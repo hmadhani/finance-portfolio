@@ -1,0 +1,630 @@
+<title>Finance Portfolio Ledger</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ink: #16232E;
+    --ink-dim: #4B5A66;
+    --ground: #EEF0EC;
+    --surface: #FFFFFF;
+    --surface-2: #E4E7DE;
+    --line: #D3D7CC;
+    --accent: #B8792A;
+    --accent-dim: #B8792A33;
+    --good: #2F7D5D;
+    --good-dim: #2F7D5D1f;
+    --bad: #B23A34;
+    --bad-dim: #B23A341f;
+    --cat-stock: #B8792A;
+    --cat-etf: #2B6E7A;
+    --cat-bond: #3A4A63;
+    --cat-cash: #9A9488;
+    --sec-tech: #B8792A;
+    --sec-industrials: #6B4F9E;
+    --sec-financials: #2B6E7A;
+    --sec-health: #3A7D5E;
+    --sec-discretionary: #B2554A;
+    --sec-comm: #4B6FA5;
+    --sec-materials: #8C7853;
+    --sec-staples: #6E8B5A;
+    --sec-utilities: #A2884F;
+    --shadow: 0 1px 2px rgba(22,35,46,0.06), 0 8px 24px rgba(22,35,46,0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #E9ECE6;
+      --ink-dim: #9AA6AC;
+      --ground: #0F1620;
+      --surface: #161F29;
+      --surface-2: #1E2933;
+      --line: #2B3844;
+      --accent: #D99A46;
+      --accent-dim: #D99A4630;
+      --good: #4FAE85;
+      --good-dim: #4FAE8524;
+      --bad: #E0645C;
+      --bad-dim: #E0645C24;
+      --cat-stock: #D99A46;
+      --cat-etf: #3FA0AE;
+      --cat-bond: #7E92B4;
+      --cat-cash: #A9A392;
+      --sec-tech: #D99A46;
+      --sec-industrials: #9B84C9;
+      --sec-financials: #4FA6B4;
+      --sec-health: #5FBF93;
+      --sec-discretionary: #D98177;
+      --sec-comm: #7FA0D9;
+      --sec-materials: #B39D72;
+      --sec-staples: #96B57F;
+      --sec-utilities: #CBAE72;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E9ECE6;
+    --ink-dim: #9AA6AC;
+    --ground: #0F1620;
+    --surface: #161F29;
+    --surface-2: #1E2933;
+    --line: #2B3844;
+    --accent: #D99A46;
+    --accent-dim: #D99A4630;
+    --good: #4FAE85;
+    --good-dim: #4FAE8524;
+    --bad: #E0645C;
+    --bad-dim: #E0645C24;
+    --cat-stock: #D99A46;
+    --cat-etf: #3FA0AE;
+    --cat-bond: #7E92B4;
+    --cat-cash: #A9A392;
+    --sec-tech: #D99A46;
+    --sec-industrials: #9B84C9;
+    --sec-financials: #4FA6B4;
+    --sec-health: #5FBF93;
+    --sec-discretionary: #D98177;
+    --sec-comm: #7FA0D9;
+    --sec-materials: #B39D72;
+    --sec-staples: #96B57F;
+    --sec-utilities: #CBAE72;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono, .num, table { font-variant-numeric: tabular-nums; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace; }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover, a:focus-visible { border-bottom-color: currentColor; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 64px; }
+
+  /* ---- Header ---- */
+  header.top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .brand { display: flex; flex-direction: column; gap: 6px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  h1 {
+    margin: 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(24px, 3.4vw, 34px);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .nav-block { text-align: right; }
+  .nav-figure {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.01em;
+  }
+  .nav-sub { font-size: 13px; color: var(--ink-dim); margin-top: 2px; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-top: 8px;
+  }
+  .pill.flat { background: var(--surface-2); color: var(--ink-dim); }
+
+  /* ---- Strategy identity ---- */
+  section.strategy {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+  .strategy-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .strategy-name {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--accent);
+  }
+  section.strategy p { margin: 8px 0 0; max-width: 72ch; color: var(--ink); }
+  .strategy-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .sm-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-dim); }
+  .sm-value { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 18px; margin-top: 2px; }
+
+  /* ---- Charts row ---- */
+  .charts-row {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(340px, 1.3fr);
+    gap: 20px;
+    margin-bottom: 28px;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) { .charts-row { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  .card h2 {
+    margin: 0 0 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: 600;
+  }
+  .card .card-sub { font-size: 12px; color: var(--ink-dim); margin-bottom: 14px; }
+
+  .pie-body { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  #pieCanvas { width: 190px; height: 190px; flex: 0 0 auto; }
+  .legend { display: flex; flex-direction: column; gap: 9px; flex: 1 1 160px; min-width: 150px; }
+  .legend-row { display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+  .swatch { width: 10px; height: 10px; border-radius: 2px; flex: 0 0 auto; }
+  .legend-row .lab { flex: 1; }
+  .legend-row .val { font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+
+  .stack { display: flex; flex-direction: column; gap: 20px; }
+
+  .sector-list { display: flex; flex-direction: column; gap: 8px; }
+  .sector-row { display: grid; grid-template-columns: 118px 1fr 52px; align-items: center; gap: 10px; font-size: 12.5px; }
+  .sector-row .sname { color: var(--ink-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sector-track { background: var(--surface-2); border-radius: 3px; height: 9px; overflow: hidden; }
+  .sector-fill { height: 100%; border-radius: 3px; }
+  .sector-row .spct { font-family: "IBM Plex Mono", monospace; text-align: right; }
+
+  #trendCanvas { width: 100%; height: 130px; display: block; }
+  .trend-note { font-size: 12px; color: var(--ink-dim); margin-top: 8px; }
+
+  /* ---- Holdings table ---- */
+  section.holdings { margin-bottom: 28px; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; min-width: 760px; background: var(--surface); }
+  thead th {
+    text-align: left;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+    white-space: nowrap;
+  }
+  thead th.num, tbody td.num { text-align: right; }
+  tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+  tbody tr.holding { border-left: 3px solid var(--row-color, transparent); }
+  tbody tr.holding td:first-child { border-left: 3px solid var(--row-color, transparent); margin-left: -3px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr.total td {
+    font-weight: 700;
+    background: var(--surface-2);
+    border-top: 1px solid var(--line);
+  }
+  .ticker-link {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .ticker-link:hover { color: var(--accent); }
+  .ticker-link .go { font-size: 10px; opacity: 0.5; }
+  .type-tag {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+  }
+  .gl-flat { color: var(--ink-dim); }
+
+  footer.disclaimer {
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    max-width: 80ch;
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="eyebrow">finance-portfolio &middot; market-data-only paper ledger</div>
+      <h1>Cloud Model Portfolio</h1>
+    </div>
+    <div class="nav-block">
+      <div class="nav-figure num" id="navFigure">$100,000.00</div>
+      <div class="nav-sub">NAV &middot; inception 2026-08-26</div>
+      <span class="pill flat" id="returnPill">+0.00% since inception &middot; SPY $766.08</span>
+    </div>
+  </header>
+
+  <section class="strategy">
+    <div class="strategy-head">
+      <span class="eyebrow">Strategy classification</span>
+    </div>
+    <div class="strategy-name">Core-Satellite Growth Portfolio, AI/Infrastructure Sector-Rotation Overlay</div>
+    <p>
+      71.0% combined equity exposure (49.1% single-name stocks + 21.9% sector-rotation ETFs) sits well above a
+      classic 60/40 balanced fund's equity share, with the bond sleeve deliberately thin (8.0%) rather than a
+      true ballast. The stock sleeve blends GARP value names trading at compressed multiples (COF ~12x P/E, PEP
+      near a 6-month low) against richly-valued AI-infrastructure growth names (AVGO ~60x P/E, MU on a
+      196%-YoY-revenue run) &mdash; a barbell, not a single-factor bet. The two ETF slots (XLK, XLI) are the
+      momentum/rotation overlay: re-screened every cycle for accumulation signal and swapped out when the
+      signal reverses, rather than held as static beta. Cash (21.0%) is temporary structural slack from an
+      under-filled stock sleeve (10 of a 15-20 target), not a tactical call &mdash; it's expected to compress
+      toward the 10% floor as more names clear the screen.
+    </p>
+    <div class="strategy-metrics">
+      <div><div class="sm-label">Equity exposure</div><div class="sm-value">71.0%</div></div>
+      <div><div class="sm-label">Ballast (bonds+cash)</div><div class="sm-value">29.0%</div></div>
+      <div><div class="sm-label">Stock positions</div><div class="sm-value">10 / 15&ndash;20</div></div>
+      <div><div class="sm-label">Max single name</div><div class="sm-value">5.0% cap</div></div>
+    </div>
+  </section>
+
+  <div class="charts-row">
+    <div class="card">
+      <h2>Allocation</h2>
+      <div class="card-sub">By sleeve, % of $100,000 NAV</div>
+      <div class="pie-body">
+        <canvas id="pieCanvas" width="380" height="380" role="img" aria-label="Portfolio allocation pie chart: 49.1% stocks, 21.9% sector ETFs, 8.0% bonds, 21.0% cash"></canvas>
+        <div class="legend" id="pieLegend"></div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="card">
+        <h2>Sector exposure</h2>
+        <div class="card-sub">Stock sleeve only &middot; % of NAV per GICS-style sector</div>
+        <div class="sector-list" id="sectorList"></div>
+      </div>
+      <div class="card">
+        <h2>Return trend</h2>
+        <div class="card-sub">Total return vs. inception, by cycle date</div>
+        <canvas id="trendCanvas" width="900" height="180"></canvas>
+        <div class="trend-note">Day 1 of tracking &mdash; series lengthens one point per Monday cycle. Flat at 0.00% until the first re-pricing.</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="holdings">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Sleeve</th>
+            <th class="num">Shares</th>
+            <th class="num">Price</th>
+            <th class="num">Mkt Value</th>
+            <th class="num">% NAV</th>
+            <th class="num">Unrl. G/L</th>
+          </tr>
+        </thead>
+        <tbody id="holdingsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    IMPORTANT: This is a paper/model portfolio for evaluation purposes only, tracked with public market data
+    alone (no personal financial context). It does not constitute investment advice or a recommendation to buy
+    or sell any security. All investments involve risk, including potential loss of principal. Always consult
+    with qualified financial professionals before making investment decisions. Ticker links open Yahoo Finance
+    real-time quote pages in a new tab.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var holdings = [
+    { t: "AVGO", type: "Stock", sector: "Technology", shares: 14, price: 357.56, value: 5005.84, pct: 5.01, gl: 0, glp: 0 },
+    { t: "ETN", type: "Stock", sector: "Industrials", shares: 12, price: 412.97, value: 4955.64, pct: 4.96, gl: 0, glp: 0 },
+    { t: "COF", type: "Stock", sector: "Financials", shares: 23, price: 216.96, value: 4990.08, pct: 4.99, gl: 0, glp: 0 },
+    { t: "LLY", type: "Stock", sector: "Healthcare", shares: 4, price: 1215.13, value: 4860.52, pct: 4.86, gl: 0, glp: 0 },
+    { t: "TJX", type: "Stock", sector: "Consumer Discretionary", shares: 35, price: 139.48, value: 4881.80, pct: 4.88, gl: 0, glp: 0 },
+    { t: "GOOGL", type: "Stock", sector: "Communication Services", shares: 14, price: 341.95, value: 4787.30, pct: 4.79, gl: 0, glp: 0 },
+    { t: "BALL", type: "Stock", sector: "Materials", shares: 81, price: 61.30, value: 4965.30, pct: 4.97, gl: 0, glp: 0 },
+    { t: "PEP", type: "Stock", sector: "Consumer Staples", shares: 35, price: 142.27, value: 4979.45, pct: 4.98, gl: 0, glp: 0 },
+    { t: "NEE", type: "Stock", sector: "Utilities", shares: 59, price: 84.29, value: 4973.11, pct: 4.97, gl: 0, glp: 0 },
+    { t: "MU", type: "Stock", sector: "Technology", shares: 5, price: 930.25, value: 4651.25, pct: 4.65, gl: 0, glp: 0 },
+    { t: "XLK", type: "Sector ETF", sector: "Technology", shares: 59, price: 186.00, value: 10974.00, pct: 10.97, gl: 0, glp: 0 },
+    { t: "XLI", type: "Sector ETF", sector: "Industrials", shares: 59, price: 185.96, value: 10971.64, pct: 10.97, gl: 0, glp: 0 },
+    { t: "AGG", type: "Bond", sector: "Bonds", shares: 82, price: 97.90, value: 8027.80, pct: 8.03, gl: 0, glp: 0 }
+  ];
+  var cash = { value: 20976.27, pct: 20.98 };
+  var nav = 100000.00;
+
+  var trend = [ { date: "2026-08-26", pct: 0.00 } ];
+
+  var sectorColor = {
+    "Technology": "var(--sec-tech)",
+    "Industrials": "var(--sec-industrials)",
+    "Financials": "var(--sec-financials)",
+    "Healthcare": "var(--sec-health)",
+    "Consumer Discretionary": "var(--sec-discretionary)",
+    "Communication Services": "var(--sec-comm)",
+    "Materials": "var(--sec-materials)",
+    "Consumer Staples": "var(--sec-staples)",
+    "Utilities": "var(--sec-utilities)",
+    "Bonds": "var(--cat-bond)"
+  };
+
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function fmt(n) { return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function usd(n) { return "$" + fmt(n); }
+
+  // ---- Holdings table ----
+  var body = document.getElementById("holdingsBody");
+  holdings.forEach(function (h) {
+    var tr = document.createElement("tr");
+    tr.className = "holding";
+    tr.style.setProperty("--row-color", sectorColor[h.sector] || "var(--line)");
+    var glClass = h.gl > 0 ? "" : (h.gl < 0 ? "" : "gl-flat");
+    var glColor = h.gl > 0 ? "var(--good)" : (h.gl < 0 ? "var(--bad)" : "var(--ink-dim)");
+    tr.innerHTML =
+      '<td><a class="ticker-link" href="https://finance.yahoo.com/quote/' + h.t + '/" target="_blank" rel="noopener">' + h.t + '<span class="go">&#8599;</span></a><div class="type-tag">' + h.sector + '</div></td>' +
+      '<td>' + h.type + '</td>' +
+      '<td class="num mono">' + h.shares + '</td>' +
+      '<td class="num mono">' + usd(h.price) + '</td>' +
+      '<td class="num mono">' + usd(h.value) + '</td>' +
+      '<td class="num mono">' + h.pct.toFixed(2) + '%</td>' +
+      '<td class="num mono ' + glClass + '" style="color:' + glColor + '">' + usd(h.gl) + ' (' + h.glp.toFixed(2) + '%)</td>';
+    body.appendChild(tr);
+  });
+  var cashTr = document.createElement("tr");
+  cashTr.className = "holding";
+  cashTr.style.setProperty("--row-color", "var(--cat-cash)");
+  cashTr.innerHTML =
+    '<td><span class="ticker-link">CASH</span><div class="type-tag">T-Bill equiv. (SGOV), ~4-5%/yr accrual</div></td>' +
+    '<td>Cash</td><td class="num mono">&mdash;</td><td class="num mono">&mdash;</td>' +
+    '<td class="num mono">' + usd(cash.value) + '</td>' +
+    '<td class="num mono">' + cash.pct.toFixed(2) + '%</td>' +
+    '<td class="num mono gl-flat">&mdash;</td>';
+  body.appendChild(cashTr);
+
+  var totalTr = document.createElement("tr");
+  totalTr.className = "total";
+  totalTr.innerHTML =
+    '<td>TOTAL</td><td></td><td></td><td></td>' +
+    '<td class="num mono">' + usd(nav) + '</td>' +
+    '<td class="num mono">100.00%</td>' +
+    '<td class="num mono">' + usd(0) + ' (0.00%)</td>';
+  body.appendChild(totalTr);
+
+  // ---- Category pie ----
+  var stockTotal = holdings.filter(function (h) { return h.type === "Stock"; }).reduce(function (a, h) { return a + h.value; }, 0);
+  var etfTotal = holdings.filter(function (h) { return h.type === "Sector ETF"; }).reduce(function (a, h) { return a + h.value; }, 0);
+  var bondTotal = holdings.filter(function (h) { return h.type === "Bond"; }).reduce(function (a, h) { return a + h.value; }, 0);
+  var categories = [
+    { label: "Stocks (10 names)", value: stockTotal, color: "--cat-stock" },
+    { label: "Sector ETFs (XLK, XLI)", value: etfTotal, color: "--cat-etf" },
+    { label: "Bonds (AGG)", value: bondTotal, color: "--cat-bond" },
+    { label: "Cash (T-Bill equiv.)", value: cash.value, color: "--cat-cash" }
+  ];
+
+  var legend = document.getElementById("pieLegend");
+  categories.forEach(function (c) {
+    var row = document.createElement("div");
+    row.className = "legend-row";
+    row.innerHTML =
+      '<span class="swatch" style="background:var(' + c.color + ')"></span>' +
+      '<span class="lab">' + c.label + '</span>' +
+      '<span class="val mono">' + (c.value / nav * 100).toFixed(1) + '%</span>';
+    legend.appendChild(row);
+  });
+
+  function drawPie() {
+    var canvas = document.getElementById("pieCanvas");
+    var dpr = window.devicePixelRatio || 1;
+    var size = 190;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + "px";
+    canvas.style.height = size + "px";
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, size, size);
+    var cx = size / 2, cy = size / 2, r = size / 2 - 6, inner = r * 0.56;
+    var start = -Math.PI / 2;
+    categories.forEach(function (c) {
+      var frac = c.value / nav;
+      var end = start + frac * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, start, end);
+      ctx.closePath();
+      ctx.fillStyle = cssVar(c.color);
+      ctx.fill();
+      start = end;
+    });
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = cssVar("--ink");
+    ctx.font = "600 15px 'IBM Plex Mono', monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("71.0%", cx, cy - 7);
+    ctx.font = "500 9.5px 'IBM Plex Sans', sans-serif";
+    ctx.fillStyle = cssVar("--ink-dim");
+    ctx.fillText("EQUITY", cx, cy + 9);
+  }
+
+  // ---- Sector exposure bars ----
+  var sectorList = document.getElementById("sectorList");
+  var sectorTotals = {};
+  holdings.filter(function (h) { return h.type === "Stock"; }).forEach(function (h) {
+    sectorTotals[h.sector] = (sectorTotals[h.sector] || 0) + h.value;
+  });
+  var maxSector = Math.max.apply(null, Object.values(sectorTotals));
+  Object.keys(sectorTotals).sort(function (a, b) { return sectorTotals[b] - sectorTotals[a]; }).forEach(function (s) {
+    var v = sectorTotals[s];
+    var row = document.createElement("div");
+    row.className = "sector-row";
+    row.innerHTML =
+      '<span class="sname">' + s + '</span>' +
+      '<span class="sector-track"><span class="sector-fill" style="width:' + (v / maxSector * 100).toFixed(1) + '%; background:' + sectorColor[s] + '"></span></span>' +
+      '<span class="spct mono">' + (v / nav * 100).toFixed(2) + '%</span>';
+    sectorList.appendChild(row);
+  });
+
+  // ---- Trend chart ----
+  function drawTrend() {
+    var canvas = document.getElementById("trendCanvas");
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.clientWidth || 900;
+    var h = 130;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.height = h + "px";
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    var pad = { l: 44, r: 16, t: 14, b: 24 };
+    var vals = trend.map(function (p) { return p.pct; });
+    var lo = Math.min(-1, Math.min.apply(null, vals));
+    var hi = Math.max(1, Math.max.apply(null, vals));
+    var range = hi - lo;
+    function xAt(i) { return pad.l + (trend.length === 1 ? (w - pad.l - pad.r) / 2 : i / (trend.length - 1) * (w - pad.l - pad.r)); }
+    function yAt(v) { return pad.t + (1 - (v - lo) / range) * (h - pad.t - pad.b); }
+
+    // gridlines
+    ctx.strokeStyle = cssVar("--line");
+    ctx.lineWidth = 1;
+    ctx.font = "11px 'IBM Plex Mono', monospace";
+    ctx.fillStyle = cssVar("--ink-dim");
+    [hi, 0, lo].forEach(function (v) {
+      var y = yAt(v);
+      ctx.beginPath();
+      ctx.moveTo(pad.l, y + 0.5);
+      ctx.lineTo(w - pad.r, y + 0.5);
+      ctx.stroke();
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(v.toFixed(1) + "%", pad.l - 8, y);
+    });
+
+    // zero baseline emphasis
+    ctx.strokeStyle = cssVar("--ink-dim");
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, yAt(0) + 0.5);
+    ctx.lineTo(w - pad.r, yAt(0) + 0.5);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    // line
+    ctx.strokeStyle = cssVar("--accent");
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    trend.forEach(function (p, i) {
+      var x = xAt(i), y = yAt(p.pct);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // points + date labels
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    trend.forEach(function (p, i) {
+      var x = xAt(i), y = yAt(p.pct);
+      ctx.beginPath();
+      ctx.arc(x, y, i === trend.length - 1 ? 4.5 : 3, 0, Math.PI * 2);
+      ctx.fillStyle = cssVar("--accent");
+      ctx.fill();
+      ctx.fillStyle = cssVar("--ink-dim");
+      ctx.font = "10.5px 'IBM Plex Mono', monospace";
+      ctx.fillText(p.date.slice(5), x, h - pad.b + 6);
+    });
+  }
+
+  drawPie();
+  drawTrend();
+  window.addEventListener("resize", function () { drawTrend(); });
+
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", function () { drawPie(); drawTrend(); });
+})();
+</script>
