@@ -33,6 +33,20 @@ cycles, same pattern as `hm-model-portfolio`'s live start on 2026-08-23.
 
 ---
 
+## NAV History
+
+Appended every cycle (heavy or light) — source of truth for the Quarterly/
+Annual Report's Return Trend chart. `Blended Benchmark` is the 70/13/7/10
+ACWI/AGG/GLD/cash mix defined in `investor-profile.md`; left as "—" for
+cycles before that benchmark was tracked.
+
+| Date | Cycle # | NAV | Blended Benchmark | SPY (ref) |
+|---|---|---|---|---|
+| 2026-08-26 | 1 | $100,000.00 | — | $766.08 |
+| 2026-09-05 | 6 | $100,000.00 | — | $766.08 |
+
+---
+
 ## Holdings
 
 | Ticker | Type | Theme | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
