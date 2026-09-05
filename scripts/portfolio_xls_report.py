@@ -7,6 +7,29 @@ current state, framed as prepared for "Investor: Mr. Spock — Logical
 Investor" (see investor-profile.md). Self-contained: no dependency on any
 file outside this repo, since the cloud routine that runs this only has
 finance-portfolio checked out.
+
+--data-json schema (all fields required unless noted):
+{
+  "portfolio_data": {
+    "nav": float,
+    "total_return_pct": float,
+    "glide_path_phase": str,
+    "cycle_number": int,
+    "holdings": [{"ticker": str, "type": str, "theme": str, "shares": number,
+                  "mkt_value": float, "pct_nav": float, "unrealized_gl": float}, ...],
+    "trades": [{"date": "YYYY-MM-DD", "ticker": str, "action": str, "rationale": str}, ...],
+    "theme_exposure": [{"theme": str, "pct_nav": float}, ...],
+    "return_trend": [{"date": "YYYY-MM-DD", "nav": float,
+                       "blended_benchmark": float (optional), "spy": float (optional)}, ...]
+  },
+  "benchmark_data": {"blended_return_pct": float, "spy_return_pct": float}
+}
+
+return_trend needs one point per cycle since the last report at minimum
+(ideally since inception) to plot a real trend line — portfolio.md's trade
+log is the source for this; see DECISION.md if a dedicated NAV-history table
+becomes necessary. blended_benchmark/spy per point are optional (omit if not
+tracked historically) — the chart will still render with NAV alone.
 """
 
 import argparse
@@ -227,8 +250,8 @@ def create_charts_sheet(wb: Workbook, theme_exposure: List[Dict], return_trend: 
     for r, point in enumerate(return_trend, start=trend_start_row + 1):
         ws.cell(row=r, column=1, value=point['date'])
         ws.cell(row=r, column=2, value=point['nav'])
-        ws.cell(row=r, column=3, value=point['blended_benchmark'])
-        ws.cell(row=r, column=4, value=point['spy'])
+        ws.cell(row=r, column=3, value=point.get('blended_benchmark'))
+        ws.cell(row=r, column=4, value=point.get('spy'))
 
     line = LineChart()
     line.title = "Return Trend"
