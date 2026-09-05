@@ -18,10 +18,12 @@ rules governing this loop.
 | NAV | $100,000.00 |
 | Total return | 0.00% (inception) |
 | SPY (ref) | $766.08 |
-| Cash balance | $20,976.27 (21.0% of NAV) |
+| Cash balance | $26,370.27 (26.4% of NAV) |
 | Stock sleeve | $49,050.29 (49.1% of NAV) |
-| Sector ETF sleeve | $21,945.64 (21.9% of NAV) |
+| Sector ETF sleeve | $16,551.64 (16.6% of NAV) |
 | Bond sleeve | $8,027.80 (8.0% of NAV) |
+| Cycle # | 6 |
+| Glide-Path Phase | Accumulation |
 
 2026-08-26 is being treated as this week's Monday cycle (inception + first fill-out
 pass same day). Stock sleeve now holds 10 of the 15-20 target positions, each sized
@@ -33,27 +35,56 @@ cycles, same pattern as `hm-model-portfolio`'s live start on 2026-08-23.
 
 ## Holdings
 
-| Ticker | Type | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
-|---|---|---|---|---|---|---|---|---|
-| AVGO | Stock | 14 | $357.56 | $5,005.84 | $357.56 | $5,005.84 | 5.01% | $0.00 (0.00%) |
-| ETN | Stock | 12 | $412.97 | $4,955.64 | $412.97 | $4,955.64 | 4.96% | $0.00 (0.00%) |
-| COF | Stock | 23 | $216.96 | $4,990.08 | $216.96 | $4,990.08 | 4.99% | $0.00 (0.00%) |
-| LLY | Stock | 4 | $1,215.13 | $4,860.52 | $1,215.13 | $4,860.52 | 4.86% | $0.00 (0.00%) |
-| TJX | Stock | 35 | $139.48 | $4,881.80 | $139.48 | $4,881.80 | 4.88% | $0.00 (0.00%) |
-| GOOGL | Stock | 14 | $341.95 | $4,787.30 | $341.95 | $4,787.30 | 4.79% | $0.00 (0.00%) |
-| BALL | Stock | 81 | $61.30 | $4,965.30 | $61.30 | $4,965.30 | 4.97% | $0.00 (0.00%) |
-| PEP | Stock | 35 | $142.27 | $4,979.45 | $142.27 | $4,979.45 | 4.98% | $0.00 (0.00%) |
-| NEE | Stock | 59 | $84.29 | $4,973.11 | $84.29 | $4,973.11 | 4.97% | $0.00 (0.00%) |
-| MU | Stock | 5 | $930.25 | $4,651.25 | $930.25 | $4,651.25 | 4.65% | $0.00 (0.00%) |
-| XLK | Sector ETF | 59 | $186.00 | $10,974.00 | $186.00 | $10,974.00 | 10.97% | $0.00 (0.00%) |
-| XLI | Sector ETF | 59 | $185.96 | $10,971.64 | $185.96 | $10,971.64 | 10.97% | $0.00 (0.00%) |
-| AGG | Bond | 82 | $97.90 | $8,027.80 | $97.90 | $8,027.80 | 8.03% | $0.00 (0.00%) |
-| Cash | — | — | — | $20,976.27 | — | $20,976.27 | 20.98% | — |
-| **TOTAL** | — | — | — | **$100,000.00** | — | **$100,000.00** | **100.00%** | **$0.00 (0.00%)** |
+| Ticker | Type | Theme | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
+|---|---|---|---|---|---|---|---|---|---|
+| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $357.56 | $5,005.84 | 5.01% | $0.00 (0.00%) |
+| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $412.97 | $4,955.64 | 4.96% | $0.00 (0.00%) |
+| COF | Stock | Financials | 23 | $216.96 | $4,990.08 | $216.96 | $4,990.08 | 4.99% | $0.00 (0.00%) |
+| LLY | Stock | Healthcare-GLP1 | 4 | $1,215.13 | $4,860.52 | $1,215.13 | $4,860.52 | 4.86% | $0.00 (0.00%) |
+| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $139.48 | $4,881.80 | 4.88% | $0.00 (0.00%) |
+| GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $341.95 | $4,787.30 | 4.79% | $0.00 (0.00%) |
+| BALL | Stock | Materials | 81 | $61.30 | $4,965.30 | $61.30 | $4,965.30 | 4.97% | $0.00 (0.00%) |
+| PEP | Stock | Consumer-Defensive | 35 | $142.27 | $4,979.45 | $142.27 | $4,979.45 | 4.98% | $0.00 (0.00%) |
+| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $84.29 | $4,973.11 | 4.97% | $0.00 (0.00%) |
+| MU | Stock | AI-Capex | 5 | $930.25 | $4,651.25 | $930.25 | $4,651.25 | 4.65% | $0.00 (0.00%) |
+| XLK | Sector ETF | AI-Capex | 30 | $186.00 | $5,580.00 | $186.00 | $5,580.00 | 5.58% | $0.00 (0.00%) |
+| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $185.96 | $10,971.64 | 10.97% | $0.00 (0.00%) |
+| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $97.90 | $8,027.80 | 8.03% | $0.00 (0.00%) |
+| Cash | — | — | — | — | $26,370.27 | — | $26,370.27 | 26.37% | — |
+| **TOTAL** | — | — | — | — | **$100,000.00** | — | **$100,000.00** | **100.00%** | **$0.00 (0.00%)** |
+
+---
+
+## Theme Exposure
+
+| Theme | Positions | Mkt Value | % NAV |
+|---|---|---|---|
+| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $24,997.50 | 25.00% |
+| Financials | COF | $4,990.08 | 4.99% |
+| Healthcare-GLP1 | LLY | $4,860.52 | 4.86% |
+| Consumer-Defensive | TJX, PEP | $9,861.25 | 9.86% |
+| Energy-Transition | ETN, XLI | $15,927.28 | 15.93% |
+| Materials | BALL | $4,965.30 | 4.97% |
+| Diversified-Core | AGG | $8,027.80 | 8.03% |
+
+(Cash is intentionally excluded from theme exposure — it carries no thematic risk.)
 
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-09-05 — Rules-change rebalance: theme-concentration cap introduced
+
+**Rebalance — rules change (not a thesis exit):** Introduced the Investor
+Profile's 25% theme-concentration cap (see `investor-profile.md`). Tagged
+every holding with a Theme; AI-Capex (AVGO, GOOGL, NEE, MU, XLK) measured at
+30.39% NAV, exceeding the new cap. Trimmed XLK from 59 sh ($10,974.00, 10.97%
+NAV) to 30 sh ($5,580.00, 5.58% NAV) — sold 29 sh @ $186.00 = $5,394.00
+proceeds routed to cash — bringing AI-Capex to $24,997.50 (25.00% NAV, at the
+cap). No fundamental AI-Capex thesis changed for any of these five positions;
+this is a concentration-rule trim only. Also added this cycle: `Cycle #` and
+`Glide-Path Phase` header fields (Accumulation, per `investor-profile.md`'s
+wall-clock-derived glide path) and the Theme Exposure table above.
 
 ### 2026-08-26 — Fill-out pass (same-day continuation of the Monday cycle)
 
