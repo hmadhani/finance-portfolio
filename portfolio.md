@@ -2,8 +2,8 @@
 
 Market-data-only, no personal financial context. This is an isolated experiment;
 it does not read or reference any personal financial data, account files, or
-external personal tracking systems. See `hm-finance-portfolio` SKILL.md for the
-rules governing this loop.
+external personal tracking systems. See `investor-profile.md` for the sizing
+rules, glide path, and theme-concentration limits governing this loop.
 
 - **Inception date:** 2026-08-26
 - **Starting balance:** $100,000
@@ -22,14 +22,17 @@ rules governing this loop.
 | Stock sleeve | $49,050.29 (49.1% of NAV) |
 | Sector ETF sleeve | $16,551.64 (16.6% of NAV) |
 | Bond sleeve | $8,027.80 (8.0% of NAV) |
-| Cycle # | 6 |
+| Cycle # | 2 |
 | Glide-Path Phase | Accumulation |
+
+`Cycle #` counts routine cycles that have written this file (one entry per
+NAV History row below), independent of wall-clock cadence changes.
 
 2026-08-26 is being treated as this week's Monday cycle (inception + first fill-out
 pass same day). Stock sleeve now holds 10 of the 15-20 target positions, each sized
-near — never over — the 5% NAV cap. Cash sits at 21.0%, above the 10% floor,
-declining as more candidates clear the Watchlist Entry Criteria on future Monday
-cycles, same pattern as `hm-model-portfolio`'s live start on 2026-08-23.
+near — never over — the 10% per-name NAV cap (see `investor-profile.md`). Cash
+sits at 26.4%, above the 10% floor, declining as more candidates clear the
+Watchlist Entry Criteria on future heavy cycles.
 
 ---
 
@@ -43,7 +46,7 @@ cycles before that benchmark was tracked.
 | Date | Cycle # | NAV | Blended Benchmark | SPY (ref) |
 |---|---|---|---|---|
 | 2026-08-26 | 1 | $100,000.00 | — | $766.08 |
-| 2026-09-05 | 6 | $100,000.00 | — | $766.08 |
+| 2026-09-05 | 2 | $100,000.00 | — | $766.08 |
 
 ---
 
