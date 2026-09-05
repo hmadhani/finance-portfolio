@@ -1,0 +1,3 @@
+# Local-only, never pushed: personal vault-sync utility and design specs.
+/sync-to-vault.sh
+/.private/

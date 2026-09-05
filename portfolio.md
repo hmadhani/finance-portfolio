@@ -1,8 +1,9 @@
 # Finance Portfolio (Cloud, Isolated) — Model Portfolio Tracker
 
-Market-data-only, no personal financial context. This is the isolated twin of
-`hm-model-portfolio`; it does not read or reference any file under `[personal data]/`.
-See `hm-finance-portfolio` SKILL.md for the rules governing this loop.
+Market-data-only, no personal financial context. This is an isolated experiment;
+it does not read or reference any personal financial data, account files, or
+external personal tracking systems. See `hm-finance-portfolio` SKILL.md for the
+rules governing this loop.
 
 - **Inception date:** 2026-08-26
 - **Starting balance:** $100,000
