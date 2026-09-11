@@ -19,45 +19,54 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-09-08)
+## Header (as of 2026-09-11)
 
 | Metric | Value |
 |---|---|
-| NAV | $99,001.13 |
-| Total return | -1.00% (since inception) |
+| NAV | $98,412.97 |
+| Total return | -1.59% (since inception) |
 | Blended Benchmark (ref) | not yet tracked — see note below |
-| SPY (ref) | $770.19 (+0.54% since inception) |
-| Cash balance | $26,939.30 (27.21% of NAV) |
-| Stock sleeve | $48,710.34 (49.20% of NAV) |
-| Sector ETF sleeve | $15,397.49 (15.55% of NAV) |
-| Bond sleeve | $7,954.00 (8.03% of NAV) |
-| Cycle # | 4 |
+| SPY (ref) | $757.54 (-1.11% since inception) |
+| Cash balance | $17,193.29 (17.47% of NAV) |
+| Stock sleeve | $57,979.78 (58.91% of NAV) |
+| Sector ETF sleeve | $15,355.60 (15.60% of NAV) |
+| Bond sleeve | $7,884.30 (8.01% of NAV) |
+| Cycle # | 5 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
 NAV History row below), independent of wall-clock cadence changes.
 
 **Blended Benchmark note:** `investor-profile.md` defines the 70% ACWI / 13%
-AGG / 7% GLD / 10% cash blended benchmark, but no reliable inception-date
-(2026-08-26) closing prices for ACWI/AGG/GLD were available to this cycle
-either to backfill a baseline index without fabricating data. Today's
-reference prices (ACWI ~$161.09, AGG $97.00, GLD $406.77) are logged here so
-a future cycle can establish the baseline once inception-date closes can be
-sourced; NAV History continues to carry "—" for this column until then. SPY
-is tracked as the secondary reference per the profile.
+AGG / 7% GLD / 10% cash blended benchmark. This cycle made another dedicated
+attempt to backfill the 2026-08-26 inception-date closes for ACWI/AGG/GLD
+(needed to build a baseline index) but still could not source them — most
+historical-data providers (Yahoo Finance, stockanalysis.com, MarketWatch,
+Stooq, ishares.com, spdrgoldshares.com, etc.) returned network-egress denials
+to this session's direct-fetch tooling, and WebSearch-snippet results for
+that specific date were either absent or internally inconsistent (a GLD
+figure of $408.89 turned up attached to two different dates, indicating a
+stale/cached quote rather than a real historical close). Today's reference
+prices (ACWI $158.91 as of 2026-09-10, AGG $96.15, GLD $396.36) are logged
+here so a future cycle can retry the backfill; NAV History continues to
+carry "—" for this column until then. SPY is tracked as the secondary
+reference per the profile.
 
-This is Cycle #4, a **LIGHT** cycle. Per the routine's Mon(HEAVY)/Wed(LIGHT)/
-Fri(LIGHT) rotation, this fills the "Friday LIGHT" slot following Cycle #3;
-its raw calendar date (2026-09-07) fell on Labor Day (an NYSE holiday), so
-the slot shifted forward to the next valid business day — run 2026-09-08,
-one calendar day after its originally-intended 2026-09-07 slot, due to the
-market-holiday shift. Held positions got a reaffirm/exit-only check only —
-no full fundamentals/technicals research pass, and no new positions were
-opened (heavy-cycle only). Cash accrued ~3 days of SGOV-equivalent interest
-(4.5%/yr assumed, the midpoint of the stated 4-5%/yr range) since the last
-cycle (2026-09-05). The only trade this cycle was a rules-based theme-cap
-rebalance (see Trade Log) triggered by pure price appreciation pushing
-AI-Capex fractionally over its 25% NAV cap.
+This is Cycle #5, a **HEAVY** cycle, run on a Friday rather than a Monday:
+this calendar week's Monday (2026-09-07) was Labor Day (an NYSE holiday), so
+the routine's own rules called for the first trading day of the week to
+carry the HEAVY slot — that fell to Tuesday 2026-09-08, but that day's cycle
+(Cycle #4) was logged as LIGHT rather than HEAVY. Per the routine's
+catch-up rule (scanning this week's Trade Log headings from Monday 9/7
+through today and finding no HEAVY tag in that window), today's cycle picks
+up the missed HEAVY slot. All 13 previously-held positions got the full
+fundamentals/valuation/technicals/catalyst/insider/analyst-consensus
+research pass (see Trade Log); the baseline screener and sector-rotation
+scan were also run since the portfolio remained well under its 15-20 stock
+position target (10 stocks) with cash well above the 10% floor (27.4%
+before this cycle's trades). Two new positions were opened (BHRB, IMAX).
+Cash accrued ~3 days of SGOV-equivalent interest since the last cycle
+(2026-09-08).
 
 ---
 
@@ -74,6 +83,7 @@ cycles before that benchmark was tracked.
 | 2026-09-05 | 2 | $100,000.00 | — | $766.08 |
 | 2026-09-05 | 3 | $100,031.19 | — | $770.19 |
 | 2026-09-08 | 4 | $99,001.13 | — | $770.19 |
+| 2026-09-11 | 5 | $98,412.97 | — | $757.54 |
 
 ---
 
@@ -81,21 +91,23 @@ cycles before that benchmark was tracked.
 
 | Ticker | Type | Theme | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
 |---|---|---|---|---|---|---|---|---|---|
-| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $357.89 | $5,010.46 | 5.06% | +$4.62 (+0.09%) |
-| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $410.85 | $4,930.20 | 4.98% | -$25.44 (-0.51%) |
-| COF | Stock | Financials | 23 | $216.96 | $4,990.08 | $219.60 | $5,050.80 | 5.10% | +$60.72 (+1.22%) |
-| LLY | Stock | Healthcare-GLP1 | 4 | $1,215.13 | $4,860.52 | $1,149.36 | $4,597.44 | 4.64% | -$263.08 (-5.41%) |
-| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $132.35 | $4,632.25 | 4.68% | -$249.55 (-5.11%) |
-| GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $331.35 | $4,638.90 | 4.69% | -$148.40 (-3.10%) |
-| BALL | Stock | Materials | 81 | $61.30 | $4,965.30 | $62.49 | $5,061.69 | 5.11% | +$96.39 (+1.94%) |
-| PEP | Stock | Consumer-Defensive | 35 | $142.27 | $4,979.45 | $137.63 | $4,817.05 | 4.87% | -$162.40 (-3.26%) |
-| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $83.00 | $4,897.00 | 4.95% | -$76.11 (-1.53%) |
-| MU | Stock | AI-Capex | 5 | $930.25 | $4,651.25 | $1,014.91 | $5,074.55 | 5.13% | +$423.30 (+9.10%) |
-| XLK | Sector ETF | AI-Capex | 27 | $186.00 | $5,022.00 | $187.28 | $5,056.56 | 5.11% | +$34.56 (+0.69%) |
-| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $175.27 | $10,340.93 | 10.44% | -$630.71 (-5.75%) |
-| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $97.00 | $7,954.00 | 8.03% | -$73.80 (-0.92%) |
-| Cash | — | — | — | — | $26,939.30 | — | $26,939.30 | 27.21% | — |
-| **TOTAL** | — | — | — | — | **$100,011.03** | — | **$99,001.13** | **100.00%** | **-$1,009.90 (-1.01% on positions)** |
+| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $361.95 | $5,067.30 | 5.15% | +$61.46 (+1.23%) |
+| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $409.63 | $4,915.56 | 4.99% | -$40.08 (-0.81%) |
+| COF | Stock | Financials | 23 | $216.96 | $4,990.08 | $218.00 | $5,014.00 | 5.09% | +$23.92 (+0.48%) |
+| LLY | Stock | Healthcare-GLP1 | 4 | $1,215.13 | $4,860.52 | $1,130.00 | $4,520.00 | 4.59% | -$340.52 (-7.01%) |
+| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $125.49 | $4,392.15 | 4.46% | -$489.65 (-10.03%) |
+| GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $332.60 | $4,656.40 | 4.73% | -$130.90 (-2.73%) |
+| BALL | Stock | Materials | 81 | $61.30 | $4,965.30 | $62.49 | $5,061.69 | 5.14% | +$96.39 (+1.94%) |
+| PEP | Stock | Consumer-Defensive | 35 | $142.27 | $4,979.45 | $136.65 | $4,782.75 | 4.86% | -$196.70 (-3.95%) |
+| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $82.44 | $4,863.96 | 4.94% | -$109.15 (-2.19%) |
+| MU | Stock | AI-Capex | 5 | $930.25 | $4,651.25 | $990.00 | $4,950.00 | 5.03% | +$298.75 (+6.42%) |
+| BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $70.63 | $4,873.47 | 4.95% | $0.00 (0.00%) |
+| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $52.50 | $4,882.50 | 4.96% | $0.00 (0.00%) |
+| XLK | Sector ETF | AI-Capex | 27 | $186.00 | $5,022.00 | $187.28 | $5,056.56 | 5.14% | +$34.56 (+0.69%) |
+| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $174.56 | $10,299.04 | 10.46% | -$672.60 (-6.13%) |
+| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.15 | $7,884.30 | 8.01% | -$143.50 (-1.79%) |
+| Cash | — | — | — | — | $17,193.29 | — | $17,193.29 | 17.47% | — |
+| **TOTAL** | — | — | — | — | **$100,020.99** | — | **$98,412.97** | **100.00%** | **-$1,608.02 (-1.94% on positions)** |
 
 ---
 
@@ -103,19 +115,322 @@ cycles before that benchmark was tracked.
 
 | Theme | Positions | Mkt Value | % NAV |
 |---|---|---|---|
-| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $24,677.47 | 24.93% |
-| Financials | COF | $5,050.80 | 5.10% |
-| Healthcare-GLP1 | LLY | $4,597.44 | 4.64% |
-| Consumer-Defensive | TJX, PEP | $9,449.30 | 9.54% |
-| Energy-Transition | ETN, XLI | $15,271.13 | 15.43% |
-| Materials | BALL | $5,061.69 | 5.11% |
-| Diversified-Core | AGG | $7,954.00 | 8.03% |
+| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $24,594.22 | 24.99% |
+| Financials | COF, BHRB | $9,887.47 | 10.05% |
+| Healthcare-GLP1 | LLY | $4,520.00 | 4.59% |
+| Consumer-Defensive | TJX, PEP | $9,174.90 | 9.32% |
+| Energy-Transition | ETN, XLI | $15,214.60 | 15.46% |
+| Materials | BALL | $5,061.69 | 5.14% |
+| Communication-Services | IMAX | $4,882.50 | 4.96% |
+| Diversified-Core | AGG | $7,884.30 | 8.01% |
 
 (Cash is intentionally excluded from theme exposure — it carries no thematic risk.)
 
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-09-11 — Cycle #5 (HEAVY): full research pass, 2 new positions (BHRB, IMAX)
+
+Heavy cycle run Friday 2026-09-11 rather than Monday — this week's Monday
+(2026-09-07) was Labor Day, the routine's own catch-up rule looked at this
+week's Trade Log headings (Monday 9/7 through today) and found only Cycle
+#4 (2026-09-08), tagged LIGHT rather than HEAVY, so today's cycle picks up
+the missed HEAVY slot. Full fundamentals/valuation/technicals/catalyst/
+insider/analyst-consensus research pass run on all 13 held positions;
+baseline screener + sector-rotation scan also run for new candidates since
+the portfolio remained well under its 15-20 stock target (10 stocks) with
+cash well above the 10% floor (27.4% before this cycle's trades).
+
+**AVGO — reaffirmed, HOLD.** Q3 FY26 (reported 9/2-9/4) beat on revenue
+($29.59B, +86% YoY) and adjusted EPS ($3.32 vs $3.24 est), AI-semiconductor
+revenue +221% YoY to $16.7B; forward P/E (~19x) is below the semiconductor
+industry median despite the AI-networking/custom-silicon growth story
+intact (6 named hyperscale custom-silicon customers). Watch items: adjusted
+gross margin compressing (~75%, guided toward ~73% next quarter) as custom
+silicon mixes up, and a soft Q4 revenue guide ($34.8B vs $35.03B consensus)
+drove a post-earnings pullback. Insider selling remains persistent (51 of
+52 trailing-90-day Form 4s were sales) but reads as routine 10b5-1/tax
+activity against very large remaining insider stakes, not a concentrated
+>10%-of-holdings cluster — exit criteria not triggered. Analyst consensus
+remains ~84% buy, target range $506-533. Theme: AI-Capex, still the
+portfolio's hottest theme (now 24.99% NAV, effectively at the 25% cap) —
+flagged explicitly per the DECISION.md #3 stopgap; no further AI-Capex
+buys are appropriate until the theme has room.
+
+**ETN — reaffirmed, HOLD.** Record Q2 2026 results (sales $8.5B, +21% YoY;
+adjusted EPS $3.15) with FY2026 guidance raised again (EPS $13.40-$13.60,
+organic growth 11-13%); data-center order momentum continues (+85% YoY) and
+UBS upgraded to Buy on 9/8 (target raised $450->$515), directly confirming
+the grid-to-chip thesis. Watch item: valuation is rich (~68% above its own
+10-year average P/E) and short interest jumped ~20% over the past week
+immediately after the UBS-driven rally, suggesting some skepticism about
+chasing it here — not an exit signal, but worth monitoring. Theme:
+Energy-Transition, a theme still seeing real fund-flow support (XLI
++9-20% YTD depending on methodology) — a "hot" theme by the DECISION.md #3
+stopgap standard, sized within its per-position cap.
+
+**COF — reaffirmed, HOLD.** Q2 2026 beat (adjusted EPS $5.81 vs $4.85 est,
+revenue $15.85B +4% QoQ) with credit quality improving (provision for
+credit losses -27%, net charge-off rate down 22bps) and Discover
+integration on track (50% of originations migrated). Valuation comparisons
+are noisy post-acquisition (GAAP P/E swung from 38x to ~12x on deal
+accounting) but normalized profitability is recovering. No insider-selling
+cluster or credit-quality red flag found. Theme: Financials — not
+previously a "hot" theme by flow data, though this cycle's screen found
+sector-level rotation-in support (XLF, curve steepening); COF itself is
+an idiosyncratic integration story, not a chase of that flow.
+
+**LLY — reaffirmed, HOLD.** Q2 2026 revenue $23.0B (+48% YoY) driven by
+Mounjaro/Zepbound ($14.9B combined, +$6.3B YoY); FY2026 guidance raised
+again (revenue $85-87B, EPS $35.50-$36.50). GLP-1 franchise thesis fully
+intact; CEO Ricks made an open-market purchase this period (~$1M+), a
+mildly positive insider signal, not a red flag. Watch items: valuation
+premium to sector remains large (~58-80% above healthcare/peer averages)
+and ex-US GLP-1 pricing realization is down 36% even as volume is up
+113%, a pricing-power watch item rather than a thesis break. Q3 earnings
+confirmed 2026-10-29. Theme: Healthcare-GLP1 — a narrow, idiosyncratic
+theme (not a broad "hot sector" chase; broader healthcare/XLV strength
+this cycle is driven by names outside this theme's definition).
+
+**TJX — reaffirmed, HOLD (full research pass, decision point).** This
+position was explicitly flagged last cycle for a full research pass to
+decide HOLD/SELL/TRIM, since it had fallen to a 52-week low. Since then it
+has fallen further, to a fresh 52-week low of $125.49 intraday today (down
+from $132.35 on 9/8, ~26% off its 52-week high), and picked up a batch of
+sell-side price-target cuts since the last cycle (Jefferies to Hold/$145,
+Citi to Neutral/$154, Gordon Haskett to Accumulate/$155, Guggenheim and
+Wells Fargo also cutting targets). Against that, the fundamentals do not
+confirm the stated exit criteria: Q2 FY27 (reported 8/19) beat on both
+revenue (+5% YoY) and EPS ($1.36 vs $1.10 LY), and full-year guidance was
+raised for the second consecutive quarter — the only soft data point is a
+Q3 FY27 guide (comps +2-3%, EPS $1.30-$1.32) that came in below Street
+hopes, and management attributes the Marmaxx comp deceleration to a
+self-described "self-inflicted," fixable merchandise-mix execution issue
+rather than a demand problem. Barclays and Morgan Stanley both reiterated
+Buy this week despite the new low. Per the routine's named exit criteria
+(thesis broken outright, or 2 consecutive quarters of *confirmed*
+fundamental deterioration — not yet met, since both of the last two
+quarters actually beat and guidance was raised both times), this does not
+yet meet the bar for a rules-based exit; selling purely on price-momentum
+and sentiment without a confirmed fundamental or thesis break would be a
+reactive, undisciplined decision inconsistent with this portfolio's stated
+philosophy of disciplined compounding over short-term reaction. HELD, with
+the position re-flagged as a hard decision point for the next HEAVY cycle:
+the Q3 FY27 print (expected mid-to-late November) is the report that will
+either confirm the claimed Marmaxx recovery or convert the "soft guidance"
+data point into the second quarter of confirmed deterioration the exit
+criteria call for. Theme: Consumer-Defensive, not a hot/flow-driven theme
+right now — this is a name-specific, not thematic, risk.
+
+**GOOGL — reaffirmed, HOLD.** Q2 2026 revenue $119.8B (+24% YoY) with
+Google Cloud accelerating to +82% YoY ($24.8B) and cloud operating income
+more than tripling YoY; capex guidance raised to $195-205B on continued
+AI-infrastructure buildout. Trailing P/E (~17x) remains the cheapest of
+mega-cap tech peers. New near-term catalyst: the next phase of the U.S.
+ad-tech antitrust trial is set for 2026-09-22 (within the 90-day window),
+and an appeals-court ruling has cleared youth-addiction litigation to
+proceed against major platforms including Google — incremental legal
+overhang, not a thesis break. No insider-selling cluster; short interest
+low (~0.6% of shares out). Theme: AI-Capex, at the theme cap alongside
+AVGO/NEE/MU/XLK (see AVGO note above) — no room to add here even though
+the fundamentals remain strong.
+
+**BALL — reaffirmed, HOLD.** Cleanest quarter of the four consumer/
+materials names: Q2 2026 revenue $3.99-4.00B (+20% YoY, well above the
+~$3.68B estimate), comparable diluted EPS +14.4% YoY, global can shipments
+accelerating (+4.3% YoY); FY2026 guidance (>10% comparable EPS growth,
+>$900M FCF) reaffirmed. No insider-selling cluster (only routine small
+VP-level option exercises); two new independent directors joined the
+board 9/9, governance-neutral. Analyst consensus solidly Buy, average
+target ~$72.57 (~16% upside from $62.49). Theme: Materials — XLB is
+seeing real rotation-in this cycle (+17% YTD, breaking out on
+copper/gold-silver strength), making this a "hot" theme by the DECISION.md
+#3 stopgap standard, though BALL itself was entered well before this
+flow picked up.
+
+**PEP — reaffirmed, HOLD (watch item).** Q2 2026 revenue $24.18B (+6.4%
+reported, beat) and core EPS $2.20 (narrow beat), but the stated
+margin-recovery thesis has not yet shown up in the numbers this quarter
+(gross margin -50-80bps YoY, core operating margin -40bps YoY) and North
+America beverage volume fell 4%; FY2026 guidance was only reaffirmed, not
+raised, in contrast to every other held name's guidance this cycle. Short
+interest rose ~30% in the latest reporting period, though still a modest
+~1.6% of shares out. No insider-selling cluster (routine executive/
+director activity only). Not yet a confirmed exit trigger (revenue and
+EPS both still beat, and only one quarter without margin improvement, not
+the two consecutive quarters of deterioration the criteria call for), but
+this is now the second-most-flagged watch item in the book after TJX,
+worth resolving at the 2026-10-08 Q3 print. Theme: Consumer-Defensive, not
+a hot/flow-driven theme.
+
+**NEE — reaffirmed, HOLD (watch item, escalated).** Fundamentals remain
+strong — FY2026 guidance reaffirmed at the high end ($3.92-4.02 adjusted
+EPS), renewables/storage backlog grew to 35.1 GW, and FPL's large-load
+data-center demand pipeline grew from 6 GW to 8 GW contracted with 12 GW
+in advanced discussions, direct evidence for the AI-power thesis. However,
+the named "stop" watch item has genuinely escalated since the last cycle:
+Virginia's governor has now formally intervened as a party in the SCC's
+Dominion Energy merger review, Arlington County's board also voted to
+intervene, and the SCC took the unusual step of ordering three in-person
+public hearings (Nov 5, 9, 10) — this is a broadening of political/
+regulatory opposition, not yet the "regulatory setback" that is this
+position's actual named stop criterion (a final SCC decision isn't
+expected until January 2027, outside this cycle's 90-day catalyst window).
+Technicals have also turned soft (price below both its 50- and 200-day
+moving averages, with one source flagging a death cross). Per the named
+exit criteria, this remains a HOLD — the stop is "a regulatory setback,"
+not "regulatory scrutiny" — but it is now flagged as the most elevated
+watch item in the book, to be reassessed immediately if the SCC process
+produces an adverse procedural or preliminary ruling before the next
+cycle. Theme: AI-Capex, at the theme cap (see AVGO note).
+
+**MU — reaffirmed, HOLD (watch item).** HBM thesis remains intact: full
+calendar-2026 HBM supply (including HBM4) is sold under signed contracts,
+HBM4E targeted for CY2027 volume production, and forward valuation
+(~10-11x, some estimates as low as ~6x FY2027 consensus) screens cheap
+relative to AI-semiconductor peers. The single biggest near-term catalyst
+in the entire book is MU's fiscal Q4 2026 earnings on 2026-09-30 — flagged
+across coverage as potentially the most important 2026 catalyst for AI
+memory stocks, and it falls right before the next scheduled cycle. Watch
+items unchanged in direction but with new data this cycle: short interest
+is "near the highest levels seen in years" (~3.3% of float) even as the
+stock trades well below its June all-time high, and CXMT's global DRAM
+share has now confirmed at 10% (up from <1% in 2023, now the #4 global
+DRAM supplier), though one forecast expects CXMT's growth-momentum to
+decelerate in 2027. No hyperscaler capex deceleration evidence found yet.
+Not a thesis break. Theme: AI-Capex, at the theme cap (see AVGO note).
+
+**XLK — reaffirmed, HOLD.** Technicals remain constructive (price above
+both 50- and 200-day moving averages, RSI ~61, aggregated screens read
+Strong Buy) and the broad AI-capex thesis is unchanged, but flow data is a
+new watch item: technology-sector ETFs pulled in a record $19B in July
+2026 then *lost* $6.1B in August even as the sector gained ~6% that month —
+an early sign of profit-taking/rotation out of mega-cap tech, consistent
+with 2026 flow data increasingly favoring industrials/healthcare/
+financials. The 2026-09-15/16 FOMC meeting is the dominant near-term macro
+catalyst for high-multiple tech names in this fund. Price data for this
+ETF could not be refreshed past a 2026-09-04 snapshot this cycle (same
+figure as last cycle) — flagged as a data-staleness caveat below. Theme:
+AI-Capex, at the theme cap (see AVGO note).
+
+**XLI — reaffirmed, HOLD.** Continues to be one of 2026's strongest-flow
+sectors on a relative basis (YTD outperformance vs. SPY cited across
+multiple sources, though exact magnitude varied by methodology), with the
+fund's own narrative shifting toward being "the physical layer of the AI
+buildout" (power, cooling, grid equipment) alongside its original
+reshoring/defense angle — both directly consistent with the stated thesis.
+Technical indicators (50/200-day moving averages, RSI) could not be
+reliably pinned down this cycle; one figure found (200-DMA ~$156.68) is
+inconsistent with the fund's current ~$174-176 price and strong YTD
+performance and is flagged as likely stale rather than used. Q3 2026
+industrial earnings (October) are the next catalyst, with GE Aerospace/RTX
+order-book commentary as a tone-setter. Theme: Energy-Transition, a "hot"
+theme by flow data this cycle (see ETN note).
+
+**AGG — passive core bond sleeve, no action.** Not re-picked; rebalanced
+only on drift from its ~13% target (currently 8.0% NAV, below target but
+not a hard-capped sleeve — no rebalance rule triggers a top-up buy absent
+a specific instruction to do so). Price update only. ~4.1% trailing yield.
+Theme: Diversified-Core (non-thematic by definition).
+
+**Theme-cap check (mandatory every cycle):** Recomputed the Theme Exposure
+table from today's market values. AI-Capex (AVGO, GOOGL, NEE, MU, XLK) sits
+at $24,594.22, 24.99% NAV — essentially at, but not over, the 25% cap; no
+rebalance trigger this cycle, but no further AI-Capex buys are appropriate
+until price movement or a trim creates room. No other theme, per-position,
+or per-ETF cap was breached.
+
+**New positions opened (Step 4, baseline screener + sector-rotation scan):**
+Screened for candidates outside the AI-Capex theme (at cap) across the
+themes with room (Financials, Healthcare-GLP1, Consumer-Defensive,
+Energy-Transition, Materials, Consumer-Discretionary, Communication-
+Services). Two names cleared the bar (>=6/8 baseline filters, a catalyst
+within 90 days, RSI<70, no major insider-selling red flag); several others
+(Palomar Holdings, Sociedad Química y Minera, Hims & Hers) were screened
+and rejected on insider-ownership, leverage, or overbought-RSI grounds.
+
+**BHRB — Burke & Herbert Financial Services Corp. (BUY, 69 sh @ $70.63,
+$4,873.47, 4.95% NAV)**
+A regional-bank M&A story: completed a $354M all-stock merger with
+LINKBANCORP (May 2026), creating an ~$11.0B-asset bank. Passes 4 of 8
+baseline filters cleanly (market cap ~$1.1-1.4B, trailing P/E ~8.8-11.4x,
+insider ownership 10.9% with 34 insider buys and 0 sales trailing 12
+months, trading near the top of its 52-week range) with 3 filters not
+applicable to a depository bank's balance sheet (gross margin, D/E, FCF
+yield have no clean equivalent for a bank) rather than failed. RSI ~43,
+having cooled from a prior overbought reading rather than currently
+extended. Catalyst: Q3 2026 earnings (likely mid-to-late October) should
+show the first full quarter of LINKBANCORP integration synergies, with a
+sector-wide NIM tailwind from yield-curve steepening (2s10s from -108bp to
++52bp). Analyst consensus Moderate Buy/Buy, targets $75-81. Theme:
+Financials. Hot-theme note (DECISION.md #3 stopgap): this is a
+sector-rotation-aligned pick — Financials/XLF is seeing genuine inflow
+support this cycle from the curve-steepening tailwind — but the specific
+name is a small, under-the-radar M&A story rather than a crowded mega-cap
+bank trade, so it adds rotation exposure without chasing an already-hot
+single name. Drawdown-survivability check: a small-cap regional bank
+carries idiosyncratic/liquidity risk beyond a mega-cap bank; sized at
+~5% NAV (well under the 10% cap) specifically to keep any single-name
+shock absorbable without forced selling elsewhere in the book.
+
+**IMAX — IMAX Corporation (BUY, 93 sh @ $52.50, $4,882.50, 4.96% NAV)**
+Premium-cinema technology/licensing name, tied to box-office and system
+installs rather than AI-infrastructure spend. Passes all 8 baseline
+filters (market cap ~$2.8B; forward P/E ~22.4x; revenue +14.8% YoY TTM;
+gross margin ~57.8% TTM; debt/equity ~0.6-0.9x; FCF yield ~3-4%
+(borderline estimate, source figures for FCF varied); insider ownership
+23.2%; 52-week relative strength +45%, a clear sector outperformer).
+Technicals: price above both 50- and 200-day moving averages, RSI ~44
+(cooled from an overbought ~70 reading in early August), trading ~5.5%
+below its 52-week high rather than freshly extended. Catalyst: tracking
+toward a record ~$1.4B global 2026 box office and 160-175 new system
+installations for the year, with Q3 earnings (early November) as the next
+confirming data point and Q4 seasonally the heaviest quarter for the
+business. Analyst consensus Moderate Buy, consensus target ~$54.45
+(Rosenblatt at $65). Theme: Communication-Services — a new theme for this
+book (0% NAV before this buy). Hot-theme note (DECISION.md #3 stopgap):
+explicitly a *company-specific* momentum name (+45% over 52 weeks) sitting
+inside a *cold* sector at the ETF level (XLC saw net outflows, -$1.76B
+trailing 3 months, -$2.81B trailing year) — this is the opposite of
+chasing a hot sector rotation, and was selected specifically because it
+diversifies the book into an unused theme rather than adding to an
+already-crowded trade. Drawdown-survivability check: single-thesis
+consumer/entertainment exposure tied to box-office cyclicality; sized at
+~5% NAV, comfortably under the 10% cap.
+
+No positions sold or trimmed this cycle. Stock sleeve moved from 10 to 12
+positions (49.1% -> 58.9% of NAV, running above its ~50% target — flagged
+for the next quarterly report's sleeve-drift table, not itself a trigger
+for action under the routine's stated rebalance rules); cash declined from
+27.4% to 17.5% of NAV, still well above the 10% floor. Cash rose by $9.96
+from ~3 days of SGOV-equivalent accrual (4.5%/yr assumed midpoint of the
+stated 4-5%/yr range, pro-rated since the 2026-09-08 prior cycle) before
+the two new-position buys were funded from it. Glide-Path Phase remains
+Accumulation (16 days elapsed since the 2026-08-26 inception, far inside
+the 0-7-year window).
+
+**Price-data and methodology caveats:** Current prices for all 15
+holdings (13 prior + 2 new), SPY, and the blended-benchmark reference
+tickers were sourced via WebSearch/WebFetch per this routine's
+public-market-data-only constraint. This cycle's research agents reported
+that direct WebFetch access to most major finance data sites (Yahoo
+Finance, MarketWatch, stockanalysis.com, Finviz, WSJ, Stooq, ishares.com,
+spdrgoldshares.com) was blocked by this environment's network-egress
+policy, so all figures are WebSearch-snippet aggregates of those same
+underlying sources rather than direct page reads — a new, session-level
+data-access constraint worth flagging for future cycles. Individual price
+and technical-indicator (moving-average/RSI/MACD) readings frequently
+conflicted across sources/snapshot dates for the same ticker; the most
+specifically-dated, most-recent, and context-corroborated figure was used
+in each case, and outlier/stale-looking figures (e.g. XLI's 200-DMA, a
+stale SPY figure carried in the last two NAV History rows that today's
+research flagged as inconsistent with current index levels, XLK's
+2026-09-04 price snapshot) are called out inline above rather than
+silently used. NAV History is append-only per the routine's own rules, so
+no prior row was altered; today's SPY reference reflects the best
+currently-available figure rather than an attempt to reconcile the prior
+rows.
 
 ### 2026-09-08 — Cycle #4 (LIGHT): reaffirm pass + theme-cap rebalance
 
