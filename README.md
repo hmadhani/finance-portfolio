@@ -16,5 +16,7 @@ account data, tax lots, concentration limits) — that track is intentionally
 kept out of this repo entirely.
 
 `portfolio.md` is the single artifact of record for current state.
-`quarterly-reports/` holds generated Markdown + XLS performance reports on a
-quarterly and annual cadence.
+`quarterly-reports/` holds generated Markdown + XLS performance reports,
+written only after each calendar quarter (and calendar year) has ended. The
+routine started mid-quarter (inception 2026-08-26), so the first report,
+2026-Q3, covers a partial quarter (Aug 26 – Sep 30) and is labeled as such.

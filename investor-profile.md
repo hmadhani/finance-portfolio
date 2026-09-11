@@ -98,7 +98,9 @@ see `DECISION.md` item 1 for the deferred mechanical version.
 
 Each `quarterly-reports/YYYY-Qn.md` (or `YYYY-annual.md`) contains, in order:
 
-1. Header: period label, NAV, period return %, since-inception return %.
+1. Header: period label, NAV, period return %, since-inception return %. A
+   partial period (the inception quarter/year — inception was 2026-08-26,
+   mid-Q3) is labeled partial with its actual date range.
 2. Benchmark comparison table: this portfolio vs. blended benchmark vs. SPY.
 3. Sleeve-drift table: target % vs. current % per sleeve.
 4. Theme Exposure table (same shape as portfolio.md's).
