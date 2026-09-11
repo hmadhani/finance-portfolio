@@ -2,8 +2,9 @@
 
 Isolated repo for a cloud-automated, market-data-only paper trading experiment
 (synthetic $100K portfolio). Deliberately contains **no personal financial data**
-(no account balances, tax lots, concentration flags) — the Mon/Wed/Fri cloud
-routine that writes to this repo only ever sees public market data (WebSearch/
+(no account balances, tax lots, concentration flags) — the daily cloud routine
+(one cycle every US trading day: heavy on the week's first trading day, light
+the rest) that writes to this repo only ever sees public market data (WebSearch/
 WebFetch prices and research) and its own prior state in this repo, including
 `investor-profile.md` (a fictional risk-posture profile, "Mr. Spock — Logical
 Investor," containing zero real personal data) and `DECISION.md` (a design
