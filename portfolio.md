@@ -19,86 +19,83 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-09-17)
+## Header (as of 2026-09-18)
 
 | Metric | Value |
 |---|---|
-| NAV | $97,198.00 |
-| Total return | -2.80% (since inception) |
+| NAV | $97,718.10 |
+| Total return | -2.28% (since inception) |
 | Blended Benchmark (ref) | not yet tracked — see note below |
-| SPY (ref) | $754.05 (-1.57% since inception) |
-| Cash balance | $11,042.90 (11.36% of NAV) |
-| Stock sleeve | $63,469.97 (65.32% of NAV) |
-| Sector ETF sleeve | $14,731.13 (15.16% of NAV) |
-| Bond sleeve | $7,954.00 (8.18% of NAV) |
-| Cycle # | 9 |
+| SPY (ref) | $762.60 (-0.45% since inception) |
+| Cash balance | $11,044.26 (11.30% of NAV) |
+| Stock sleeve | $63,494.29 (64.98% of NAV) |
+| Sector ETF sleeve | $15,225.55 (15.58% of NAV) |
+| Bond sleeve | $7,954.00 (8.14% of NAV) |
+| Cycle # | 10 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
 NAV History row below), independent of wall-clock cadence changes.
 
 **Blended Benchmark note:** `investor-profile.md` defines the 70% ACWI / 13%
-AGG / 7% GLD / 10% cash blended benchmark. This cycle made another dedicated
-attempt to backfill the 2026-08-26 inception-date closes for ACWI/AGG/GLD
-and got closer than any prior cycle but still not a confirmed exact-date
-close: direct-fetch access to every major historical-data provider (Yahoo
-Finance, stockanalysis.com, MarketWatch, Stooq, ishares.com,
-spdrgoldshares.com, SEC EDGAR, Finviz, TipRanks, Wikipedia, etc.) remains
-blocked by this session's network-egress policy. The best bracketing data
-found this cycle: ACWI closed $161.09 on 2026-08-27 (one day after
-inception, in a range-bound market week — S&P 500 closed +0.3% on
-2026-08-26 itself); AGG traded ~$97.82 on 2026-08-19 (one week before
-inception); spot gold closed/traded ~$4,593-4,621/oz on 2026-08-26 itself
-per market-recap sourcing, which cross-checked against today's
-spot-to-GLD ratio (~0.914) implies a derived (not sourced) GLD close near
-$420-422 that day. None of these is an actual confirmed 2026-08-26 closing
-print for the ETF itself, so NAV History continues to carry "—" for this
-column until an exact print can be sourced (e.g. via a paid data API or a
-manual brokerage historical-data pull) — the bracket data above is logged
-for a future cycle to use if it decides an approximation is preferable to
-continuing the gap. Today's current-day reference prices: ACWI ~$158.51
-(unresolved to a clean same-day print — cluster of $158.20-$158.82 across
-a Sept 15 close and Sept 16 pre-market read, two outliers at $162.62 and
-$154.79 discarded as stale/mismatched; carried as an approximation, not a
-confirmed Sept 17 close), AGG $97.00 (today), GLD $394.15 (no fresher
-print found than 2026-09-16, carried forward unchanged). SPY is tracked as
-the secondary reference per the profile.
+AGG / 7% GLD / 10% cash blended benchmark. This cycle did not attempt a
+fresh inception-date backfill (see Cycle #9's note above for the
+bracketing data already logged); direct-fetch access to historical-data
+providers remains blocked by this session's network-egress policy, so
+NAV History continues to carry "—" for this column. Today's reference
+prices for the components: GLD $399.12 (2026-09-18, day range
+$396.46-$399.21), AGG $97.00 (no fresher print found than 2026-09-05,
+carried forward unchanged — third consecutive cycle carried), ACWI
+unresolved to a clean same-day print (conflicting reads of $158.91,
+dated 2026-09-10 and stale, vs. $162.62, undated — neither usable).
+SPY is tracked as the secondary reference per the profile; today's SPY
+read ($762.60) was itself one of two conflicting search results (the
+other, $769.35, was undated and set aside as less reliable since
+$762.60 is internally consistent with a +1.12%-over-yesterday framing
+matching the confirmed 2026-09-17 close of $754.05).
 
-This is Cycle #9, a **LIGHT** cycle (Thursday, the fourth trading day of
+This is Cycle #10, a **LIGHT** cycle (Friday, the fifth trading day of
 this calendar week — Cycle #6 already covered Monday's HEAVY slot). All 15
 holdings got the lightweight reaffirm/exit-only check (major news + Exit
 Criteria scan only, no full fundamentals/technicals/analyst-consensus
 pass) — see Trade Log. No Exit Criteria were triggered on any position;
-all 15 reaffirmed HOLD, though COF's rate-cap overhang and NEE's
-Dominion-merger process remain logged as watch items, not triggers. No new
-positions were opened (LIGHT cycles never open new positions per the
-routine's rules) and no trims were needed — the Theme Exposure table was
-recomputed from today's prices and every theme, position, and sector-ETF
-sleeve remained inside its cap (AI-Capex closest at 24.58% of NAV, still
-under the 25% cap). Cash accrued 1 day of SGOV-equivalent interest since
-the last cycle (2026-09-16).
+all 15 reaffirmed HOLD. Three watch items are logged but none rose to a
+trigger: PEP continues a multi-week slide to a fresh 52-week low
+($130.10, down from $136.46 last cycle) on price-cuts/margin pressure and
+soft North America trends, but Q2 2026 revenue and EPS still modestly
+beat consensus — that is not yet "2 consecutive quarters of fundamental
+deterioration," so held, not trimmed. COF's rate-cap overhang and NEE's
+pending ~$100B Dominion Energy acquisition (regulatory-approval-dependent)
+remain logged as watch items, not triggers. No new positions were opened
+(LIGHT cycles never open new positions per the routine's rules) and no
+trims were needed — the Theme Exposure table was recomputed from today's
+prices and every theme, position, and sector-ETF sleeve remained inside
+its cap (AI-Capex closest at 24.86% of NAV, still under the 25% cap but
+worth watching next cycle given continued AI-name strength). Cash accrued
+1 day of SGOV-equivalent interest since the last cycle (2026-09-17).
 
-**Price-data reconciliation this cycle:** several tickers returned
-materially conflicting WebSearch reads today, so a second, targeted
-cross-check pass was run before locking in prices (see Trade Log entries
-below for each). AVGO ($349.21 used, +1.3% day-over-day, corroborated by
-an independent read near $348.28 tied to a Cloud Network Insights product
-launch plus a broader semiconductor rebound — the alternate $342.91 read
-was set aside). COF ($203.19 used — the math lines up almost exactly with
-a -1.77% move off yesterday's confirmed close and is consistent with the
-ongoing rate-cap overhang; a $216.51 "rebound" read had no corroborating
-news and was discarded). TJX ($122.84 used, a normal -2.7% day; a $154.39
-read implying a ~22% one-day jump had zero corroborating news anywhere
-and is treated as a bad data point). MU ($927.60 used — essentially flat
-day-over-day and independently corroborated; a $973.88 read had no
-matching news-sourced print and was discarded). LLY's search result
-repeated the prior cycle's exact price ($1,136.11) within a plausible
-day range ($1,131.59-$1,161.00) and was accepted as a flat day. BALL and
-ETN could not be refreshed past their existing prices ($62.49 and
-$399.22 respectively) and were carried forward unchanged — BALL's third
-consecutive cycle carried, ETN's second. ACWI remains unresolved to a
-clean same-day print (see benchmark note above) — flagged for a future
-cycle with better data access.
+**Price-data reconciliation this cycle:** several tickers again returned
+conflicting WebSearch reads, so a second, targeted cross-check pass was
+run before locking in prices (see Trade Log entries below for each). ETN
+($392.66 used — internally consistent with its own previous-close read of
+$392.30; an outlier read of $372.33 had no corroborating news and was
+discarded). COF ($203.00 used — consistent with yesterday's confirmed
+$203.19 and today's -1.77%-framed read; a $207.55 "rebound" read had no
+corroborating news and was discarded). NEE ($80.50 used — corroborated
+by two independent reads within the $80.42-$81.34 range; outlier reads of
+$89.64 and $76.36 had no corroborating news and were discarded). MU
+($985.00 used — cluster of reads spanning $976.66-$998.74, all pointing
+the same direction on real news, a new $2.75B India semiconductor
+assembly/test facility opening; used the cluster midpoint). BHRB ($73.80
+used, unchanged from last cycle and self-consistent across sources; a
+$70.63 "close" read conflicted and was discarded). AGG could not be
+refreshed past its existing price ($97.00) and was carried forward
+unchanged (third consecutive cycle carried). TJX could not be refreshed
+past 2026-09-16 data and was carried forward unchanged at $122.84 (second
+consecutive cycle carried). PEP's $130.10 read, despite the sharp drop
+from last cycle, was corroborated by independent news coverage of a
+continuing multi-week decline to a fresh 52-week low and was accepted as
+genuine, not a bad data point.
 
 ---
 
@@ -120,6 +117,7 @@ cycles before that benchmark was tracked.
 | 2026-09-15 | 7 | $98,903.82 | — | $760.88 |
 | 2026-09-16 | 8 | $97,296.82 | — | $760.88 |
 | 2026-09-17 | 9 | $97,198.00 | — | $754.05 |
+| 2026-09-18 | 10 | $97,718.10 | — | $762.60 |
 
 ---
 
@@ -127,23 +125,23 @@ cycles before that benchmark was tracked.
 
 | Ticker | Type | Theme | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
 |---|---|---|---|---|---|---|---|---|---|
-| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $349.21 | $4,888.94 | 5.03% | -$116.90 (-2.34%) |
-| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $399.22 | $4,790.64 | 4.93% | -$165.00 (-3.33%) |
-| COF | Stock | Financials | 35 | $217.40 | $7,609.08 | $203.19 | $7,111.65 | 7.32% | -$497.43 (-6.54%) |
-| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.52 | $1,136.11 | $6,816.66 | 7.01% | -$275.86 (-3.89%) |
-| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $122.84 | $4,299.40 | 4.42% | -$582.40 (-11.93%) |
-| GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $344.98 | $4,829.72 | 4.97% | +$42.42 (+0.89%) |
-| BALL | Stock | Materials | 106 | $60.97 | $6,462.80 | $62.49 | $6,623.94 | 6.82% | +$161.14 (+2.49%) |
-| PEP | Stock | Consumer-Defensive | 35 | $142.27 | $4,979.45 | $136.46 | $4,776.10 | 4.91% | -$203.35 (-4.08%) |
-| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $80.65 | $4,758.35 | 4.90% | -$214.76 (-4.32%) |
-| MU | Stock | AI-Capex | 5 | $930.25 | $4,651.25 | $927.60 | $4,638.00 | 4.77% | -$13.25 (-0.28%) |
-| BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $73.80 | $5,092.20 | 5.24% | +$218.73 (+4.49%) |
-| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $52.09 | $4,844.37 | 4.98% | -$38.13 (-0.78%) |
-| XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $183.74 | $4,777.24 | 4.91% | -$58.76 (-1.22%) |
-| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $168.71 | $9,953.89 | 10.24% | -$1,017.75 (-9.28%) |
-| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $97.00 | $7,954.00 | 8.18% | -$73.80 (-0.92%) |
-| Cash | — | — | — | — | $11,042.90 | — | $11,042.90 | 11.36% | — |
-| **TOTAL** | — | — | — | — | **$100,033.10** | — | **$97,198.00** | **100.00%** | **-$2,835.10 (-3.19% on positions)** |
+| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $349.05 | $4,886.70 | 5.00% | -$119.14 (-2.38%) |
+| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $392.66 | $4,711.92 | 4.82% | -$243.72 (-4.92%) |
+| COF | Stock | Financials | 35 | $217.40 | $7,609.08 | $203.00 | $7,105.00 | 7.27% | -$504.08 (-6.62%) |
+| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.52 | $1,134.34 | $6,806.04 | 6.97% | -$286.48 (-4.04%) |
+| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $122.84 | $4,299.40 | 4.40% | -$582.40 (-11.93%) |
+| GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $346.51 | $4,851.14 | 4.97% | +$63.84 (+1.33%) |
+| BALL | Stock | Materials | 106 | $60.97 | $6,462.80 | $62.92 | $6,669.52 | 6.83% | +$206.72 (+3.20%) |
+| PEP | Stock | Consumer-Defensive | 35 | $142.27 | $4,979.45 | $130.10 | $4,553.50 | 4.66% | -$425.95 (-8.55%) |
+| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $80.50 | $4,749.50 | 4.86% | -$223.61 (-4.50%) |
+| MU | Stock | AI-Capex | 5 | $930.25 | $4,651.25 | $985.00 | $4,925.00 | 5.04% | +$273.75 (+5.89%) |
+| BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $73.80 | $5,092.20 | 5.21% | +$218.73 (+4.49%) |
+| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $52.09 | $4,844.37 | 4.96% | -$38.13 (-0.78%) |
+| XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $187.87 | $4,884.62 | 5.00% | +$48.62 (+1.01%) |
+| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $175.27 | $10,340.93 | 10.58% | -$630.71 (-5.75%) |
+| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $97.00 | $7,954.00 | 8.14% | -$73.80 (-0.92%) |
+| Cash | — | — | — | — | $11,044.26 | — | $11,044.26 | 11.30% | — |
+| **TOTAL** | — | — | — | — | **$100,034.46** | — | **$97,718.10** | **100.00%** | **-$2,316.36 (-2.60% on positions)** |
 
 ---
 
@@ -151,20 +149,122 @@ cycles before that benchmark was tracked.
 
 | Theme | Positions | Mkt Value | % NAV |
 |---|---|---|---|
-| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $23,892.25 | 24.58% |
-| Financials | COF, BHRB | $12,203.85 | 12.56% |
-| Healthcare-GLP1 | LLY | $6,816.66 | 7.01% |
-| Consumer-Defensive | TJX, PEP | $9,075.50 | 9.34% |
-| Energy-Transition | ETN, XLI | $14,744.53 | 15.17% |
-| Materials | BALL | $6,623.94 | 6.82% |
-| Communication-Services | IMAX | $4,844.37 | 4.98% |
-| Diversified-Core | AGG | $7,954.00 | 8.18% |
+| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $24,296.96 | 24.86% |
+| Financials | COF, BHRB | $12,197.20 | 12.48% |
+| Healthcare-GLP1 | LLY | $6,806.04 | 6.97% |
+| Consumer-Defensive | TJX, PEP | $8,852.90 | 9.06% |
+| Energy-Transition | ETN, XLI | $15,052.85 | 15.40% |
+| Materials | BALL | $6,669.52 | 6.83% |
+| Communication-Services | IMAX | $4,844.37 | 4.96% |
+| Diversified-Core | AGG | $7,954.00 | 8.14% |
 
 (Cash is intentionally excluded from theme exposure — it carries no thematic risk.)
 
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-09-18 — Cycle #10 (LIGHT): reaffirm pass, no trades
+
+Lightweight reaffirm/exit-only check on all 15 holdings (major-news + Exit
+Criteria scan only, per LIGHT-cycle rules — no full fundamentals/technicals/
+analyst-consensus pass, no new positions opened). Theme Exposure table
+recomputed from today's prices; every theme, position, and sector-ETF
+sleeve remained inside its cap, so no rebalance was needed.
+
+**AVGO — Broadcom (HOLD, reaffirmed).** $349.05 (prev $349.21). Positive
+news only: Q3 FY26 beat (revenue $29.6B, EPS $3.32), guided Q4 revenue
+$34.8B on AI-chip sales +236% YoY; ex-dividend $0.65/share Sept 21. No
+Exit Criteria triggered. Theme: AI-Capex.
+
+**ETN — Eaton Corporation (HOLD, reaffirmed).** $392.66 (prev $399.22,
+carried-forward price refreshed this cycle). Raised FY26 organic-growth
+guidance to 12% on data-center demand; new Aerospace segment president
+named. No negative news, no Exit Criteria triggered. Theme:
+Energy-Transition.
+
+**COF — Capital One Financial (HOLD, reaffirmed).** $203.00 (prev
+$203.19). No major negative catalyst; BofA trimmed price target to $254
+from $280 (still Buy-rated) and completed a €1.5B senior-notes offering.
+Watch item: passing mention of rising credit-card delinquencies in
+unrelated coverage — not sourced to a COF-specific disclosure, logged as a
+watch item, not an Exit Criteria trigger. Theme: Financials.
+
+**LLY — Eli Lilly (HOLD, reaffirmed).** $1,134.34 (prev $1,136.11,
+essentially flat). Positive flow: FDA approved an updated Kisunla label
+(better ARIA-E safety) and Foundayo (oral GLP-1), and the FDA ended the
+GLP-1 shortage designation (blocks compounded knockoffs of
+Zepbound/Mounjaro) — net bullish for the branded franchise. No Exit
+Criteria triggered. Theme: Healthcare-GLP1.
+
+**TJX — TJX Companies (HOLD, reaffirmed).** $122.84, carried forward
+unchanged — no price print newer than 2026-09-16 could be sourced this
+cycle (second consecutive cycle carried). No fresh news found beyond the
+already-logged raised FY27 outlook / Jefferies Marmaxx-segment concern.
+No Exit Criteria triggered. Theme: Consumer-Defensive.
+
+**GOOGL — Alphabet (HOLD, reaffirmed).** $346.51 (prev $344.98). Positive
+catalyst: a federal judge ruled Google will not have to divest its AdX
+ad-tech exchange (behavioral remedies only, no breakup) — a meaningful
+antitrust overhang eased; multiple analyst price-target hikes followed
+(e.g. Evercore to $450). No Exit Criteria triggered. Theme: AI-Capex.
+
+**BALL — Ball Corporation (HOLD, reaffirmed).** $62.92 (prev $62.49,
+refreshed this cycle after being carried forward). New India
+manufacturing-facility investment and two new board members announced;
+no negative news. No Exit Criteria triggered. Theme: Materials.
+
+**PEP — PepsiCo (HOLD, reaffirmed — watch item).** $130.10 (prev $136.46,
+a -4.66% move), a fresh 52-week low, continuing a multi-week slide on
+snack-item price cuts pressuring margins and soft North America consumer
+trends. However, Q2 2026 revenue ($24.18B) and EPS ($2.20) still modestly
+beat consensus, so this does not yet meet the Exit Criterion of "2
+consecutive quarters of fundamental deterioration" — held, not trimmed,
+but flagged as a watch item for the next HEAVY research pass. Theme:
+Consumer-Defensive.
+
+**NEE — NextEra Energy (HOLD, reaffirmed — watch item).** $80.50 (prev
+$80.65, essentially flat). NextEra continues advancing its pending ~$100B
+Dominion Energy acquisition (expanded a Virginia customer-benefits
+package Sept 14 to secure regulatory approval) and secured a $1.9B loan
+to restart the Duane Arnold nuclear plant. Regulatory-approval-dependent
+M&A remains a watch item, not a trigger. No Exit Criteria triggered.
+Theme: AI-Capex.
+
+**MU — Micron Technology (HOLD, reaffirmed).** $985.00 (prev $927.60,
++6.19%). Opened a $2.75B India semiconductor assembly/test facility
+(Gujarat) with commercial production started and first modules shipped to
+Dell; TD Cowen reiterated Buy at $1,600 PT, RBC initiated/reiterated
+Outperform. No Exit Criteria triggered. Theme: AI-Capex.
+
+**BHRB — Burke & Herbert Financial (HOLD, reaffirmed).** $73.80,
+unchanged. No new negative news; LINKBANCORP/LINKBANK merger integration
+fully closed, Q2 EPS beat ($2.03 vs. $1.99 consensus). No Exit Criteria
+triggered. Theme: Financials.
+
+**IMAX — IMAX Corporation (HOLD, reaffirmed).** $52.09, unchanged.
+Reaffirmed FY26 guidance (~$1.4B global box office); "The Odyssey" is now
+IMAX's highest-grossing release ever ($289M). No negative news, no Exit
+Criteria triggered. Theme: Communication-Services.
+
+**XLK — Technology Select Sector SPDR (HOLD, reaffirmed).** $187.87 (prev
+$183.74, +2.25%), tracking the broader AI/tech rally (GOOGL, MU strength
+today). No rebalance needed — sleeve remains within its 15% NAV cap.
+
+**XLI — Industrial Select Sector SPDR (HOLD, reaffirmed).** $175.27 (prev
+$168.71, +3.89%). No rebalance needed — sleeve at 10.58% of NAV, within
+its 15% NAV cap.
+
+**AGG — iShares Core U.S. Aggregate Bond ETF (HOLD, reaffirmed).** $97.00,
+carried forward unchanged — no fresher print than 2026-09-05 could be
+sourced this cycle (third consecutive cycle carried; passive core bond
+sleeve, not re-picked). No rebalance needed — sleeve at 8.14% of NAV.
+
+**No positions sold, trimmed, or added this cycle.** Theme Exposure
+recomputed: AI-Capex is the closest theme to its cap at 24.86% of NAV
+(still under the 25% cap) — watch next cycle given continued strength in
+AVGO/GOOGL/MU/XLK. Cash accrued 1 day of SGOV-equivalent interest since
+the last cycle (2026-09-17), bringing the balance to $11,044.26.
 
 ### 2026-09-17 — Cycle #9 (LIGHT): reaffirm pass, no trades, price-data reconciliation
 
