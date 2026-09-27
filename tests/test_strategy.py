@@ -1,3 +1,4 @@
+import math
 import unittest
 
 from tests.helpers import make_chain, make_contract, ASOF, EXPIRY
@@ -87,6 +88,40 @@ class TestAnalyze(unittest.TestCase):
         a = st.analyze(L, 1, 100.0, ASOF)
         self.assertTrue(a["defined_risk"])                 # short call covered by shares
         self.assertAlmostEqual(a["net_greeks"]["delta_shares"], 100 - 100 * L[0].contract.delta, places=0)
+
+    def test_high_iv_calendar_is_defined_risk(self):
+        # Reviewer repro: at high IV the back-month long call hasn't reached its
+        # asymptote at the old 2x-strike grid boundary, so a naive finite-difference
+        # slope wrongly read this as unbounded loss. Structural upside-exposure
+        # (net calls+stock sign*ratio == 0 here) must call it defined-risk.
+        back = __import__("datetime").date(2026, 12, 18)
+        L = legs("SELL 1 C 100 2026-11-06; BUY 1 C 100 2026-12-18",
+                 expiries=(EXPIRY, back), iv=0.6)
+        a = st.analyze(L, 1, 100.0, ASOF)
+        self.assertTrue(a["defined_risk"])
+        self.assertFalse(a["unbounded_loss"])
+        self.assertTrue(math.isfinite(a["max_loss"]))
+        self.assertLess(a["max_loss"], 0)
+        debit = a["entry_cost_per_share"] * 100
+        self.assertGreaterEqual(a["max_loss"], -debit - a["fees_round_trip"])
+
+    def test_high_iv_calendar_longer_back_month_is_defined_risk(self):
+        back = __import__("datetime").date(2027, 1, 15)
+        L = legs("SELL 1 C 100 2026-11-06; BUY 1 C 100 2027-01-15",
+                 expiries=(EXPIRY, back), iv=0.4)
+        a = st.analyze(L, 1, 100.0, ASOF)
+        self.assertTrue(a["defined_risk"])
+        self.assertFalse(a["unbounded_loss"])
+        self.assertTrue(math.isfinite(a["max_loss"]))
+        self.assertLess(a["max_loss"], 0)
+        debit = a["entry_cost_per_share"] * 100
+        self.assertGreaterEqual(a["max_loss"], -debit - a["fees_round_trip"])
+
+    def test_naked_short_call_still_unbounded_after_fix(self):
+        a = st.analyze(legs("SELL 1 C 110 2026-11-06"), 1, 100.0, ASOF)
+        self.assertTrue(a["unbounded_loss"])
+        self.assertFalse(a["defined_risk"])
+        self.assertIsNone(a["max_loss"])
 
 
 class TestAscii(unittest.TestCase):

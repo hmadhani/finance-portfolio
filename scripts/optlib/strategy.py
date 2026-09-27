@@ -106,9 +106,22 @@ def analyze(legs: list, qty: int, spot: float, asof: date) -> dict:
     cost = entry_cost(legs)
     grid = _grid(legs, spot)
     pnls = [pnl_at(legs, S, ev, cost) * qty for S in grid]
-    slope_hi = pnls[-1] - pnls[-2]
-    unbounded_profit = slope_hi > 1e-6
-    unbounded_loss = slope_hi < -1e-6
+
+    # Unboundedness is a structural property of net upside exposure, not a
+    # finite-difference slope: puts can never make loss unbounded (S >= 0),
+    # and a long back-month call in a calendar may not have converged to its
+    # linear asymptote by 2x the highest strike at high IV/long DTE, which
+    # would make the slope test wrongly flag an in-rule calendar as unbounded.
+    upside_exposure = sum(l.sign * l.ratio for l in legs if l.contract.kind in ("C", "S"))
+    unbounded_profit = upside_exposure > 0
+    unbounded_loss = upside_exposure < 0
+
+    # For bounded structures whose per-leg BS value hasn't fully converged at
+    # the grid's 2x-strike boundary (e.g. a high-IV calendar), sample a much
+    # further point to get max_profit/max_loss closer to the true extremum.
+    # The original grid resolution is kept for breakevens and the ASCII plot.
+    far = max([l.contract.strike for l in legs if l.contract.kind != "S"] + [spot]) * 10.0
+    tail_pnls = pnls + [pnl_at(legs, far, ev, cost) * qty]
 
     breakevens = []
     for i in range(1, len(grid)):
@@ -149,8 +162,8 @@ def analyze(legs: list, qty: int, spot: float, asof: date) -> dict:
         "qty": qty,
         "fills": [{"option": l.contract.option, "action": l.action, "ratio": l.ratio,
                    "fill": fill_price(l)} for l in legs],
-        "max_profit": None if unbounded_profit else round(max(pnls), 2),
-        "max_loss": None if unbounded_loss else round(min(pnls), 2),
+        "max_profit": None if unbounded_profit else round(max(tail_pnls), 2),
+        "max_loss": None if unbounded_loss else round(min(tail_pnls), 2),
         "unbounded_profit": unbounded_profit,
         "unbounded_loss": unbounded_loss,
         "defined_risk": not unbounded_loss,
