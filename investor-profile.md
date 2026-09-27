@@ -29,8 +29,8 @@ date (2026-08-26), which was always public and is not sensitive.
 
 - Target stock position count: 15-20 concurrent positions (the 10% cap is a
   ceiling, not a target size).
-- Rebalance any position back to target weight when appreciation pushes it
-  over its cap; log as "rebalance," never as a thesis exit.
+- Rebalance a position when appreciation pushes it past its cap's trim band
+  (see Trading Discipline rule 3); log as "rebalance," never as a thesis exit.
 - Cash yield: ~4-5%/yr, SGOV-equivalent, accrued on idle cash.
 
 ## Theme Taxonomy and Concentration Cap
@@ -57,6 +57,46 @@ individual stocks and sector ETFs alike) may exceed **25% of NAV**. Checked
 before every new buy and every rebalance, independent of the per-position and
 per-ETF caps above — a portfolio can be fully compliant on position-level caps
 and still breach the theme cap.
+
+## Trading Discipline (anti-churn, effective 2026-09-28)
+
+The loop runs a full research pass every trading day, so these rules keep daily
+re-evaluation from turning into daily trading. They apply on every cycle. When
+one blocks a trade the research pass would otherwise make, log the position as
+"reaffirmed — no action (blocked by Trading Discipline rule N)" so the log shows
+why.
+
+1. **Minimum hold** — no discretionary SELL, TRIM, or ADD on a position within
+   20 trading days of its most recent BUY or ADD (count trading days from the
+   trade-log dates). Exempt: hard exits (thesis broken; insider selling >10% of
+   a single insider's holdings) and cap rebalances under rule 3.
+2. **Buy-back cooldown** — do not buy a ticker within 30 calendar days of a
+   full SELL of it.
+3. **Trim bands** — caps are enforced with hysteresis, not at the line:
+   - Theme: trim only when a theme exceeds **27% NAV**, back down to **24%**.
+   - Individual stock: trim only above **11% NAV**, back down to **9%**.
+   - Sector ETF: trim only above **16.5% NAV**, back down to **13.5%**.
+   - Hedge: trim only above **11% NAV**, back down to **9%**.
+   The 25% / 10% / 15% / 10% caps still apply at full strength to **new buys
+   and adds** — never buy into a theme or position that would sit above its
+   cap. The bands only govern when drift from price appreciation forces a
+   trim.
+4. **Minimum trade size** — skip any trade under **0.5% of NAV** (~$500 at
+   inception). Hard exits (full SELL) are exempt.
+5. **Something must have changed** — an ADD or TRIM on a held position needs
+   new information since that position's last verdict: an earnings report or
+   guidance change, an analyst rating change (a price-target tweak alone does
+   not count), a ±10% price move since the last verdict, or a material
+   corporate event (M&A, regulatory/FDA decision, litigation ruling,
+   management change). Otherwise the verdict is "reaffirmed — no action".
+   Name the change in the rationale.
+6. **Trading costs** — every trade pays **5 bps slippage**: buys execute at
+   quote × 1.0005, sells at quote × 0.9995. Record the execution price (not
+   the quote) in the trade log, so costs flow through NAV.
+7. **Weekly limit & turnover** — at most **2 new positions opened per calendar
+   week** (Mon-Fri, counted from the trade log). Quarterly/annual reports
+   include a turnover figure: (total buys + total sells, $) ÷ 2 ÷ average NAV
+   over the period.
 
 ## Glide Path
 
@@ -105,7 +145,8 @@ Each `quarterly-reports/YYYY-Qn.md` (or `YYYY-annual.md`) contains, in order:
 3. Sleeve-drift table: target % vs. current % per sleeve.
 4. Theme Exposure table (same shape as portfolio.md's).
 5. Glide-Path Phase and Cycle # as of period end.
-6. Trade-log summary for the period (count of buys/sells/rebalances/reaffirms).
+6. Trade-log summary for the period (count of buys/sells/rebalances/reaffirms,
+   plus turnover % per Trading Discipline rule 7 and total slippage paid).
 7. "Known Simplifications" section, verbatim list of DECISION.md's 3 open items.
 8. The standard disclaimer paragraph.
 9. A link/reference to the matching `.xlsx` in the same directory.
