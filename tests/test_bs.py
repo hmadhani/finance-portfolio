@@ -40,6 +40,16 @@ class TestBlackScholes(unittest.TestCase):
         self.assertTrue(-0.25 < g["theta"] < -0.10, g["theta"])
         self.assertTrue(0.8 < g["vega"] < 1.3, g["vega"])
 
+    def test_greeks_at_expiry_or_zero_vol_no_exception(self):
+        gc = bs_greeks(105, 100, 0, 0.04, 0.2, "C")
+        self.assertEqual(gc, {"delta": 1.0, "gamma": 0.0, "theta": 0.0, "vega": 0.0})
+        gp = bs_greeks(95, 100, 0, 0.04, 0.2, "P")
+        self.assertEqual(gp, {"delta": -1.0, "gamma": 0.0, "theta": 0.0, "vega": 0.0})
+        gc_otm = bs_greeks(95, 100, 0, 0.04, 0.2, "C")
+        self.assertEqual(gc_otm["delta"], 0.0)
+        gz = bs_greeks(105, 100, 0.5, 0.04, 0.0, "C")
+        self.assertEqual(gz, {"delta": 1.0, "gamma": 0.0, "theta": 0.0, "vega": 0.0})
+
     def test_prob_itm(self):
         self.assertAlmostEqual(prob_itm(100, 100, 1e-9, 0.0, 0.2, "C"), 0.5, places=2)
         self.assertEqual(prob_itm(110, 100, 0, 0.04, 0.2, "C"), 1.0)

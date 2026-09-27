@@ -35,6 +35,12 @@ def bs_price(S: float, K: float, T: float, r: float, sigma: float, kind: str) ->
 
 
 def bs_greeks(S: float, K: float, T: float, r: float, sigma: float, kind: str) -> dict:
+    if T <= 0 or sigma <= 0:
+        if kind == "C":
+            delta = 1.0 if S > K else 0.0
+        else:
+            delta = -1.0 if S < K else 0.0
+        return {"delta": delta, "gamma": 0.0, "theta": 0.0, "vega": 0.0}
     d1, d2 = _d1_d2(S, K, T, r, sigma)
     pdf = norm_pdf(d1)
     sq = math.sqrt(T)
