@@ -23,7 +23,12 @@ def _rows(path: str) -> list:
 
 def record(path: str, day: str, rows: list) -> int:
     existing = {(r["date"], r["symbol"]) for r in _rows(path)}
-    new = [r for r in rows if (day, r[0]) not in existing]
+    new = []
+    for r in rows:
+        key = (day, r[0])
+        if key not in existing:
+            existing.add(key)
+            new.append(r)
     write_header = not os.path.exists(path) or os.path.getsize(path) == 0
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     with open(path, "a", newline="") as f:

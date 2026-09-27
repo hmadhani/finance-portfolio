@@ -22,6 +22,13 @@ class TestRecord(unittest.TestCase):
     def test_history_missing_file(self):
         self.assertEqual(ivhist.history("/nonexistent/iv.csv", "SPY"), [])
 
+    def test_dedupes_within_same_call(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "iv.csv")
+            self.assertEqual(
+                ivhist.record(p, "2026-09-28", [("SPY", 11.0, 1.0), ("SPY", 12.0, 2.0)]), 1)
+            self.assertEqual(ivhist.history(p, "SPY"), [11.0])
+
 
 class TestRank(unittest.TestCase):
     def test_insufficient_history(self):
