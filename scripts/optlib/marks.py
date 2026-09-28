@@ -36,9 +36,19 @@ def mark_position(position: dict, cs_index: dict, spot: float, asof: date) -> di
         if mid is not None:
             value += sign * leg["ratio"] * mid
 
+    # Date/spot-derived triggers depend only on dtes/assignment, already known
+    # regardless of missing quotes, so compute them unconditionally.
+    triggers = []
+    if dtes and min(dtes) <= 21:
+        triggers.append("21_dte")
+    if dtes and min(dtes) <= 0:
+        triggers.append("expiration")
+    if assignment:
+        triggers.append("assignment")
+
     out = {"id": position["id"], "symbol": position["symbol"], "strategy": position["strategy"],
            "spot": spot, "legs": leg_rows, "errors": errors,
-           "dte": min(dtes) if dtes else None, "triggers": []}
+           "dte": min(dtes) if dtes else None, "triggers": triggers}
     if errors:
         out.update(value_per_share=None, pnl=None, pct_of_basis=None)
         return out
@@ -47,17 +57,10 @@ def mark_position(position: dict, cs_index: dict, spot: float, asof: date) -> di
     basis = abs(cost) * MULTIPLIER * qty
     pct = round(pnl / basis * 100.0, 1) if basis else None
     target = position.get("profit_target_pct", 50)
-    triggers = []
     if pct is not None and pct >= target:
         triggers.append("profit_target")
     stop_mult = 2.0 if cost < 0 else 0.5
     if basis and pnl <= -stop_mult * basis:
         triggers.append("stop_loss")
-    if dtes and min(dtes) <= 21:
-        triggers.append("21_dte")
-    if dtes and min(dtes) <= 0:
-        triggers.append("expiration")
-    if assignment:
-        triggers.append("assignment")
     out.update(value_per_share=round(value, 4), pnl=pnl, pct_of_basis=pct, triggers=triggers)
     return out

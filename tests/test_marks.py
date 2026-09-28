@@ -63,6 +63,23 @@ class TestMarks(unittest.TestCase):
         self.assertTrue(m["errors"])
         self.assertIsNone(m["pnl"])
 
+    def test_mixed_expiry_error_still_reports_date_triggers(self):
+        pos = {"id": "M1", "symbol": "TEST", "strategy": "diagonal", "opened": "2026-09-01",
+               "qty": 1, "entry_cost": -1.00, "profit_target_pct": 50,
+               "legs": [{"action": "SELL", "ratio": 1, "option": "TEST260925P00095000"},
+                        {"action": "BUY", "ratio": 1, "option": "TEST261106P00090000"}]}
+        # front leg expired (dte<0) and ITM (spot 93 < strike 95) -> expiration + assignment;
+        # back leg missing from cs_index -> error, but date-based triggers must still show.
+        m = marks.mark_position(pos, {}, 93.0, ASOF)
+        self.assertTrue(m["errors"])
+        self.assertIsNone(m["pnl"])
+        self.assertIsNone(m["value_per_share"])
+        self.assertIsNone(m["pct_of_basis"])
+        self.assertIn("expiration", m["triggers"])
+        self.assertIn("assignment", m["triggers"])
+        self.assertNotIn("profit_target", m["triggers"])
+        self.assertNotIn("stop_loss", m["triggers"])
+
     def test_stock_leg(self):
         pos = {"id": "S1", "symbol": "KO", "strategy": "assigned_shares", "opened": "2026-11-06",
                "qty": 1, "entry_cost": 85.0, "profit_target_pct": 100,
