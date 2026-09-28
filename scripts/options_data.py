@@ -42,6 +42,13 @@ class UsageError(Exception):
     pass
 
 
+def positive_int(s: str) -> int:
+    v = int(s)
+    if v <= 0:
+        raise argparse.ArgumentTypeError(f"qty must be > 0: {s}")
+    return v
+
+
 def liquid_kwargs(symbol: str) -> dict:
     return {"abs_spread_ok": 0.05} if symbol in ETFS else {}
 
@@ -110,9 +117,16 @@ def cmd_mark(a):
     for p in positions:
         sym = p["symbol"]
         if sym not in chains:
-            raw = ch.load_chain(sym)
-            chains[sym] = (ch.index_contracts(ch.contracts(raw)), raw["current_price"])
-        idx, spot = chains[sym]
+            try:
+                raw = ch.load_chain(sym)
+                chains[sym] = (ch.index_contracts(ch.contracts(raw)), raw["current_price"])
+            except Exception as e:  # one bad symbol must not sink the rest of the marks
+                chains[sym] = e
+        cached = chains[sym]
+        if isinstance(cached, Exception):
+            out.append({"id": p["id"], "symbol": sym, "error": f"{type(cached).__name__}: {cached}"})
+            continue
+        idx, spot = cached
         out.append(marks.mark_position(p, idx, spot, a.asof))
     return {"asof": a.asof.isoformat(), "marks": out}
 
@@ -143,7 +157,7 @@ def build_parser():
     ps = sub.add_parser("price-spread")
     ps.add_argument("--symbol", required=True)
     ps.add_argument("--legs", required=True)
-    ps.add_argument("--qty", type=int, required=True)
+    ps.add_argument("--qty", type=positive_int, required=True)
     ps.add_argument("--with-stock", action="store_true")
     ps.set_defaults(fn=cmd_price_spread)
     m = sub.add_parser("mark")

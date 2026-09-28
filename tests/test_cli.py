@@ -84,6 +84,32 @@ class TestCli(unittest.TestCase):
             json.dump({"positions": []}, f)
         self.assertEqual(self.run_cli("mark", "--positions", pos_path)["marks"], [])
 
+    def test_mark_isolates_per_symbol_chain_failure(self):
+        pos_path = os.path.join(self.tmp.name, "positions.json")
+        tpl = self.run_cli("price-spread", "--symbol", "TEST", "--qty", "1",
+                           "--legs", "SELL 1 P 95 2026-11-06; BUY 1 P 90 2026-11-06")["position_template"]
+        tpl["id"] = "T1"
+        bad = json.loads(json.dumps(tpl))
+        bad["id"] = "T2"
+        bad["symbol"] = "MISSING"
+        with open(pos_path, "w") as f:
+            json.dump({"positions": [tpl, bad]}, f)
+        r = self.run_cli("mark", "--positions", pos_path)
+        by_id = {m["id"]: m for m in r["marks"]}
+        self.assertEqual(len(by_id), 2)
+        self.assertNotIn("error", by_id["T1"])
+        self.assertLess(by_id["T1"]["pnl"], 0)
+        self.assertIn("error", by_id["T2"])
+        self.assertEqual(by_id["T2"]["symbol"], "MISSING")
+
+    def test_price_spread_qty_zero_is_usage_error(self):
+        self.run_cli("price-spread", "--symbol", "TEST", "--qty", "0",
+                     "--legs", "SELL 1 P 95 2026-11-06; BUY 1 P 90 2026-11-06", expect=2)
+
+    def test_price_spread_negative_qty_is_usage_error(self):
+        self.run_cli("price-spread", "--symbol", "TEST", "--qty", "-1",
+                     "--legs", "BUY 1 C 105 2026-11-06", expect=2)
+
 
 if __name__ == "__main__":
     unittest.main()
