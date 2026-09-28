@@ -87,7 +87,8 @@ cap.
 - Short option in the money at expiration → simulate assignment: CSP becomes
   100 shares per contract at the strike (then covered calls are allowed);
   spreads are closed at intrinsic value.
-- Covered calls (assigned shares only): contracts ≤ shares held / 100. A
+- Covered calls (assigned shares only): contracts ≤ shares held / 100, written
+  on all of the share position's lots (contracts = its `qty`). A
   `price-spread --with-stock` run is the analysis gate — it must show defined
   risk, and its max loss is the combined position's max loss for the 3% and 25%
   checks; the fill and cash come from the call-only run. The call is added to
