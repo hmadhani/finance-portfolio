@@ -19,3 +19,12 @@ kept out of this repo entirely.
 written only after each calendar quarter (and calendar year) has ended. The
 routine started mid-quarter (inception 2026-08-26), so the first report,
 2026-Q3, covers a partial quarter (Aug 26 – Sep 30) and is labeled as such.
+
+## Options paper portfolio (`options/`)
+
+A separate $50K paper portfolio that trades **defined-risk options only**, run by
+its own daily cloud routine, with a beginner-level learning ledger explaining every
+decision. Rules: `options/investor-profile.md`. State: `options/options-portfolio.md`.
+Teaching: `options/learning-ledger.md`. Reading list: `options/RESOURCES.md`.
+Math and data: `scripts/options_data.py` (stdlib only; Cboe delayed quotes).
+Tests: `python3 -m unittest discover -s tests -v`.
