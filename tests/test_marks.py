@@ -80,6 +80,31 @@ class TestMarks(unittest.TestCase):
         self.assertNotIn("profit_target", m["triggers"])
         self.assertNotIn("stop_loss", m["triggers"])
 
+    def test_zero_zero_short_leg_is_missing_quote(self):
+        # short 95P quotes 0/0 (no market): without the guard its mid of 0 would
+        # read as a full-profit mark and falsely fire profit_target.
+        m = marks.mark_position(pcs_position(), idx(0.0, 0.0, 0.15, 0.25), 100.0, ASOF)
+        self.assertTrue(m["errors"])
+        self.assertIn("TEST261106P00095000", m["errors"][0])
+        self.assertIsNone(m["pnl"])
+        self.assertNotIn("profit_target", m["triggers"])
+        self.assertNotIn("stop_loss", m["triggers"])
+
+    def test_crossed_quote_is_missing_quote(self):
+        m = marks.mark_position(pcs_position(), idx(0.65, 0.55, 0.15, 0.25), 100.0, ASOF)
+        self.assertTrue(m["errors"])
+        self.assertIsNone(m["pnl"])
+
+    def test_bad_quote_still_reports_date_triggers(self):
+        m = marks.mark_position(pcs_position(), idx(0.0, 0.0, 0.0, 0.0), 100.0, date(2026, 10, 17))
+        self.assertTrue(m["errors"])
+        self.assertIn("21_dte", m["triggers"])
+
+    def test_zero_bid_positive_ask_still_marks(self):
+        m = marks.mark_position(pcs_position(), idx(0.55, 0.65, 0.0, 0.10), 100.0, ASOF)
+        self.assertEqual(m["errors"], [])
+        self.assertIsNotNone(m["pnl"])
+
     def test_stock_leg(self):
         pos = {"id": "S1", "symbol": "KO", "strategy": "assigned_shares", "opened": "2026-11-06",
                "qty": 1, "entry_cost": 85.0, "profit_target_pct": 100,

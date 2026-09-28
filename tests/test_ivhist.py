@@ -19,6 +19,15 @@ class TestRecord(unittest.TestCase):
             self.assertEqual(len(lines), 4)
             self.assertEqual(ivhist.history(p, "SPY"), [11.982, 12.5])
 
+    def test_record_uses_lf_line_endings(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "iv.csv")
+            ivhist.record(p, "2026-09-28", [("SPY", 11.982, 771.35)])
+            with open(p, "rb") as f:
+                raw = f.read()
+            self.assertNotIn(b"\r\n", raw)
+            self.assertEqual(raw, b"date,symbol,iv30,price\n2026-09-28,SPY,11.982,771.35\n")
+
     def test_history_missing_file(self):
         self.assertEqual(ivhist.history("/nonexistent/iv.csv", "SPY"), [])
 
@@ -53,6 +62,13 @@ class TestRank(unittest.TestCase):
             f"01/01/2025,{c},{c},{c},{c}\n" for c in range(1, 101))
         self.assertEqual(ivhist.vix_percentile(csv_text, 50.5, lookback=100), 50.0)
         self.assertEqual(ivhist.vix_percentile(csv_text, 50.5, lookback=10), 0.0)  # last 10 are 91..100
+
+
+    def test_vix_percentile_no_closes_is_none(self):
+        for text in ("", "DATE,OPEN,HIGH,LOW,CLOSE\n",
+                     "<!DOCTYPE html><html><body>Access Denied</body></html>\n",
+                     "DATE,OPEN,HIGH,LOW\n01/02/2025,1,2,3\n"):
+            self.assertIsNone(ivhist.vix_percentile(text, 15.0), repr(text))
 
 
 if __name__ == "__main__":

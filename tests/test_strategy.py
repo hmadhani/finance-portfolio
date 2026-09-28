@@ -23,6 +23,27 @@ class TestSpecAndFills(unittest.TestCase):
         with self.assertRaises(ValueError):
             st.parse_leg_spec("HOLD 1 P 95 2026-11-06")
 
+    def test_nonpositive_ratio_rejected(self):
+        for spec in ("SELL 0 P 95 2026-11-06", "BUY -1 P 90 2026-11-06"):
+            with self.assertRaises(ValueError):
+                st.parse_leg_spec(spec)
+
+    def test_missing_quote_zero_zero_raises_keyerror(self):
+        c = make_contract("TEST261106P00095000", 0.0, 0.0)
+        with self.assertRaises(KeyError) as cm:
+            st.legs_from_spec("SELL 1 P 95 2026-11-06", "TEST", {c.option: c})
+        self.assertIn("no valid quote", cm.exception.args[0])
+
+    def test_crossed_quote_raises_keyerror(self):
+        c = make_contract("TEST261106P00095000", 1.10, 1.00)
+        with self.assertRaises(KeyError):
+            st.legs_from_spec("SELL 1 P 95 2026-11-06", "TEST", {c.option: c})
+
+    def test_zero_bid_positive_ask_is_a_valid_quote(self):
+        c = make_contract("TEST261106P00085000", 0.0, 0.05)
+        L = st.legs_from_spec("BUY 1 P 85 2026-11-06", "TEST", {c.option: c})
+        self.assertEqual(L[0].contract.option, c.option)
+
     def test_missing_strike_raises_keyerror(self):
         with self.assertRaises(KeyError):
             legs("SELL 1 P 97 2026-11-06")
@@ -122,6 +143,29 @@ class TestAnalyze(unittest.TestCase):
         self.assertTrue(a["unbounded_loss"])
         self.assertFalse(a["defined_risk"])
         self.assertIsNone(a["max_loss"])
+
+
+class TestUncoveredShortPuts(unittest.TestCase):
+    def test_put_ratio_1x2_has_one_uncovered(self):
+        a = st.analyze(legs("BUY 1 P 95 2026-11-06; SELL 2 P 90 2026-11-06"), 1, 100.0, ASOF)
+        self.assertEqual(a["uncovered_short_puts"], 1)
+
+    def test_csp_has_one_uncovered(self):
+        a = st.analyze(legs("SELL 1 P 95 2026-11-06"), 1, 100.0, ASOF)
+        self.assertEqual(a["uncovered_short_puts"], 1)
+
+    def test_bull_put_spread_has_none(self):
+        a = st.analyze(legs("SELL 1 P 95 2026-11-06; BUY 1 P 90 2026-11-06"), 1, 100.0, ASOF)
+        self.assertEqual(a["uncovered_short_puts"], 0)
+
+    def test_iron_condor_has_none(self):
+        a = st.analyze(legs("BUY 1 P 85 2026-11-06; SELL 1 P 90 2026-11-06; "
+                            "SELL 1 C 110 2026-11-06; BUY 1 C 115 2026-11-06"), 1, 100.0, ASOF)
+        self.assertEqual(a["uncovered_short_puts"], 0)
+
+    def test_net_long_puts_clamped_to_zero(self):
+        a = st.analyze(legs("BUY 1 P 95 2026-11-06"), 1, 100.0, ASOF)
+        self.assertEqual(a["uncovered_short_puts"], 0)
 
 
 class TestAscii(unittest.TestCase):

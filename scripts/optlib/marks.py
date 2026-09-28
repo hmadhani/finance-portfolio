@@ -2,7 +2,7 @@
 management-rule triggers defined in options/investor-profile.md."""
 from datetime import date
 
-from .chain import parse_occ
+from .chain import has_valid_quote, parse_occ
 from .strategy import MULTIPLIER
 
 
@@ -27,11 +27,15 @@ def mark_position(position: dict, cs_index: dict, spot: float, asof: date) -> di
                 mid = _intrinsic(kind, strike, spot)
                 if sign < 0 and itm:
                     assignment = True
-            elif leg["option"] in cs_index:
-                mid = cs_index[leg["option"]].mid
-            else:
+            elif leg["option"] not in cs_index:
                 errors.append(f"no quote for {leg['option']}")
                 mid = None
+            elif not has_valid_quote(cs_index[leg["option"]]):
+                c = cs_index[leg["option"]]
+                errors.append(f"no valid quote for {leg['option']} (bid {c.bid}, ask {c.ask})")
+                mid = None
+            else:
+                mid = cs_index[leg["option"]].mid
         leg_rows.append({"option": leg["option"], "mid": mid, "itm": itm})
         if mid is not None:
             value += sign * leg["ratio"] * mid

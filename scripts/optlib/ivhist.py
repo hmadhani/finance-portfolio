@@ -32,7 +32,7 @@ def record(path: str, day: str, rows: list) -> int:
     write_header = not os.path.exists(path) or os.path.getsize(path) == 0
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     with open(path, "a", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         if write_header:
             w.writerow(FIELDS)
         for symbol, iv30, price in new:
@@ -57,6 +57,17 @@ def iv_rank(values: list, current: float) -> dict:
             "iv_percentile": round(pct, 1), "n_obs": n, "note": ""}
 
 
-def vix_percentile(csv_text: str, current: float, lookback: int = 252) -> float:
-    closes = [float(r["CLOSE"]) for r in csv.DictReader(io.StringIO(csv_text))][-lookback:]
+def vix_percentile(csv_text: str, current: float, lookback: int = 252):
+    """Percent of the last `lookback` VIX closes below `current`, or None when
+    the text holds no closes (empty, header-only, an HTML error page, or no
+    CLOSE column)."""
+    closes = []
+    for r in csv.DictReader(io.StringIO(csv_text)):
+        try:
+            closes.append(float(r["CLOSE"]))
+        except (KeyError, TypeError, ValueError):
+            continue
+    closes = closes[-lookback:]
+    if not closes:
+        return None
     return round(sum(1 for c in closes if c < current) / len(closes) * 100.0, 1)

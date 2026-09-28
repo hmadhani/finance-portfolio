@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from datetime import date
 
 from .bs import bs_price, norm_cdf
-from .chain import Contract, occ_symbol, stock_contract
+from .chain import Contract, has_valid_quote, occ_symbol, stock_contract
 
 MULTIPLIER = 100
 FEE_PER_CONTRACT = 0.65
@@ -41,7 +41,10 @@ def parse_leg_spec(spec: str) -> list:
         action, kind = action.upper(), kind.upper()
         if action not in ("BUY", "SELL") or kind not in ("C", "P"):
             raise ValueError(f"bad leg spec {part.strip()!r}: action BUY|SELL, kind C|P")
-        out.append((action, int(ratio), kind, float(strike), date.fromisoformat(exp)))
+        ratio = int(ratio)
+        if ratio <= 0:
+            raise ValueError(f"bad leg spec {part.strip()!r}: ratio must be > 0")
+        out.append((action, ratio, kind, float(strike), date.fromisoformat(exp)))
     return out
 
 
@@ -52,6 +55,10 @@ def legs_from_spec(spec: str, root: str, cs_index: dict, spot: float = None,
         sym = occ_symbol(root, exp, kind, strike)
         if sym not in cs_index:
             raise KeyError(f"no quote for {sym} ({action} {kind} {strike} {exp})")
+        if not has_valid_quote(cs_index[sym]):
+            c = cs_index[sym]
+            raise KeyError(f"no valid quote for {sym} (bid {c.bid}, ask {c.ask}): "
+                           "no market or crossed quote")
         legs.append(Leg(action, ratio, cs_index[sym]))
     if with_stock:
         legs.append(Leg("BUY", 1, stock_contract(root, spot)))
@@ -115,6 +122,10 @@ def analyze(legs: list, qty: int, spot: float, asof: date) -> dict:
     upside_exposure = sum(l.sign * l.ratio for l in legs if l.contract.kind in ("C", "S"))
     unbounded_profit = upside_exposure > 0
     unbounded_loss = upside_exposure < 0
+    # Short puts not covered by a long put. Puts have bounded loss (S >= 0), so
+    # defined_risk alone cannot catch a 1x2 put ratio spread or a CSP; the
+    # routine only allows uncovered_short_puts > 0 for a single-leg CSP.
+    uncovered_short_puts = max(0, -sum(l.sign * l.ratio for l in legs if l.contract.kind == "P"))
 
     # For bounded structures whose per-leg BS value hasn't fully converged at
     # the grid's 2x-strike boundary (e.g. a high-IV calendar), sample a much
@@ -167,6 +178,7 @@ def analyze(legs: list, qty: int, spot: float, asof: date) -> dict:
         "unbounded_profit": unbounded_profit,
         "unbounded_loss": unbounded_loss,
         "defined_risk": not unbounded_loss,
+        "uncovered_short_puts": uncovered_short_puts,
         "breakevens": breakevens,
         "prob_profit": round(pop, 3),
         "net_greeks": {k: round(v, 2) for k, v in g.items()},

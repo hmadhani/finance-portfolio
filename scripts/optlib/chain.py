@@ -105,6 +105,13 @@ def index_contracts(cs: list) -> dict:
     return {c.option: c for c in cs}
 
 
+def has_valid_quote(c: Contract) -> bool:
+    """False for a quote with no market (bid <= 0 and ask <= 0) or a crossed
+    quote (ask < bid). Such a quote is treated as MISSING: its mid is not a
+    price. bid 0 with ask > 0 is a normal far-OTM quote and stays valid."""
+    return not ((c.bid <= 0 and c.ask <= 0) or c.ask < c.bid)
+
+
 def is_liquid(c: Contract, min_oi: float = 500, max_spread_pct: float = 0.10,
               abs_spread_ok: float = None) -> bool:
     if c.bid <= 0 or c.ask < c.bid or c.open_interest < min_oi:
