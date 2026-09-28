@@ -39,7 +39,7 @@ STEP 7 — Write `options/learning-ledger.md` entries (newest first, under `## E
 - Greeks in dollars for THIS position (e.g. "theta +$4.10/day means that if nothing else changes, the position gains about $4 per day from time decay").
 - Concept spotlight: introduce at most 2 concepts not already in the Concept Index, explain from zero with a concrete example from this trade, and add each to the Concept Index table with a link to this entry. Suggested teaching order as trades allow: premium & breakeven → delta → theta → implied volatility → vega → IV rank → expected move → probability of profit → vertical spreads → credit vs debit → the volatility risk premium → gamma & why 21 DTE → skew → assignment → rolling → term structure/calendars → iron condors → butterflies.
 - What would prove this wrong.
-- Reproduce: the exact `python3 scripts/options_data.py ... --asof YYYY-MM-DD` command(s).
+- Reproduce: the exact `python3 scripts/options_data.py --asof YYYY-MM-DD ...` command(s).
 - CLOSE entries add Outcome, What drove the P&L (price move vs time decay vs volatility change, estimated from the entry Greeks), Lesson, and `**Your reflection:**` left EMPTY — never fill it.
 
 STEP 8 — Quarterly note (first cycle after a quarter ends, if `options/quarterly-reports/<YYYY-Qn>.md` does not exist and inception precedes the quarter end): write it with period return vs BXM and PUT, trades opened/closed, win rate, average P&L per trade, largest loss, and a "concepts learned this quarter" list from the Concept Index. The first quarter is partial — label it with its date range.
