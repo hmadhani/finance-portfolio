@@ -3,8 +3,10 @@
 Every decision this portfolio makes — opening, adjusting, closing, or choosing
 *not* to trade — is explained here for a beginner. Each entry shows the market
 context, why this strategy beat the alternatives, the exact trade, what can go
-wrong, and one or two new concepts. Every number can be reproduced with the
-`Reproduce:` command in the entry. Sources for the concepts: `RESOURCES.md`.
+wrong, and one or two new concepts. Every number comes from the `Reproduce:`
+command in the entry; re-running it re-prices against the quotes available
+when re-run, which may differ from the cycle's quotes. Sources for the
+concepts: `RESOURCES.md`.
 
 Entries on closed trades end with **Your reflection** — left empty for you.
 
@@ -42,7 +44,7 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 Newest first. Format:
 
-    ### YYYY-MM-DD — <OPEN|ADJUST|CLOSE|PASS> <symbol> <strategy> (Cycle #N)
+    ### YYYY-MM-DD — <OPEN|ADJUST|ROLL|CLOSE|ASSIGNED|PASS> <symbol> <strategy> (Cycle #N)
     **Decision:** …
     **Market context:** …
     **Why this strategy:** …
@@ -50,5 +52,6 @@ Newest first. Format:
     **Greeks in dollars:** …
     **Concept spotlight:** …
     **What would prove this wrong:** …
-    **Reproduce:** `python3 scripts/options_data.py --asof YYYY-MM-DD …`
+    **Reproduce:** `python3 scripts/options_data.py --asof YYYY-MM-DD …` (re-prices against the quotes available when re-run)
+    (Only OPEN headings count toward the 5-new-positions-per-week limit; a ROLL is not a new position.)
     (CLOSE entries add) **Outcome:** · **What drove the P&L:** · **Lesson:** · **Your reflection:** (blank)
