@@ -2,8 +2,10 @@ It is ~12pm ET on the day this routine fired. Run today's cycle for the $50K def
 
 HARD RULES: Paper trading only. Never read or reference anything outside this repo, never any personal financial data, never the Skill tool. Only public market data (the Cboe feed via scripts/options_data.py, plus WebSearch/WebFetch for news and earnings dates). Never fabricate a number: every price, Greek, probability, max loss, and breakeven you write must come from a `scripts/options_data.py` command you ran this cycle, and the ledger entry must show that command. Never open a position that `price-spread` reports as `defined_risk: false` (sole exception: a covered call on assigned shares, which is gated by its `--with-stock` analysis run instead — see STEP 3). Never open a position with `uncovered_short_puts > 0` unless it is a single-leg cash-secured put (exactly one SELL put leg, nothing else) that passes the 3% NAV per-position max-loss cap. Never open a position unless `price-spread` reports `all_legs_liquid: true`.
 
+GIT IN THIS SANDBOX: the checkout may be a detached HEAD, and the local `main` / `origin/main` refs can be stale snapshots — never judge what is or isn't pushed from them. GitHub's true state is `git fetch origin main` → `FETCH_HEAD`. Commits in HEAD's history that you did not make (e.g. `options/`, `scripts/`, `tests/`, `docs/` work) are legitimate parts of this repo already on GitHub — not foreign work; never try to split, reset, or move branches. At start: `git fetch origin main && git merge --ff-only FETCH_HEAD` (if the fast-forward fails, STOP and PushNotification the exact git output). To push: `git fetch origin main && git rebase FETCH_HEAD && git push origin HEAD:main`; if rejected, repeat that line once.
+
 STEP 0 — Setup and trading-day check.
-0a. `cd` into the repo (find it with `pwd`/`ls`). `git pull --rebase origin main`. Run `date`.
+0a. `cd` into the repo (find it with `pwd`/`ls`). Sync per GIT above (the "At start" line). Run `date`.
 0b. NYSE holidays — 2026: Jan 1, Jan 19, Feb 16, Apr 3, May 25, Jun 19, Jul 3, Sep 7, Nov 26, Dec 25. 2027: Jan 1, Jan 18, Feb 15, Mar 26, May 31, Jun 18, Jul 5, Sep 6, Nov 25, Dec 24. Beyond these, derive from the standard NYSE calendar (weekend-observed shifts). Weekend or holiday → PushNotification "Options: market closed today (<reason>) — no cycle." and stop. Write nothing.
 0c. Same-day guard: if `options/options-portfolio.md` NAV History already has a row dated today, stop silently (no writes, no notification).
 0d. Data check: `python3 scripts/options_data.py regime`.
@@ -60,7 +62,7 @@ STEP 7 — Write `options/learning-ledger.md` entries (newest first, under `## E
 
 STEP 8 — Quarterly note (first cycle after a quarter ends, if `options/quarterly-reports/<YYYY-Qn>.md` does not exist and inception precedes the quarter end): write it with period return vs BXM and PUT, trades opened/closed, win rate, average P&L per trade, largest loss, and a "concepts learned this quarter" list from the Concept Index. The first quarter is partial — label it with its date range.
 
-STEP 9 — Verify then commit: `python3 -c "import json;json.load(open('options/data/positions.json'))"` must succeed. `git add options/`, commit with message "Options cycle #N: <summary>" and body ending with a blank line then `Signed-off-by: hmadhani2024@gmail.com` (no Co-Authored-By). `git pull --rebase origin main` then `git push origin main`. If the push is rejected, pull --rebase again and retry once. No PRs, no gh CLI.
+STEP 9 — Verify then commit: `python3 -c "import json;json.load(open('options/data/positions.json'))"` must succeed. `git add options/`, commit with message "Options cycle #N: <summary>" and body ending with a blank line then `Signed-off-by: hmadhani2024@gmail.com` (no Co-Authored-By). Push per GIT above (the "To push" line). No PRs, no gh CLI.
 
 STEP 10 — PushNotification: "Options #N: NAV $X (±Y% vs BXM ±A%, PUT ±B%). Opened: … Closed: … New concepts: …".
 
