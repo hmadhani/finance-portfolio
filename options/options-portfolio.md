@@ -13,8 +13,8 @@ Machine state: `options/data/positions.json`
 
 | Field | Value |
 |---|---|
-| Inception | (set on first cycle) |
-| Cycle # | 0 |
+| Inception | 2026-10-01 (BXM/PUT base levels unavailable — Cboe unreachable on cycle 1; to be set on first successful cycle) |
+| Cycle # | 1 |
 | NAV | $50,000.00 |
 | Cash | $50,000.00 |
 | Collateral / max loss reserved | $0.00 |
@@ -25,7 +25,7 @@ Machine state: `options/data/positions.json`
 | Return since inception | 0.00% |
 | BXM since inception | — |
 | PUT since inception | — |
-| Regime | — |
+| Regime | Unknown (Cboe data unreachable, degraded cycle) |
 
 ## Open Positions
 
@@ -43,7 +43,14 @@ Append-only. One row per cycle.
 
 | Date | Cycle # | NAV | BXM | PUT | VIX |
 |---|---|---|---|---|---|
+| 2026-10-01 | 1 (degraded — no marks; no positions open) | $50,000.00 | — | — | — |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-01 — Cycle #1 (degraded): Cboe unreachable, no trades
+
+- `regime` failed entirely: every Cboe fetch (VIX, VIX3M, BXM, PUT) returned `Tunnel connection failed: 403 Forbidden` from the sandbox proxy. Degraded mode per routine rules: no new positions opened.
+- `mark` ran (exit 0) but there are no open positions, so nothing to manage and no triggers.
+- NAV carried at the starting $50,000.00 (all cash; no interest accrued since inception is today). BXM/PUT/VIX base levels could NOT be recorded — they are left blank rather than guessed; set them on the first cycle with working data.
