@@ -13,24 +13,25 @@ Machine state: `options/data/positions.json`
 
 | Field | Value |
 |---|---|
-| Inception | 2026-10-01 (BXM/PUT base levels unavailable — Cboe unreachable on cycle 1; to be set on first successful cycle) |
-| Cycle # | 1 |
-| NAV | $50,000.00 |
-| Cash | $50,000.00 |
-| Collateral / max loss reserved | $0.00 |
-| Capital at risk (sum of max losses) | $0.00 (0.0% NAV) |
-| Net delta (share-equivalents) | 0 |
-| Net theta ($/day) | 0.00 |
-| Net vega ($/IV point) | 0.00 |
+| Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
+| Cycle # | 2 |
+| NAV | $50,001.86 |
+| Cash | $49,034.86 |
+| Collateral / max loss reserved | $970.00 |
+| Capital at risk (sum of max losses) | $970.00 (1.9% NAV) |
+| Net delta (share-equivalents) | 33.09 |
+| Net theta ($/day) | -8.00 |
+| Net vega ($/IV point) | 33.37 |
 | Return since inception | 0.00% |
-| BXM since inception | — |
-| PUT since inception | — |
-| Regime | Unknown (Cboe data unreachable, degraded cycle) |
+| BXM since inception | 0.00% (base set today) |
+| PUT since inception | 0.00% (base set today) |
+| Regime | VIX 15.65 / VIX3M 18.24 contango, not stress; VIX 1y percentile 18.7 (low) → buy premium |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-02-SPY-BCDS-1 | SPY | bull_call_debit_spread | 2026-10-02 | 2026-11-06 | 1 | 9.70 | 9.67 | -3.00 | -0.3% | 970 | 35 | none |
 
 ## Closed Positions
 
@@ -44,10 +45,18 @@ Append-only. One row per cycle.
 | Date | Cycle # | NAV | BXM | PUT | VIX |
 |---|---|---|---|---|---|
 | 2026-10-01 | 1 (degraded — no marks; no positions open) | $50,000.00 | — | — | — |
+| 2026-10-02 | 2 | $50,001.86 | 2564.68 | 3681.24 | 15.65 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-02 — Cycle #2: Cboe back online; opened SPY bull call debit spread
+
+- Regime: VIX 15.65, VIX3M 18.24 (contango, no stress), VIX 1y percentile 18.7 → cheap options, lean to buying premium. IV history has 0 days, so the VIX percentile is the proxy. BXM/PUT base levels recorded today.
+- No open positions to manage (`mark` empty at start).
+- NEW 2026-10-02-SPY-BCDS-1: SPY 773/800 Nov-06 call debit spread, 1 lot, debit $9.70, max loss $970 (+$2.60 fees), 1.9% of NAV. Only 1 trade today — one clean low-IV trade is enough.
+- Interest accrued $6.16 (1 day at 4.5% on $50,000 cash). NAV $50,001.86 (spread marked at 9.67 mid).
 
 ### 2026-10-01 — Cycle #1 (degraded): Cboe unreachable, no trades
 

@@ -39,8 +39,42 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 | Concept | First explained in |
 |---|---|
+| Premium & breakeven | [2026-10-02 OPEN SPY](#2026-10-02--open-spy-bull-call-debit-spread-cycle-2) |
+| Vertical spreads (debit) | [2026-10-02 OPEN SPY](#2026-10-02--open-spy-bull-call-debit-spread-cycle-2) |
 
 ## Entries
+
+### 2026-10-02 — OPEN SPY bull call debit spread (Cycle #2)
+**Decision:** Buy 1 SPY Nov-06 773/800 call debit spread for a $9.70/share debit ($970).
+**Market context:** The VIX ("fear gauge") is 15.65, low for the past year (18.7th percentile), and VIX3M (18.24) is above it — a calm market with no stress. When option prices are cheap, buying is more attractive than selling. SPY is $768.99; the market's expected 30-day move is about ±$28.
+**Why this strategy:** A debit spread is a bet SPY rises, with a capped cost. Rejected: (1) a plain long call — costs about $12 per share and loses more if nothing happens; (2) a bull put credit spread — selling premium pays little when volatility is this low.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| BUY | 1 | Call | 773 | 2026-11-06 | 12.09 |
+| SELL | 1 | Call | 800 | 2026-11-06 | 2.39 |
+
+Max profit $1,730 · Max loss $970 · Breakeven 782.70 · Probability of profit 35.5% · fees_round_trip $2.60 (35 DTE).
+```
+      1730                     |        **********************
+                               |       *
+                               |      *
+                               |
+                               |     *
+                               |    *
+           ---------------------------------------------------
+                               |   *
+                               |  *
+                               | *
+      -970 **********************
+           692.09                                       880.00
+```
+**Greeks in dollars:** Delta +33 share-equivalents: SPY up $1 ≈ +$33. Theta −$8.00/day: if nothing else changes, the position loses about $8 a day to time decay. Vega +$33.37 per IV point: if implied volatility rises 1 point, the position gains about $33.
+**Concept spotlight:**
+- *Premium & breakeven:* the premium is the price of an option. We pay $12.09 and receive $2.39, a net $9.70 debit. SPY must finish above 773 + 9.70 = 782.70 to profit.
+- *Vertical (debit) spread:* buy one option and sell another of the same type and expiry at a different strike. The sold call (800) pays part of the cost but caps the gain at (800−773)−9.70 = $17.30/share.
+**What would prove this wrong:** SPY flat or falling by Nov 6 (it needs ~+1.8% to break even). Exit rule: loss reaches 50% of the debit, profit hits 100%, or 21 DTE.
+**Reproduce:** `python3 scripts/options_data.py --asof 2026-10-02 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06; SELL 1 C 800 2026-11-06" --qty 1` (re-prices against the quotes available when re-run)
 
 Newest first. Format:
 

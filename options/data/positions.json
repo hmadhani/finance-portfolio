@@ -1,1 +1,26 @@
-{"positions": []}
+{
+  "positions": [
+    {
+      "id": "2026-10-02-SPY-BCDS-1",
+      "symbol": "SPY",
+      "strategy": "bull_call_debit_spread",
+      "opened": "2026-10-02",
+      "qty": 1,
+      "entry_cost": 9.7,
+      "max_loss": -970.0,
+      "profit_target_pct": 100,
+      "legs": [
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "SPY261106C00773000"
+        },
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "SPY261106C00800000"
+        }
+      ]
+    }
+  ]
+}
