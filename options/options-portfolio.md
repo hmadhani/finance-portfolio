@@ -14,15 +14,15 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT base levels unavailable — Cboe unreachable on cycle 1; to be set on first successful cycle) |
-| Cycle # | 1 |
-| NAV | $50,000.00 |
-| Cash | $50,000.00 |
+| Cycle # | 2 |
+| NAV | $50,006.16 |
+| Cash | $50,006.16 |
 | Collateral / max loss reserved | $0.00 |
 | Capital at risk (sum of max losses) | $0.00 (0.0% NAV) |
 | Net delta (share-equivalents) | 0 |
 | Net theta ($/day) | 0.00 |
 | Net vega ($/IV point) | 0.00 |
-| Return since inception | 0.00% |
+| Return since inception | 0.01% |
 | BXM since inception | — |
 | PUT since inception | — |
 | Regime | Unknown (Cboe data unreachable, degraded cycle) |
@@ -44,10 +44,18 @@ Append-only. One row per cycle.
 | Date | Cycle # | NAV | BXM | PUT | VIX |
 |---|---|---|---|---|---|
 | 2026-10-01 | 1 (degraded — no marks; no positions open) | $50,000.00 | — | — | — |
+| 2026-10-02 | 2 (degraded) | $50,006.16 | — | — | — |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-02 — Cycle #2 (degraded): Cboe still unreachable, no trades
+
+- `regime` exited 1 again: all Cboe fetches (VIX, VIX3M, BXM, PUT) returned `Tunnel connection failed: 403 Forbidden`. Degraded mode: no new positions, no scan, no record-iv.
+- `mark` ran (exit 0): no open positions, no triggers.
+- NAV = cash $50,000.00 + 1 day interest at 4.5%/yr ($6.16) = $50,006.16. BXM/PUT/VIX base levels still unrecorded (not guessed).
+- No ledger entries: nothing opened, closed or assigned.
 
 ### 2026-10-01 — Cycle #1 (degraded): Cboe unreachable, no trades
 
