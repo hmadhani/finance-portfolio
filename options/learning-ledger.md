@@ -41,8 +41,42 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 |---|---|
 | Premium & breakeven | [2026-10-02 OPEN SPY](#2026-10-02--open-spy-bull-call-debit-spread-cycle-2) |
 | Vertical spreads (debit) | [2026-10-02 OPEN SPY](#2026-10-02--open-spy-bull-call-debit-spread-cycle-2) |
+| Delta | [2026-10-05 OPEN QQQ](#2026-10-05--open-qqq-bull-call-debit-spread-cycle-3) |
+| Theta | [2026-10-05 OPEN QQQ](#2026-10-05--open-qqq-bull-call-debit-spread-cycle-3) |
 
 ## Entries
+
+### 2026-10-05 — OPEN QQQ bull call debit spread (Cycle #3)
+**Decision:** Buy 1 QQQ Nov-06 760/790 call debit spread for a $10.83/share debit ($1,083).
+**Market context:** The VIX is 15.57, still low (18.3rd percentile) with VIX3M at 18.06 — calm, no stress. Cheap options favor buying. QQQ is $753.80 and the market's expected 30-day move is about ±$40.51. Our SPY spread is already up $121.50 (+12.5%).
+**Why this strategy:** Another capped-cost bullish bet. Rejected: (1) a bull put credit spread — selling premium pays little when volatility is low; (2) a second SPY spread — we would then hold two positions on one underlying; QQQ spreads the bet slightly, though it is highly correlated with SPY, so this is really more of the same view.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| BUY | 1 | Call | 760 | 2026-11-06 | 15.145 |
+| SELL | 1 | Call | 790 | 2026-11-06 | 4.3125 |
+
+Max profit $1,916.75 · Max loss $1,083.25 · Breakeven 770.83 · Probability of profit 34.9% · fees_round_trip $2.60 (32 DTE).
+```
+      1917                     |        **********************
+                               |                              
+                               |       *                      
+                               |      *                       
+                               |     *                        
+                               |    *                         
+           ---------------------------------------------------
+                               |   *                          
+                               |  *                           
+                               | *                            
+     -1083 **********************                             
+           678.42                                       869.00
+```
+**Greeks in dollars:** Delta +27.25 share-equivalents; theta −$8.89/day; vega +$24.10 per IV point.
+**Concept spotlight:**
+- *Delta:* how much an option's price moves when the stock moves $1. Our long 760 call has delta 0.48, the short 790 call 0.21; net 0.27 per share × 100 = +27 share-equivalents, so QQQ up $1 ≈ +$27 for the position (a small gain, not guaranteed).
+- *Theta:* time decay. Net theta −$8.89/day means that if nothing else changes, the position loses about $9 a day as expiry nears, because we own more option time value than we sold. Debit spreads are a race: the stock must move up faster than time decay eats the premium.
+**What would prove this wrong:** QQQ flat or falling — it needs to finish above 770.83 (+2.3%). Exit rule: loss reaches 50% of the debit, profit hits 100%, or 21 DTE.
+**Reproduce:** `python3 scripts/options_data.py --asof 2026-10-05 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06; SELL 1 C 790 2026-11-06" --qty 1` (re-prices against the quotes available when re-run)
 
 ### 2026-10-02 — OPEN SPY bull call debit spread (Cycle #2)
 **Decision:** Buy 1 SPY Nov-06 773/800 call debit spread for a $9.70/share debit ($970).

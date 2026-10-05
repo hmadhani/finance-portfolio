@@ -21,6 +21,28 @@
           "option": "SPY261106C00800000"
         }
       ]
+    },
+    {
+      "id": "2026-10-05-QQQ-BCDS-1",
+      "symbol": "QQQ",
+      "strategy": "bull_call_debit_spread",
+      "opened": "2026-10-05",
+      "qty": 1,
+      "entry_cost": 10.8325,
+      "max_loss": -1083.25,
+      "profit_target_pct": 100,
+      "legs": [
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "QQQ261106C00760000"
+        },
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "QQQ261106C00790000"
+        }
+      ]
     }
   ]
 }
