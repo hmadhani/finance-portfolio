@@ -43,8 +43,26 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Vertical spreads (debit) | [2026-10-02 OPEN SPY](#2026-10-02--open-spy-bull-call-debit-spread-cycle-2) |
 | Delta | [2026-10-05 OPEN QQQ](#2026-10-05--open-qqq-bull-call-debit-spread-cycle-3) |
 | Theta | [2026-10-05 OPEN QQQ](#2026-10-05--open-qqq-bull-call-debit-spread-cycle-3) |
+| Implied volatility | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
+| Expected move | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
 
 ## Entries
+
+### 2026-10-06 — PASS (Cycle #4)
+**Decision:** Open nothing new today; hold both bull call spreads.
+**Market context:** The VIX (the market's "fear gauge") is 15.23, only in the 13.9th percentile of the past year — options are cheap. SPY is $781.19 and QQQ $762.16; both rallied since we bought (SPY spread +$411.50, +42.4%; QQQ spread +$225.25, +20.8%). No management trigger fired (profit target is +100%, stop is −50% of the debit, 21 DTE).
+**Why pass:** Cheap options say "buy premium", which we already did twice — but both trades are the same bet (US large-cap stocks go up, same Nov-06 expiry). A third would pile on correlated risk after a sharp rally. Rejected: (1) a third index bull spread — more of the same exposure; (2) selling a bull put credit spread — premium is thin when volatility is this low, so we'd be paid little for the risk. Capital at risk is 4.1% of NAV, well under the 25% cap, so the rule allowed a trade; judgment said wait. Skipping a day is a valid decision.
+**What I checked:** `regime` (no stress), `mark` (no triggers), `scan` of all 30 symbols (e.g. SPY iv30 12.5%, expected 30-day move ±$28.02; QQQ 18.6%, ±$40.6; TLT 14.8%, ±$3.28 — no clear uncorrelated setup with a stated thesis), and capacity (1 new position this week of 5).
+**Concept spotlight:**
+- *Implied volatility (IV):* the annualized size of price swings the option prices are "implying". SPY's 30-day IV is 12.5%, meaning the market expects SPY to wobble roughly 12.5% a year. High IV = expensive options (good to sell); low IV = cheap (good to buy). It is derived from option prices, not from a forecast anyone made.
+- *Expected move:* IV turned into dollars over a period. For SPY: $781.19 × 12.5% × √(30/365) ≈ $28, so the market is pricing roughly a ±$28 range by early November (about a one-standard-deviation range, ~68% likely). Our SPY spread breakeven is $782.70, so the stock needs to hold near here for us to stay in profit.
+**What would prove this wrong:** A strong continued rally where we would have wished we had added; or a sharp reversal where passing saved us. Either way the thesis for each held spread stays the same — see their OPEN entries.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-06 regime
+python3 scripts/options_data.py --asof 2026-10-06 mark
+python3 scripts/options_data.py --asof 2026-10-06 scan
+```
 
 ### 2026-10-05 — OPEN QQQ bull call debit spread (Cycle #3)
 **Decision:** Buy 1 QQQ Nov-06 760/790 call debit spread for a $10.83/share debit ($1,083).

@@ -14,25 +14,25 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 3 |
-| NAV | $50,139.45 |
-| Cash | $47,968.45 |
+| Cycle # | 4 |
+| NAV | $50,664.36 |
+| Cash | $47,974.36 |
 | Collateral / max loss reserved | $2,053.25 |
 | Capital at risk (sum of max losses) | $2,053.25 (4.1% NAV) |
-| Net delta (share-equivalents) | 62.83 |
-| Net theta ($/day) | -16.02 |
-| Net vega ($/IV point) | 49.55 |
-| Return since inception | +0.28% |
-| BXM since inception | +0.25% |
-| PUT since inception | +0.25% |
-| Regime | VIX 15.57 / VIX3M 18.06 contango, not stress; VIX 1y percentile 18.3 (low) → buy premium |
+| Net delta (share-equivalents) | 64.35 |
+| Net theta ($/day) | -9.46 |
+| Net vega ($/IV point) | 19.25 |
+| Return since inception | +1.33% |
+| BXM since inception | +0.41% |
+| PUT since inception | +0.41% |
+| Regime | VIX 15.23 / VIX3M 17.79 contango, not stress; VIX 1y percentile 13.9 (low) → buy premium |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-02-SPY-BCDS-1 | SPY | bull_call_debit_spread | 2026-10-02 | 2026-11-06 | 1 | 9.70 | 10.92 | +121.50 | +12.5% | 970 | 32 | none |
-| 2026-10-05-QQQ-BCDS-1 | QQQ | bull_call_debit_spread | 2026-10-05 | 2026-11-06 | 1 | 10.83 | 10.80 | -3.75 | -0.3% | 1083 | 32 | none |
+| 2026-10-02-SPY-BCDS-1 | SPY | bull_call_debit_spread | 2026-10-02 | 2026-11-06 | 1 | 9.70 | 13.82 | +411.50 | +42.4% | 970 | 31 | none |
+| 2026-10-05-QQQ-BCDS-1 | QQQ | bull_call_debit_spread | 2026-10-05 | 2026-11-06 | 1 | 10.83 | 13.09 | +225.25 | +20.8% | 1083 | 31 | none |
 
 ## Closed Positions
 
@@ -48,10 +48,19 @@ Append-only. One row per cycle.
 | 2026-10-01 | 1 (degraded — no marks; no positions open) | $50,000.00 | — | — | — |
 | 2026-10-02 | 2 | $50,001.86 | 2564.68 | 3681.24 | 15.65 |
 | 2026-10-05 | 3 | $50,139.45 | 2571.02 | 3690.31 | 15.57 |
+| 2026-10-06 | 4 | $50,664.36 | 2575.32 | 3696.35 | 15.23 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-06 — Cycle #4: both spreads up, no triggers; PASS on new trades
+
+- Regime: VIX 15.23, VIX3M 17.79 (contango, no stress), VIX 1y percentile 13.9 → very cheap options, lean to buying premium. IV history still only 2 days, so the VIX percentile is the proxy.
+- HOLD 2026-10-02-SPY-BCDS-1: mark 13.815 vs 9.70 entry, P&L +$411.50 (+42.4%), 31 DTE, no triggers (profit target +100%).
+- HOLD 2026-10-05-QQQ-BCDS-1: mark 13.085 vs 10.8325 entry, P&L +$225.25 (+20.8%), 31 DTE, no triggers.
+- PASS on new trades: both open positions are the same bullish Nov-06 index bet; a third would stack correlated delta right after a sharp rally. See ledger PASS entry.
+- Interest accrued $5.91 (1 day at 4.5% on $47,968.45). NAV $50,664.36 (positions marked at mid). Net Greeks summed from `price-spread` runs of each position.
 
 ### 2026-10-05 — Cycle #3: SPY spread +12.5%, opened QQQ bull call debit spread
 
