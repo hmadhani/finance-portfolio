@@ -45,8 +45,27 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Theta | [2026-10-05 OPEN QQQ](#2026-10-05--open-qqq-bull-call-debit-spread-cycle-3) |
 | Implied volatility | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
 | Expected move | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
+| Vega | [2026-10-07 PASS](#2026-10-07--pass-cycle-5) |
 
 ## Entries
+
+### 2026-10-07 — PASS (Cycle #5)
+**Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
+**Market context:** The market dipped: SPY fell from $781.19 to $776.17 and QQQ from $762.16 to $756.68. The VIX is 15.35 (15.9th percentile of the past year, contango, no stress), so options are still cheap. Our spreads gave back some gains: SPY spread +$227.50 (+23.5%, was +42.4%), QQQ spread +$59.75 (+5.5%, was +20.8%). Profit target is +100%, stop is −50% of the debit, 21-DTE rule not near (30 DTE).
+**Why pass:** Both holdings are the same bet (US large-cap stocks up by Nov-06). Adding a third would stack correlated risk; a dip does not change that. Rejected: (1) a third index bull call spread — more of the same exposure; (2) a bull put credit spread — premium is thin at VIX 15, so we would be paid little for the risk. Capital at risk is 4.1% of NAV, under the 25% cap, and 2 of 5 weekly slots are used, so the rules allowed a trade; judgment said wait.
+**What I checked:** `regime` (no stress), `mark` (no triggers, no errors), `scan` of all 30 symbols (SPY iv30 12.5%, expected 30-day move ±$27.92; QQQ 18.5%, ±$40.03; IWM 19.1%, ±$15.16; XLE 25.4%, ±$4.60 — no uncorrelated setup with a clear thesis; IV history only 3 days so VIX percentile is the proxy).
+**Greeks for what we hold (from `price-spread` at current quotes):** SPY spread: delta +37.6 share-equivalents, theta −$6.68/day, vega +$20.18 per IV point. QQQ spread: delta +29.2, theta −$9.10/day, vega +$22.67. Together theta is about −$15.78/day: if nothing else changes, time decay costs the pair roughly $16 a day.
+**Concept spotlight:**
+- *Vega:* how much a position's value changes when implied volatility moves one point. Our SPY spread has vega +$20.18, so if SPY's IV rose from 12.5% to 13.5%, the spread would gain about $20 (all else equal); if IV fell a point, it would lose about $20. We own options (we paid a debit), so we are "long vega": cheap options at VIX 15 are the reason we bought, and a rise in volatility would help us.
+**What would prove this wrong:** A rebound that makes us wish we had added, or a deeper slide that tests the −50% stop (SPY: spread value at about $4.85, QQQ about $5.42). Either way each spread's thesis is in its OPEN entry.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-07 regime
+python3 scripts/options_data.py --asof 2026-10-07 mark
+python3 scripts/options_data.py --asof 2026-10-07 scan
+python3 scripts/options_data.py --asof 2026-10-07 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+python3 scripts/options_data.py --asof 2026-10-07 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06;SELL 1 C 790 2026-11-06" --qty 1
+```
 
 ### 2026-10-06 — PASS (Cycle #4)
 **Decision:** Open nothing new today; hold both bull call spreads.
