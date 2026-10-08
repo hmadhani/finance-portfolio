@@ -46,8 +46,29 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Implied volatility | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
 | Expected move | [2026-10-06 PASS](#2026-10-06--pass-cycle-4) |
 | Vega | [2026-10-07 PASS](#2026-10-07--pass-cycle-5) |
+| IV rank | [2026-10-08 PASS](#2026-10-08--pass-cycle-6) |
+| Probability of profit | [2026-10-08 PASS](#2026-10-08--pass-cycle-6) |
 
 ## Entries
+
+### 2026-10-08 — PASS (Cycle #6)
+**Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
+**Market context:** Stocks slipped again: SPY $774.46 (was $776.17), QQQ $753.36 (was $756.68). The VIX is 15.48 (19th percentile of the past year, contango, no stress), so options are still cheap. SPY spread +$151.00 (+15.6%), QQQ spread now -$56.25 (-5.2%). Stop is -50% of the debit, profit target +100%, 21-DTE rule is 8 days away from mattering (29 DTE).
+**Why pass:** Both holdings are one bet (US large caps up by Nov-06). A dip does not make a third copy a different bet. Rejected: (1) averaging down with another QQQ spread — adds to the position that is losing and raises correlated risk; (2) a bull put credit spread — at VIX 15 we would be paid little for the risk. Capacity was not the problem (capital at risk 4.1% NAV vs 25% cap; 2 of 5 weekly slots used).
+**What I checked:** `regime`, `mark` (no triggers, no errors), `scan` of all 30 symbols (SPY iv30 12.55%, ±$27.86 expected move; QQQ 18.3%, ±$39.56; AMD 54.4%, INTC 65.6% are the richest but single-stock and would need earnings checks and short premium — no clear thesis).
+**Greeks for what we hold (from `price-spread`):** SPY spread: delta +38.4 share-equivalents, theta -$7.92/day, vega +$26.29 per IV point. QQQ spread: delta +29.4, theta -$10.69/day, vega +$28.62. Together theta is about -$18.61/day.
+**Concept spotlight:**
+- *IV rank:* where today's implied volatility sits between its lowest and highest level over the past year (0 = cheapest, 100 = most expensive). If SPY's IV ranged 10%-30% and is 12.55%, rank is about 13: cheap, favoring buying options. We only have 4 days of our own IV history (need 20), so we use the VIX percentile (19) as a stand-in.
+- *Probability of profit (PoP):* the model's estimate of the chance a position finishes with a gain at expiration. Our SPY spread has PoP 38.8% (breakeven $784.26): it wins less than half the time but pays about 1.8 to 1 when it does (max profit $1,730 vs max loss $970). A low PoP is not bad on its own; compare it with the payout.
+**What would prove this wrong:** A rebound that makes us wish we had added, or a slide to the stop (QQQ spread value near $5.42).
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-08 regime
+python3 scripts/options_data.py --asof 2026-10-08 mark
+python3 scripts/options_data.py --asof 2026-10-08 scan
+python3 scripts/options_data.py --asof 2026-10-08 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+python3 scripts/options_data.py --asof 2026-10-08 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06;SELL 1 C 790 2026-11-06" --qty 1
+```
 
 ### 2026-10-07 — PASS (Cycle #5)
 **Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
