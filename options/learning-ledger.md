@@ -48,8 +48,29 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Vega | [2026-10-07 PASS](#2026-10-07--pass-cycle-5) |
 | IV rank | [2026-10-08 PASS](#2026-10-08--pass-cycle-6) |
 | Probability of profit | [2026-10-08 PASS](#2026-10-08--pass-cycle-6) |
+| Credit vs debit | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
+| Volatility risk premium | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
 
 ## Entries
+
+### 2026-10-09 — PASS (Cycle #7)
+**Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
+**Market context:** The VIX is 14.88, only the 8th percentile of the past year (contango, no stress): options are about as cheap as they have been all year. SPY is $777.41 and our SPY spread is +$242.00 (+24.9%). QQQ is $750.17 and our QQQ spread is -$215.25 (-19.9%): the two indexes split today, even though we treated them as one bet. The QQQ stop is -50% of the debit (spread value about 5.42 vs 8.68 now); 28 DTE, so the 21-DTE rule is a week away.
+**Why pass:** Cheap options favor buying, which we already did. A third bullish spread would be more of the same bet, and doubling down on the losing QQQ leg is not a plan. Rejected: (1) a bull put credit spread on SPY — at this volatility the market pays very little for the risk (see spotlight); (2) a single-stock iron condor on a rich-IV name (AMD iv30 53.9%, INTC 63.6%) — would be short premium on a single stock with no earnings check or clear thesis, and rich IV there usually exists for a reason. Capital at risk is 4.1% of NAV vs 25% cap and 2 of 5 weekly slots are used, so rules allowed a trade; judgment said wait.
+**What I checked:** `regime` (no stress, no errors), `mark` (no triggers, no errors), `scan` of all 30 symbols (SPY iv30 11.97%, ±$26.68 expected move; QQQ 17.75%, ±$38.17; IWM 18.18%, ±$14.52; DIA 12.93%, ±$19.06 — nothing uncorrelated with a clear thesis; IV history 5 days so VIX percentile is the proxy), `record-iv`.
+**Greeks for what we hold (from `price-spread`):** SPY spread: delta +40.7 share-equivalents, theta -$7.41/day, vega +$21.39 per IV point; PoP 41.4%, breakeven $785.12. QQQ spread: delta +29.18, theta -$12.53/day, vega +$35.19; PoP 31.0%, breakeven $768.71. Together theta is about -$19.94/day: if nothing else changes, time decay costs the pair roughly $20 a day.
+**Concept spotlight:**
+- *Credit vs debit:* a **debit** trade costs money up front (we pay, like both of our spreads); the most you can lose is what you paid, and time decay works against you. A **credit** trade pays you up front (you sell); the most you can lose is the spread width minus the credit, and time decay works for you, but you need the price to stay away from your short strike. Example: our SPY spread cost $9.70 per share to open; its mirror, a credit spread, would pay you instead and win when the stock stays put.
+- *Volatility risk premium:* on average, implied volatility (what options charge) runs higher than the volatility that actually happens, so option sellers get paid a small edge for taking on risk. The edge is fattest when IV is high and thinnest when IV is low. With the VIX in its 8th percentile, selling premium is a poor deal today, which is why we pass on credit trades and have been buying instead.
+**What would prove this wrong:** A rebound that makes us wish we had added, or QQQ sliding to its stop (spread value near 5.42).
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-09 regime
+python3 scripts/options_data.py --asof 2026-10-09 mark
+python3 scripts/options_data.py --asof 2026-10-09 scan
+python3 scripts/options_data.py --asof 2026-10-09 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+python3 scripts/options_data.py --asof 2026-10-09 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06;SELL 1 C 790 2026-11-06" --qty 1
+```
 
 ### 2026-10-08 — PASS (Cycle #6)
 **Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
