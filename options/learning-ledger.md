@@ -50,8 +50,27 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Probability of profit | [2026-10-08 PASS](#2026-10-08--pass-cycle-6) |
 | Credit vs debit | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
 | Volatility risk premium | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
+| Gamma & why 21 DTE | [2026-10-12 PASS](#2026-10-12--pass-cycle-8) |
 
 ## Entries
+
+### 2026-10-12 — PASS (Cycle #8)
+**Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
+**Market context:** SPY rose to $778.87 and QQQ fell to $747.63, so the two indexes diverged again. The VIX is 15.14 (13th percentile of the past year, contango, no stress): options are still cheap. SPY spread is +$292.00 (+30.1%); QQQ spread is -$335.75 (-31.0%). The QQQ stop is -50% of the debit (spread value about 5.42 vs 7.475 now); both are at 25 DTE, so the 21-DTE exit is only 4 days away.
+**Why pass:** Both holdings are one bet (US large caps up by Nov-06), and capital at risk is already 4.1% NAV. Rejected: (1) a new debit spread on a third index (IWM/DIA) — the same bet again, with QQQ already losing; (2) a credit spread on a rich-IV single stock (INTC iv30 61.1%, AMD 53.1%) — single-stock short premium with no clear thesis, and the IV is high for a reason. The rules allowed a trade; judgment said wait.
+**What I checked:** `regime` (no stress, no errors), `mark` (no triggers, no errors), `scan` of all 30 symbols (SPY iv30 12.0%, expected move ±$26.81; QQQ 17.9%, ±$38.38; IV history 6 days so the VIX percentile is the proxy), `record-iv`.
+**Greeks for what we hold (from `price-spread`):** SPY spread: delta +42.81 share-equivalents, gamma 0.14, theta -$7.38/day, vega +$18.02 per IV point; PoP 41.8%, breakeven $785.67. QQQ spread: delta +28.59, gamma 0.55, theta -$14.56/day, vega +$38.38; PoP 28.6%, breakeven $767.47. Together theta is about -$21.94/day: if nothing else changes, time decay costs the pair roughly $22 a day.
+**Concept spotlight:**
+- *Gamma & why 21 DTE:* delta says how much an option gains per $1 move in the stock; **gamma** says how fast delta itself changes. Our QQQ spread has gamma 0.55: for each $1 QQQ moves, the position's delta shifts by about 0.55 share-equivalents, so a $10 rally would lift delta from ~29 to ~34 and make the position behave more like owning shares. Gamma grows as expiration nears, so a few days can swing the position hard in either direction. That is why the profile closes or rolls anything at 21 DTE: after that, outcomes get jumpier and less predictable for the same dollars at risk.
+**What would prove this wrong:** A sharp rally that makes us wish we had added, or QQQ sliding to its stop (spread value near 5.42). Also the 21-DTE exit arrives soon, so we must decide then whether to close or roll.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-12 regime
+python3 scripts/options_data.py --asof 2026-10-12 mark
+python3 scripts/options_data.py --asof 2026-10-12 scan
+python3 scripts/options_data.py --asof 2026-10-12 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+python3 scripts/options_data.py --asof 2026-10-12 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06;SELL 1 C 790 2026-11-06" --qty 1
+```
 
 ### 2026-10-09 — PASS (Cycle #7)
 **Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
