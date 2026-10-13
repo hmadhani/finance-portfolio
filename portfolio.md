@@ -19,19 +19,19 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-10-12)
+## Header (as of 2026-10-13)
 
 | Metric | Value |
 |---|---|
-| NAV | $98,822.01 |
+| NAV | $98,823.40 |
 | Total return | -1.18% (since inception) |
 | Blended Benchmark (ref) | not yet tracked — see note below |
-| SPY (ref) | $768.64 (+0.33% since inception) |
-| Cash balance | $11,255.05 (11.39% of NAV) |
+| SPY (ref) | $778.57 (+1.63% since inception) |
+| Cash balance | $11,256.44 (11.39% of NAV) |
 | Stock sleeve | $64,157.94 (64.92% of NAV) |
 | Sector ETF sleeve | $15,516.52 (15.70% of NAV) |
 | Bond sleeve | $7,892.50 (7.99% of NAV) |
-| Cycle # | 25 |
+| Cycle # | 26 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
@@ -43,7 +43,9 @@ internally contradictory ($393.41 vs. a $380-383 session range), so neither
 is reliable enough to start the column; NAV History carries "—". SPY
 ($765.63, session range $763.72-769.54) is the secondary reference.
 
-This is Cycle #25 (HEAVY). No trades executed. Cash accrued 3 days (Fri-Mon) of SGOV-equivalent interest (~4.5%/yr, +$4.16). Theme Exposure: AI-Capex 24.03% (within trim band). **Price-data note (2026-10-12):** no corroborated same-day prints obtainable (searches return only through the 10-08 session: S&P 500 -0.47% to 7,765.36; SPY quotes stale/contradictory), so all holdings and SPY ($768.64) are carried forward; only cash interest moved NAV. **PEP Q3 (10-08):** now partly verified — core EPS $2.34 vs $2.30 est, revenue +5.6% to $25.27B, but full-year profit outlook cut; one unconfirmed source has PEP closing $123.73 (-1.58%), not used. First guidance cut, not two consecutive quarters of deterioration; trim <0.5% NAV (rule 4) — held. Blended benchmark still untracked. No quarterly/annual report due.
+This is Cycle #26 (HEAVY). No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). Theme Exposure: AI-Capex 24.03% (within trim band). **Price-data note (2026-10-13):** no same-day prints obtainable (searches return only through the 10-09 session: S&P 500 +0.6% to 7,811.54, record week; 10-yr yield 5.24%). SPY updated to $778.57 (10-09 close, consistent with the S&P 500 level via the established SPY/index ratio; single technical-analysis source); all holdings carried forward, so only cash interest moved NAV. PEP: no new verified information, held. Blended benchmark still untracked. No quarterly/annual report due.
+
+Prior cycle (#25, HEAVY) detail:  No trades executed. Cash accrued 3 days (Fri-Mon) of SGOV-equivalent interest (~4.5%/yr, +$4.16). Theme Exposure: AI-Capex 24.03% (within trim band). **Price-data note (2026-10-12):** no corroborated same-day prints obtainable (searches return only through the 10-08 session: S&P 500 -0.47% to 7,765.36; SPY quotes stale/contradictory), so all holdings and SPY ($768.64) are carried forward; only cash interest moved NAV. **PEP Q3 (10-08):** now partly verified — core EPS $2.34 vs $2.30 est, revenue +5.6% to $25.27B, but full-year profit outlook cut; one unconfirmed source has PEP closing $123.73 (-1.58%), not used. First guidance cut, not two consecutive quarters of deterioration; trim <0.5% NAV (rule 4) — held. Blended benchmark still untracked. No quarterly/annual report due.
 
 Prior cycle (#24, HEAVY): No trades; all prices carried forward (only cash interest moved NAV).
 
@@ -103,6 +105,7 @@ cycles before that benchmark was tracked.
 | 2026-10-08 | 23 | $98,816.46 | — | $768.64 |
 | 2026-10-09 | 24 | $98,817.85 | — | $768.64 |
 | 2026-10-12 | 25 | $98,822.01 | — | $768.64 |
+| 2026-10-13 | 26 | $98,823.40 | — | $778.57 |
 
 ---
 
@@ -126,8 +129,8 @@ cycles before that benchmark was tracked.
 | XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $199.81 | $5,195.06 | 5.26% | +$359.06 (+7.42%) |
 | XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $174.94 | $10,321.46 | 10.45% | -$650.18 (-5.93%) |
 | AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.25 | $7,892.50 | 7.99% | -$135.30 (-1.69%) |
-| Cash | — | — | — | — | $11,255.05 | — | $11,255.05 | 11.39% | — |
-| **TOTAL** | — | — | — | — | **$99,962.81** | — | **$98,822.01** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
+| Cash | — | — | — | — | $11,256.44 | — | $11,256.44 | 11.39% | — |
+| **TOTAL** | — | — | — | — | **$99,964.20** | — | **$98,823.40** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
 
 ---
 
@@ -149,6 +152,13 @@ cycles before that benchmark was tracked.
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-10-13 — Cycle #26 (HEAVY): full research pass, no trades
+
+All 16 positions reviewed; no Exit Criteria triggered and no Trading Discipline-eligible trade (no new verified information since last verdicts; rule 5). No new-candidate screen: cash 11.39% vs ~10% floor (~$1.4k headroom, below rule 4's useful size). NAV $98,823.40 (-1.18% since inception; SPY $778.57, +1.63%). Same-day price reads unusable (see header note); holdings carried forward, SPY updated to the 10-09 close. Slippage paid: $0.00 (no trades).
+
+- **PEP** (Consumer-Defensive) — reaffirmed HOLD at $125.61 carried. No new verified information since the Q3 guidance-cut verdict; position 2.29% NAV, -11.7%, trim <0.5% NAV (rule 4). Exit needs a second quarter of deterioration. Watch item.
+- **AVGO, ETN, COF, LLY, TJX, GOOGL, BALL, NEE, MU, BHRB, IMAX, VRTX, XLK, XLI, AGG** — reaffirmed HOLD at carried prices; no new information, no corroborated print. Macro context: record S&P week into 10-09 but 10-yr yield 5.24% and volatile oil are a risk for AI-Capex (24.03%, within trim band; AVGO, GOOGL, MU hot-theme screened). XLI 10.45% below 16.5% band. NEE and COF remain watch items. GOOGL earnings 2026-10-27.
 
 ### 2026-10-12 — Cycle #25 (HEAVY): full research pass, no trades
 
