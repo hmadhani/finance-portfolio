@@ -51,8 +51,27 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Credit vs debit | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
 | Volatility risk premium | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
 | Gamma & why 21 DTE | [2026-10-12 PASS](#2026-10-12--pass-cycle-8) |
+| Skew | [2026-10-13 PASS](#2026-10-13--pass-cycle-9) |
 
 ## Entries
+
+### 2026-10-13 — PASS (Cycle #9)
+**Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
+**Market context:** SPY slipped to $776.82 and QQQ to $742.09. The VIX is 15.44 (19th percentile of the past year, contango, no stress): options are still cheap. SPY spread is +$200.50 (+20.7%); QQQ spread is -$503.75 (-46.5%). The QQQ stop is -50% of the debit, a spread value of about 5.42 versus 5.795 now, so only about $38 from being triggered. Both are at 24 DTE; the 21-DTE exit arrives 2026-10-16.
+**Why pass:** Both holdings are one bet (US large caps up by Nov-06), and QQQ is nearly stopped out. Rejected: (1) a fresh QQQ spread at lower prices — that is averaging down into a position the rules say to cut at -50%; (2) a bull put credit spread on SPY — with VIX in the 19th percentile we are paid little for the risk. The stop, not hope, decides QQQ's fate.
+**What I checked:** `regime` (no stress, no errors), `mark` (no triggers, no errors), `scan` of all 30 symbols (SPY iv30 12.2%, expected move ±$27.09; QQQ 18.3%, ±$38.98; INTC 63.7% and AMD 55.6% richest but single-stock), `record-iv`.
+**Greeks for what we hold (from `price-spread`):** SPY spread: delta +43.56 share-equivalents, gamma 0.31, theta -$9.70/day, vega +$25.36 per IV point; PoP 39.3%, breakeven $784.74. QQQ spread: delta +25.43, gamma 0.65, theta -$15.99/day, vega +$41.39; PoP 24.3%, breakeven $765.87. Together theta is about -$25.69/day: if nothing else changes, time decay costs the pair roughly $26 a day.
+**Concept spotlight:**
+- *Skew:* options on the same stock and expiry do not all trade at the same implied volatility. Puts far below the price usually cost more IV than at-the-money options, because investors pay up for crash protection. Example from today's scan: SPY Nov-13 700 put has IV 22.96%, while the 780 call near the money has IV 12.18%. That gap is skew. It means a credit spread that sells a downside put collects richer premium than the at-the-money IV suggests, and a bought put costs extra.
+**What would prove this wrong:** A sharp rebound in QQQ that makes us wish we had added; or QQQ falling to its stop (spread value near 5.42), which would lock in a loss near -$550 including fees. Either way the 21-DTE decision is on 2026-10-16.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-13 regime
+python3 scripts/options_data.py --asof 2026-10-13 mark
+python3 scripts/options_data.py --asof 2026-10-13 scan
+python3 scripts/options_data.py --asof 2026-10-13 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+python3 scripts/options_data.py --asof 2026-10-13 price-spread --symbol QQQ --legs "BUY 1 C 760 2026-11-06;SELL 1 C 790 2026-11-06" --qty 1
+```
 
 ### 2026-10-12 — PASS (Cycle #8)
 **Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
