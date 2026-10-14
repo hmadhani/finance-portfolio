@@ -52,8 +52,47 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Volatility risk premium | [2026-10-09 PASS](#2026-10-09--pass-cycle-7) |
 | Gamma & why 21 DTE | [2026-10-12 PASS](#2026-10-12--pass-cycle-8) |
 | Skew | [2026-10-13 PASS](#2026-10-13--pass-cycle-9) |
+| Stop-loss | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
+| Rolling | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
 
 ## Entries
+
+### 2026-10-14 — PASS (Cycle #10)
+**Decision:** Open nothing new today.
+**Market context:** VIX 16.19 (34th percentile of the past year, contango, no stress). SPY $770.72 and QQQ $732.55 fell again. Options are still on the cheap side, but we just got stopped out of one bullish bet and still hold another.
+**Why pass:** Opening a fresh bullish spread right after a stop-out is chasing the loss back. Rejected: (1) a new QQQ call spread at lower strikes — same bet that just failed; (2) a bull put credit spread on SPY — VIX in the 34th percentile pays little for the risk. SPY's remaining spread has its own 21-DTE decision on 2026-10-16.
+**What I checked:** `regime` (no stress, no errors), `mark`, `scan` of all 30 symbols (SPY iv30 12.8%, expected move ±$28.18; INTC 65.1% and AMD 57.2% richest, single-stock), `record-iv`.
+**What would prove this wrong:** A sharp rebound that we sat out. Missing a move costs nothing; a forced trade costs real (paper) money.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-14 regime
+python3 scripts/options_data.py --asof 2026-10-14 scan
+```
+
+### 2026-10-14 — CLOSE QQQ bull call debit spread (Cycle #10)
+**Decision:** Close 2026-10-05-QQQ-BCDS-1 (QQQ 760/790 Nov-06 call spread, 1 lot) because the stop-loss fired.
+**Market context in plain words:** QQQ drifted down from $757-ish when we bought to $732.55. A call spread needs the price to rise; instead it fell, so the spread we paid $10.83 for is now worth about $3.56 at mid. That is -67.1% of what we paid, past our -50% limit.
+**Why close (not hold or roll):** The rule was written before the trade, when we were calm. Rejected: (1) hold and hope — QQQ would need to rally above $763.54 (breakeven of the closing trade's mirror) to recover, and only ~23 days remain; (2) roll to a later expiry — a roll means paying more premium for the same failed thesis, and the thesis (QQQ rises) is not better today than on Oct 5.
+**The trade (closing):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL (to close) | 1 | Call | 760 | 2026-11-06 | 4.00 |
+| BUY (to close) | 1 | Call | 790 | 2026-11-06 | 0.455 |
+
+Net credit received $3.545/share = $354.50. Opened at a $10.8325 debit. Fees: entry $1.30 + exit $1.30 = $2.60.
+**Outcome:** Realized P&L = -(−3.545 + 10.8325) × 100 − 2.60 = **-$731.35** (-67.5% of the debit).
+**What drove the P&L (estimated from entry Greeks):** Mostly price: delta was about +25 share-equivalents, and QQQ fell roughly $25 from entry, which accounts for most of the loss. Time decay (theta about -$16/day over 9 days, ≈ -$140) took a further bite. Implied volatility moved little (vega effect small).
+**Position risk at the end:** the max loss was always capped at $1,083 (2.2% of NAV); the stop kept us from taking all of it.
+**Concept spotlight:**
+- *Stop-loss:* a pre-decided exit price. Example: we bought this spread for $10.83 and said we would sell if it fell to half, about $5.42. The market blew through it (it hit $3.56), so we exit at the next price, not the ideal one. A stop does not guarantee the exact loss; it prevents a bad trade from becoming a worse one.
+- *Rolling:* closing a position and opening a similar one further out in time (or at different strikes) to give the idea more time. Example: sell this Nov-06 spread and buy a Dec spread. It is only sensible if you would open that new trade fresh today; otherwise it is just a way to avoid admitting a loss.
+**What would prove this wrong:** QQQ rallying hard this week. We would have recovered some money by holding, but the rule exists because that outcome is not predictable.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-14 mark
+python3 scripts/options_data.py --asof 2026-10-14 price-spread --symbol QQQ --legs "SELL 1 C 760 2026-11-06;BUY 1 C 790 2026-11-06" --qty 1
+```
+**Your reflection:**
 
 ### 2026-10-13 — PASS (Cycle #9)
 **Decision:** Open nothing new; hold both bull call spreads (no trigger fired).
