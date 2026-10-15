@@ -57,6 +57,19 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 ## Entries
 
+### 2026-10-15 — PASS (Cycle #11)
+**Decision:** Open nothing new today; hold the SPY spread.
+**Market context:** VIX 16.75 (44th percentile of the past year, contango, no stress). SPY $770.41 is slightly below where we bought. Options are neither cheap nor rich, so neither buying nor selling premium has an edge.
+**Why pass:** Rejected: (1) another bull call spread — doubles a bet that is already -11.3%; (2) a bull put credit spread on SPY — a 44th-percentile VIX pays little for the risk. The SPY spread (delta +40 share-equivalents, theta -$14.03/day, vega +$40.41 per IV point, from `price-spread`) reaches 21 DTE tomorrow, when the rules say close or roll.
+**What I checked:** `regime` (no errors), `mark` (SPY spread mark 8.605, no triggers), `scan` of 30 symbols (SPY iv30 13.0%, expected move ±$28.70), `record-iv`.
+**What would prove this wrong:** A strong rally we sat out. Missing a move costs nothing.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-15 regime
+python3 scripts/options_data.py --asof 2026-10-15 scan
+python3 scripts/options_data.py --asof 2026-10-15 price-spread --symbol SPY --legs "BUY 1 C 773 2026-11-06;SELL 1 C 800 2026-11-06" --qty 1
+```
+
 ### 2026-10-14 — PASS (Cycle #10)
 **Decision:** Open nothing new today.
 **Market context:** VIX 16.19 (34th percentile of the past year, contango, no stress). SPY $770.72 and QQQ $732.55 fell again. Options are still on the cheap side, but we just got stopped out of one bullish bet and still hold another.
