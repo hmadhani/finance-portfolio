@@ -54,8 +54,45 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Skew | [2026-10-13 PASS](#2026-10-13--pass-cycle-9) |
 | Stop-loss | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
 | Rolling | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
+| Term structure (contango/backwardation) | [2026-10-16 PASS](#2026-10-16--pass-cycle-12) |
 
 ## Entries
+
+### 2026-10-16 — PASS (Cycle #12)
+**Decision:** Open nothing new; the portfolio is 100% cash after the SPY close.
+**Market context:** Cboe throttled our VIX requests (HTTP 429), so today we do not know the VIX, VIX3M or whether the market is stressed. BXM 2579.50 and PUT 3703.48 did load. SPY is $768.93, expected 30-day move ±$27.97 (iv30 12.69%, from `scan`). Our rules say unknown stress counts as stress: no new single-stock premium selling and half the usual size limit (1.5% NAV).
+**Why pass:** Rejected: (1) a fresh SPY bull call spread — it would repeat the bet we just closed with no regime read to justify it; (2) a bull put credit spread on SPY — selling premium blind to the VIX percentile means we cannot tell if we are paid enough for the risk. Flying with an instrument missing is the one time to wait.
+**What I checked:** `regime` (exit 0, five null fields), `mark`, `scan` of 30 symbols (IV history only 10 days, so no IV rank), `record-iv` (30 appended).
+**Concept spotlight:**
+- *Term structure (contango/backwardation):* VIX measures expected volatility over 30 days; VIX3M over 3 months. Normally the longer one is higher (contango, e.g. 16.75 vs 18.65 yesterday) because the future is less certain. When the short-term number jumps above the long-term one (backwardation), traders are paying up for protection right now: a stress signal. That is why a missing VIX is treated cautiously: we cannot rule it out.
+**What would prove this wrong:** A calm, rich-premium day we sat out. Missing it costs nothing.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-16 regime
+python3 scripts/options_data.py --asof 2026-10-16 scan
+```
+
+### 2026-10-16 — CLOSE SPY bull call debit spread (Cycle #12)
+**Decision:** Close 2026-10-02-SPY-BCDS-1 (SPY 773/800 Nov-06 call spread, 1 lot) because it reached 21 days to expiry; do not roll.
+**Market context in plain words:** We paid $9.70 per share for the right to profit if SPY rose above 773. SPY peaked near $779-ish earlier, but today it is $768.93, below our long strike. The spread is worth about $7.48 at mid (`mark`), -22.9%.
+**Why close (not hold or roll):** Rejected: (1) hold to expiry — gamma risk grows near expiration (see [Gamma & why 21 DTE](#concept-index)) and SPY needs about +$13.8 (to $782.70 = 773 + 9.70 debit) just to break even; (2) roll to a later spread — it would be a new bullish bet with VIX data missing, so it must clear every entry rule fresh and cannot today.
+**The trade (closing, from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL (to close) | 1 | Call | 773 | 2026-11-06 | 8.0475 |
+| BUY (to close) | 1 | Call | 800 | 2026-11-06 | 0.5875 |
+
+Net credit $7.46/share = $746.00. Opened at a $9.70 debit. Fees: entry $1.30 + exit $1.30 = $2.60.
+**Outcome:** Realized P&L = -(−7.46 + 9.70) × 100 − 2.60 = **-$226.60** (-23.4% of the debit).
+**What drove the P&L (estimated from entry Greeks):** Price and time. Delta was about +40 share-equivalents (logged 2026-10-15), so the SPY decline hurt; theta of about -$10 to -$14/day over 14 days took roughly $150. The spread was +42% on Oct 6 and gave it all back — we had no profit-taking rule below +100%.
+**Lesson:** A +42% gain unrealized is not a gain. A profit target that never triggers is only a wish; consider stating a partial-profit rule at entry.
+**What would prove this wrong:** SPY rallying above $780 before Nov-06. We would have recovered; the 21-DTE rule exists because that is not predictable.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-16 mark
+python3 scripts/options_data.py --asof 2026-10-16 price-spread --symbol SPY --legs "SELL 1 C 773 2026-11-06;BUY 1 C 800 2026-11-06" --qty 1
+```
+**Your reflection:**
 
 ### 2026-10-15 — PASS (Cycle #11)
 **Decision:** Open nothing new today; hold the SPY spread.
