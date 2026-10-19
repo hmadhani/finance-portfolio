@@ -55,8 +55,48 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Stop-loss | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
 | Rolling | [2026-10-14 CLOSE QQQ](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
 | Term structure (contango/backwardation) | [2026-10-16 PASS](#2026-10-16--pass-cycle-12) |
+| Credit vertical spread (bull put) | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
+| Risk/reward ratio vs. win rate | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
 
 ## Entries
+
+### 2026-10-19 — OPEN SPY bull put credit spread (Cycle #13)
+**Decision:** Sell 2 SPY Nov-20 748/740 put credit spreads (id 2026-10-19-SPY-BPCS-1), collecting $1.1025 per share ($220.50) with a worst case of $1,379.50.
+**Market context in plain words:** Calm market with fair-to-rich option prices. VIX is 17.55 with VIX3M at 19.16 (contango, no stress) and the VIX is higher than on 58.3% of days in the past year, so options are a bit pricier than usual. SPY is $769.89; the options market says a typical 30-day move is about ±$28.90 (iv30 13.10%). IV history is only 11 days, so IV rank is unavailable and the VIX percentile is the proxy. After a stretch of sitting in cash since the Oct-16 close, the 50-65 zone points toward modest premium selling rather than buying.
+**Why this strategy:** A bull put credit spread gets paid if SPY stays above 748. Rejected: (1) another bull call debit spread — we just lost money on two of them, and buying premium is the opposite of what a 58th-percentile VIX favors; (2) an iron condor — it also bets SPY stays under a call-side strike, and we have no view that capping the upside earns enough extra credit here. The put spread wins because the short strike (0.25 delta, 21 points below spot, inside the 1-sigma expected move) sits well under today's price and the long 740 put makes the worst case a known number.
+**The trade (from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 2 | Put | 748 | 2026-11-20 | 5.6275 |
+| BUY | 2 | Put | 740 | 2026-11-20 | 4.525 |
+
+- Net credit: $1.1025/share = $220.50 for 2 contracts. Max profit $220.50, max loss $1,379.50 (width $8 × 100 × 2 = $1,600 − credit), breakeven 746.90, probability of profit 74.2%, fees round trip $5.20 (entry $2.60 recorded now). Max loss + fees = $1,384.70, under the 3% NAV cap ($1,474) and 2.8% of NAV as capital at risk (limit 25%).
+- Profit target 50% of max profit (buy back near $0.55); stop loss if the loss reaches 2× the credit ($441); close or roll at 21 DTE (Oct 30 → Nov 20 expiry gives a 21-DTE date of 2026-10-30).
+```
+       220                        ****************************
+           ---------------------------------------------------
+                                        |                     
+                                 *      |                     
+                                        |                     
+                                        |                     
+                                        |                     
+                                        |                     
+                                *       |                     
+                                        |                     
+     -1380 *********************        |                     
+           666.00                                       846.88
+```
+**Greeks in dollars (whole position):** delta +9.86 share-equivalents (if SPY rises $1, the position gains about $10); theta +$2.32/day (if nothing else changes, about $2 a day from time decay in our favor); vega −$16.88 per IV point (if implied volatility rises one point, the position loses about $17); gamma −0.30.
+**Concept spotlight:**
+- *Credit vertical spread (bull put spread):* You sell one put and buy a cheaper put further down, in the same expiry. The money comes in on day one — the credit — and you keep all of it if SPY finishes above the short strike (748). Here we sell the 748 put for 5.6275 and buy the 740 put for 4.525, net $1.1025. The 740 put is insurance: no matter how far SPY falls, the most we lose is the $8 strike gap minus the credit, $6.8975 per share. Compare with the debit spreads we held earlier ([Credit vs debit](#concept-index)): there we paid first and hoped; here we are paid first and hope nothing bad happens.
+- *Risk/reward ratio vs. win rate:* This trade risks $1,379.50 to make $220.50 — about 6.3 dollars risked per dollar of potential profit. That only works if it wins often: break-even needs a win rate near 86%, and the model says 74.2%. In plain words, the rules let us take it, but it is not a bargain; selling premium pays on average only when the options are priced richer than the real moves, which is the [volatility risk premium](#concept-index). We are testing that, with a small stake, not assuming it.
+**What would prove this wrong:** SPY closing below 746.90 at Nov-20, or a fast drop that pushes the spread's mark to about 3.31 (a $2.21 loss per share vs. the credit, the 2× stop) well before then. A volatility spike hurts us through vega even if SPY barely moves.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-19 regime
+python3 scripts/options_data.py --asof 2026-10-19 scan
+python3 scripts/options_data.py --asof 2026-10-19 price-spread --symbol SPY --legs "SELL 1 P 748 2026-11-20;BUY 1 P 740 2026-11-20" --qty 2
+```
 
 ### 2026-10-16 — PASS (Cycle #12)
 **Decision:** Open nothing new; the portfolio is 100% cash after the SPY close.

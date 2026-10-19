@@ -14,23 +14,24 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 12 |
-| NAV | $49,131.52 |
-| Cash | $49,131.52 |
-| Collateral / max loss reserved | $0.00 |
-| Capital at risk (sum of max losses) | $0.00 (0.0% NAV) |
-| Net delta (share-equivalents) | 0 |
-| Net theta ($/day) | 0 |
-| Net vega ($/IV point) | 0 |
-| Return since inception | -1.74% |
-| BXM since inception | +0.58% |
-| PUT since inception | +0.60% |
-| Regime | VIX/VIX3M unavailable (Cboe HTTP 429) → stress unknown, treated as stress; no new trades |
+| Cycle # | 13 |
+| NAV | $49,144.59 |
+| Cash | $49,367.59 |
+| Collateral / max loss reserved | $1,379.50 |
+| Capital at risk (sum of max losses) | $1,379.50 (2.8% NAV) |
+| Net delta (share-equivalents) | +9.86 |
+| Net theta ($/day) | +2.32 |
+| Net vega ($/IV point) | -16.88 |
+| Return since inception | -1.71% |
+| BXM since inception | +0.14% |
+| PUT since inception | +0.84% |
+| Regime | VIX 17.55 / VIX3M 19.16, contango, no stress; VIX 1y percentile 58.3 (in between, leaning sell) |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-19-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-19 | 2026-11-20 | 2 | -1.1025 | -1.115 | -2.50 | -1.1% | 1,379.50 | 32 | none |
 
 ## Closed Positions
 
@@ -57,10 +58,18 @@ Append-only. One row per cycle.
 | 2026-10-14 | 10 | $49,269.90 | 2578.09 | 3701.46 | 16.19 |
 | 2026-10-15 | 11 | $49,241.36 | 2579.69 | 3703.08 | 16.75 |
 | 2026-10-16 | 12 | $49,131.52 | 2579.50 | 3703.48 | n/a (Cboe 429) |
+| 2026-10-19 | 13 | $49,144.59 | 2568.19 | 3711.99 | 17.55 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-19 — Cycle #13: opened SPY bull put credit spread (2 lots)
+
+- Regime: VIX 17.55, VIX3M 19.16 (contango, no stress), VIX 1y percentile 58.3 (in between, leaning to selling). IV history 11 days (<20), so VIX percentile is the proxy. `regime` errors: none. BXM 2568.19 and PUT 3711.99.
+- No open positions at start (`mark` empty), nothing to manage.
+- NEW 2026-10-19-SPY-BPCS-1: SPY Nov-20 748/740 put credit spread, 2 lots, credit $1.1025/sh ($220.50), max loss $1,379.50 (+$5.20 fees) = 2.8% NAV ≤ 3% cap; short leg delta 0.25, 32 DTE, all legs liquid, POP 74.2%. 1 new position this week. SPY is an ETF so no earnings check. One trade only; a second would add correlated risk.
+- Interest accrued $18.17 (3 days at 4.5% on $49,131.52). Entry cash +$217.90 ($220.50 credit − $2.60 fee). NAV $49,144.59 (cash $49,367.59 − spread $223.00 at mid). Net Greeks from `price-spread` qty 2. IV recorded (30 symbols).
 
 ### 2026-10-16 — Cycle #12: SPY spread closed at 21 DTE (-$226.60); no open positions; PASS
 
