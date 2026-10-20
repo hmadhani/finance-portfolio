@@ -57,8 +57,25 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Term structure (contango/backwardation) | [2026-10-16 PASS](#2026-10-16--pass-cycle-12) |
 | Credit vertical spread (bull put) | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
 | Risk/reward ratio vs. win rate | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
+| Correlation & concentration | [2026-10-20 PASS](#2026-10-20--pass-cycle-14) |
 
 ## Entries
+
+### 2026-10-20 — PASS (Cycle #14)
+**Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
+**Market context in plain words:** Calm and slightly pricey options. VIX is 17.73 with VIX3M at 19.16 (contango, no stress), and the VIX is higher than on 60.3% of days in the past year. SPY is $769.87 and options imply a typical 30-day move of about ±$29.31 (iv30 13.28%). IV history is only 12 days, so IV rank is unavailable and the VIX percentile is the proxy. Our spread is basically flat: mark -1.115 vs -1.1025 at entry, a $2.50 paper loss.
+**Why not trade:** Rejected: (1) a second SPY put spread — it would be the same bet twice, so one bad week in the index would hit both; (2) a bullish debit spread on QQQ — we lost on two of those last week and buying premium goes against a 60th-percentile VIX. The rules allow a new position (1 of 5 this week, 2.8% NAV at risk of the 25% limit), but allowed is not the same as worthwhile. Skipping a day is a legitimate trade.
+**Concept spotlight:**
+- *Correlation & concentration:* Correlation says how much two positions move together. SPY, QQQ and most big stocks rise and fall on the same days, so three "different" trades can behave like one big trade. Example from this portfolio: our SPY put spread loses if the market drops. Add a QQQ put spread and a drop hurts both at once, so the real risk is the sum of the two max losses ($1,380.50 each time), not a diversified average. Spreading risk across unrelated things (or just waiting) keeps any single event from mattering much.
+**Position check (from `price-spread`, qty 2):** max profit $219.50, max loss $1,380.50, breakeven 746.90, probability of profit 74.3%, fees round trip $5.20. Greeks in dollars: delta +10.04 (SPY up $1 gains about $10), theta +$2.52/day (about $2.50 a day from time decay if nothing else changes), vega -$16.94 per IV point (a one-point rise in implied volatility costs about $17).
+**What would prove this wrong:** SPY rallying steadily while we sit out means we missed income; a sharp drop would hit the open spread regardless. Passing only costs us opportunity, never principal.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-20 regime
+python3 scripts/options_data.py --asof 2026-10-20 scan
+python3 scripts/options_data.py --asof 2026-10-20 mark
+python3 scripts/options_data.py --asof 2026-10-20 price-spread --symbol SPY --legs "SELL 1 P 748 2026-11-20;BUY 1 P 740 2026-11-20" --qty 2
+```
 
 ### 2026-10-19 — OPEN SPY bull put credit spread (Cycle #13)
 **Decision:** Sell 2 SPY Nov-20 748/740 put credit spreads (id 2026-10-19-SPY-BPCS-1), collecting $1.1025 per share ($220.50) with a worst case of $1,379.50.
