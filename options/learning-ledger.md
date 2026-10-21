@@ -58,8 +58,25 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Credit vertical spread (bull put) | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
 | Risk/reward ratio vs. win rate | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
 | Correlation & concentration | [2026-10-20 PASS](#2026-10-20--pass-cycle-14) |
+| Profit target (the 50% rule) | [2026-10-21 PASS](#2026-10-21--pass-cycle-15) |
 
 ## Entries
+
+### 2026-10-21 — PASS (Cycle #15)
+**Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
+**Market context in plain words:** Options got a little cheaper. VIX is 16.69 with VIX3M at 18.70 (contango, no stress), and the VIX is higher than on 42.5% of days in the past year, which is the middle of the range. SPY rose to $772.70 and options imply a typical 30-day move of about ±$28.77 (iv30 12.985%). IV history is only 13 days, so IV rank is unavailable and the VIX percentile is the proxy. Our spread moved our way: mark -0.98 vs -1.1025 at entry, a $24.50 paper gain (+11.1%).
+**Why not trade:** Rejected: (1) a second SPY or QQQ put spread — same bet twice, see [correlation](#2026-10-20--pass-cycle-14); (2) a bullish debit spread — with the VIX in the middle of its range, neither buying nor selling premium has a clear edge, and the rules prefer skipping to forcing a trade. Capacity is fine (1 of 5 new positions this week, 2.8% NAV at risk of the 25% limit), but allowed is not worthwhile.
+**Concept spotlight:**
+- *Profit target (the 50% rule):* A credit spread's best case is keeping the whole credit, but the last half of it comes slowly and carries the same worst case. So the rules close it once half the maximum profit is earned. Example: our spread's max profit is $194.00, so the target is about $97 of profit; we are at +$24.50, roughly a quarter of the way, so we hold. Taking profit early frees up risk budget for the next idea.
+**Position check (from `price-spread`, qty 2):** max profit $194.00, max loss $1,406.00, breakeven 747.03, probability of profit 76.8%, fees round trip $5.20. Greeks in dollars: delta +9.32 (SPY up $1 gains about $9), theta +$2.94/day (about $3 a day from time decay if nothing else changes), vega -$17.28 per IV point (a one-point rise in implied volatility costs about $17).
+**What would prove this wrong:** A steady rally while we sit out means missed income; a sharp drop hits the open spread regardless. Passing costs opportunity, never principal.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-21 regime
+python3 scripts/options_data.py --asof 2026-10-21 scan
+python3 scripts/options_data.py --asof 2026-10-21 mark
+python3 scripts/options_data.py --asof 2026-10-21 price-spread --symbol SPY --legs "SELL 1 P 748 2026-11-20;BUY 1 P 740 2026-11-20" --qty 2
+```
 
 ### 2026-10-20 — PASS (Cycle #14)
 **Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
