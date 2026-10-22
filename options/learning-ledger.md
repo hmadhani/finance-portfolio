@@ -59,8 +59,25 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Risk/reward ratio vs. win rate | [2026-10-19 OPEN SPY](#2026-10-19--open-spy-bull-put-credit-spread-cycle-13) |
 | Correlation & concentration | [2026-10-20 PASS](#2026-10-20--pass-cycle-14) |
 | Profit target (the 50% rule) | [2026-10-21 PASS](#2026-10-21--pass-cycle-15) |
+| Mark-to-market (paper loss vs realized loss) | [2026-10-22 PASS](#2026-10-22--pass-cycle-16) |
 
 ## Entries
+
+### 2026-10-22 — PASS (Cycle #16)
+**Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
+**Market context in plain words:** SPY slipped about 1% to $764.92 and options got pricier. VIX is 18.31 with VIX3M at 19.74 (contango, no stress), and the VIX is higher than on 66.7% of days in the past year, which leans toward selling premium. Options imply a typical 30-day SPY move of about ±$31.14 (iv30 14.198%). IV history is only 14 days, so IV rank is unavailable and the VIX percentile is the proxy. Our spread moved against us: mark -1.415 vs -1.1025 at entry, a $62.50 paper loss (-28.3% of the credit).
+**Why not trade:** Rejected: (1) a second put spread on SPY, QQQ or IWM — the same bullish bet again, right after it started losing, which is averaging down; (2) a spread on a non-equity name such as GLD or TLT — their option prices are not rich enough to justify a new idea just to feel diversified (TLT iv30 13.869%, GLD 20.788%). Capacity is fine (1 of 5 new positions this week, 2.8% NAV at risk of the 25% limit), but allowed is not worthwhile.
+**Concept spotlight:**
+- *Mark-to-market (paper loss vs realized loss):* Every day we re-price the spread at today's mid quotes. That number is our "mark". Today's mark says closing would cost $1.415 per share against $1.1025 received, so we are down $62.50 on paper. Nothing is lost for real until we close; and the rules decide when to close: the stop is a loss of 2× the credit ($441), far from $62.50. Paper losses are information, not instructions.
+**Position check (from `price-spread`, qty 2):** max profit $280.00 (at today's fills), max loss $1,320.00, breakeven 746.60, probability of profit 70.3%, fees round trip $5.20. Greeks in dollars: delta +11.86 (SPY up $1 gains about $12), theta +$2.38/day (about $2 a day from time decay if nothing else changes), vega -$15.60 per IV point (a one-point rise in implied volatility costs about $16).
+**What would prove this wrong:** SPY sliding through 747 before Nov-20 turns the paper loss real; sitting out a bounce means missed income. Passing costs opportunity, never principal.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-22 regime
+python3 scripts/options_data.py --asof 2026-10-22 scan
+python3 scripts/options_data.py --asof 2026-10-22 mark
+python3 scripts/options_data.py --asof 2026-10-22 price-spread --symbol SPY --legs "SELL 1 P 748 2026-11-20;BUY 1 P 740 2026-11-20" --qty 2
+```
 
 ### 2026-10-21 — PASS (Cycle #15)
 **Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
