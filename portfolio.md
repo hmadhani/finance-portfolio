@@ -19,19 +19,19 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-10-27)
+## Header (as of 2026-10-28)
 
 | Metric | Value |
 |---|---|
-| NAV | $98,840.07 |
+| NAV | $98,841.46 |
 | Total return | -1.16% (since inception) |
 | Blended Benchmark (ref) | not yet tracked — see note below |
 | SPY (ref) | $777.96 (+1.55% since inception) |
-| Cash balance | $11,273.11 (11.41% of NAV) |
+| Cash balance | $11,274.50 (11.41% of NAV) |
 | Stock sleeve | $64,157.94 (64.91% of NAV) |
 | Sector ETF sleeve | $15,516.52 (15.70% of NAV) |
 | Bond sleeve | $7,892.50 (7.99% of NAV) |
-| Cycle # | 36 |
+| Cycle # | 37 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
@@ -43,7 +43,9 @@ internally contradictory ($393.41 vs. a $380-383 session range), so neither
 is reliable enough to start the column; NAV History carries "—". SPY
 ($765.63, session range $763.72-769.54) is the secondary reference.
 
-This is Cycle #36 (HEAVY). No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-10-27):** SPY and S&P 500 searches again returned nothing newer than early October (and no GOOGL post-earnings print), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. Blended benchmark still untracked. No quarterly/annual report due.
+This is Cycle #37 (HEAVY). No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-10-28):** SPY searches returned no current U.S. quote, so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. GOOGL reports Q3 earnings after the close 2026-10-28 (confirmed by IR; earlier '10-27' was a stale aggregator date) — reaction first tradable 10-29; re-evaluate then. Blended benchmark still untracked. No quarterly/annual report due.
+
+Prior cycle (#36, HEAVY) detail: No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-10-27):** SPY and S&P 500 searches again returned nothing newer than early October (and no GOOGL post-earnings print), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. Blended benchmark still untracked. No quarterly/annual report due.
 
 Prior cycle (#35, HEAVY) detail: No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-10-26):** SPY and S&P 500 searches returned nothing newer than early October, so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. Blended benchmark still untracked. GOOGL earnings 2026-10-27. No quarterly/annual report due.
 
@@ -138,6 +140,7 @@ cycles before that benchmark was tracked.
 | 2026-10-23 | 34 | $98,837.29 | — | $777.96 |
 | 2026-10-26 | 35 | $98,838.68 | — | $777.96 |
 | 2026-10-27 | 36 | $98,840.07 | — | $777.96 |
+| 2026-10-28 | 37 | $98,841.46 | — | $777.96 |
 
 ---
 
@@ -161,8 +164,8 @@ cycles before that benchmark was tracked.
 | XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $199.81 | $5,195.06 | 5.26% | +$359.06 (+7.42%) |
 | XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $174.94 | $10,321.46 | 10.44% | -$650.18 (-5.93%) |
 | AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.25 | $7,892.50 | 7.99% | -$135.30 (-1.69%) |
-| Cash | — | — | — | — | $11,271.72 | — | $11,271.72 | 11.40% | — |
-| **TOTAL** | — | — | — | — | **$99,971.15** | — | **$98,838.68** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
+| Cash | — | — | — | — | $11,271.72 | — | $11,274.50 | 11.41% | — |
+| **TOTAL** | — | — | — | — | **$99,971.15** | — | **$98,841.46** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
 
 ---
 
@@ -184,6 +187,14 @@ cycles before that benchmark was tracked.
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-10-28 — Cycle #37 (HEAVY): full research pass, no trades
+
+All 16 positions reviewed; no Exit Criteria triggered and no Trading Discipline-eligible trade (no new verified information; rule 5). No new-candidate screen: cash 11.41% vs ~10% floor. NAV $98,841.46 (-1.16% since inception; SPY $777.96 carried). No current price prints obtainable; holdings carried forward. AI-Capex 24.03% (within trim band, hot-theme screened). GOOGL Q3 earnings are after the close today (10-28), not 10-27 as previously logged; reaction evaluated next cycle. Slippage paid: $0.00 (no trades).
+
+- **PEP** (Consumer-Defensive) — reaffirmed HOLD at $125.61 carried; no new information, trim <0.5% NAV (rule 4). Watch item.
+- **GOOGL** (AI-Capex) — reaffirmed HOLD; earnings catalyst pending after today's close; no action ahead of the print.
+- **AVGO, ETN, COF, LLY, TJX, BALL, NEE, MU, BHRB, IMAX, VRTX, XLK, XLI, AGG** — reaffirmed HOLD at carried prices; no new information (rule 5). NEE and COF remain watch items.
 
 ### 2026-10-27 — Cycle #36 (HEAVY): full research pass, no trades
 
