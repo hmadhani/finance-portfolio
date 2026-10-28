@@ -63,8 +63,27 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Liquidity (open interest & bid-ask width) | [2026-10-23 PASS](#2026-10-23--pass-cycle-17) |
 | Assignment risk (why we close before expiration) | [2026-10-26 PASS](#2026-10-26--pass-cycle-18) |
 | Short-leg delta as a rough chance of finishing in the money | [2026-10-27 PASS](#2026-10-27--pass-cycle-19) |
+| Opportunity cost of waiting (cash earns interest) | [2026-10-28 PASS](#2026-10-28--pass-cycle-20) |
 
 ## Entries
+
+### 2026-10-28 — PASS (Cycle #20)
+**Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
+**Market context in plain words:** SPY is $771.42, slightly higher, and VIX eased to 17.30 (VIX3M 19.32, contango, no stress). The VIX is higher than on 53.6% of days in the past year: an in-between reading with no clear lean. Options imply a typical 30-day SPY move of about ±$29.25 (iv30 13.224%). IV history is only 18 days, so the VIX percentile is the proxy. Our spread is green: mark -0.955 vs -1.1025 at entry, a $29.50 paper gain (+13.4% of the credit). Its 21-DTE date is 2026-10-30, so the next decision is close or roll.
+**Why not trade:** Rejected: (1) a second SPY/QQQ put spread, which doubles the same bullish bet; (2) a single-stock trade, since an in-between regime gives no edge and single names add earnings risk.
+**Concept spotlight:**
+- *Opportunity cost of waiting:* Cash that is not in a trade still earns about 4.5% a year in this paper account, roughly $6 a day on $48,000. A trade therefore has to beat that quiet baseline after fees and risk, so skipping a mediocre setup is not "doing nothing", it is choosing the baseline.
+**Position check (from `price-spread`, qty 2):** max profit $190.00 (at today's fills), max loss $1,410.00, breakeven 747.05, probability of profit 76.8%, fees round trip $5.20. Greeks in dollars: delta +9.88 (SPY up $1 gains about $10), theta +$3.84/day (about $4 a day from time decay if nothing else changes), vega -$16.28 per IV point (a one-point rise in implied volatility costs about $16).
+```
+SPY P&L at expiry: max +$190 above 748; breakeven 747.05; max -$1,410 below 740
+```
+**What would prove this wrong:** A fast SPY drop below 748 before Nov-20 would turn the held spread red toward its stop; a calm drift up would make passing cost nothing.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-28 regime
+python3 scripts/options_data.py --asof 2026-10-28 mark
+python3 scripts/options_data.py --asof 2026-10-28 price-spread --symbol SPY --legs "SELL 1 P 748 2026-11-20;BUY 1 P 740 2026-11-20" --qty 2
+```
 
 ### 2026-10-27 — PASS (Cycle #19)
 **Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.
