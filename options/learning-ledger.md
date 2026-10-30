@@ -65,8 +65,71 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Short-leg delta as a rough chance of finishing in the money | [2026-10-27 PASS](#2026-10-27--pass-cycle-19) |
 | Opportunity cost of waiting (cash earns interest) | [2026-10-28 PASS](#2026-10-28--pass-cycle-20) |
 | Time-decay curve (why selling premium gains slowly at first) | [2026-10-29 PASS](#2026-10-29--pass-cycle-21) |
+| Sunk cost (past losses don't change the next decision) | [2026-10-30 CLOSE SPY](#2026-10-30--close-spy-bull-put-credit-spread-cycle-22) |
+| Strike distance vs. credit (cushion costs premium) | [2026-10-30 OPEN SPY](#2026-10-30--open-spy-bull-put-credit-spread-cycle-22) |
 
 ## Entries
+
+### 2026-10-30 — OPEN SPY bull put credit spread (Cycle #22)
+**Decision:** Sell 1 SPY Nov-30 723/714 put credit spread (id 2026-10-30-SPY-BPCS-1), collecting $0.96 per share ($96) with a worst case of $804.
+**Market context in plain words:** The market dropped and got more nervous. VIX is 20.17 with VIX3M at 21.06 (contango, no stress), and the VIX is higher than on 82.9% of days in the past year, so options are expensive: good for sellers. SPY is $757.11; the options market says a typical 30-day move is about ±$33.10 (iv30 15.251%). SPY's IV rank reads 100 but rests on only 20 days of history, so we lean on the VIX percentile.
+**Why this strategy:** A bull put credit spread gets paid if SPY stays above 723, about 4.5% below today's price. Rejected: (1) a bull call debit spread: buying options when they are expensive is the wrong side of the volatility risk premium; (2) a spread with strikes near the old 748/740: SPY already fell through that area and it would just repeat the closed trade with less cushion. Rich premium after a drop is where selling pays best, while the farther strike gives room for more decline.
+**The trade (from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 1 | Put | 723 | 2026-11-30 | 5.11 |
+| BUY | 1 | Put | 714 | 2026-11-30 | 4.15 |
+
+- Net credit: $0.96/share = $96. Max profit $96, max loss $804 (width $9 × 100 − credit), breakeven 722.04, probability of profit 78.5%, fees round trip $2.60 (entry $1.30 recorded now). Max loss + fees = $806.60, under the 3% NAV cap and 1.6% of NAV at risk (limit 25%). Honest note: this risks about $8.40 to make $1, so it needs a win rate near 89%; the model says 78.5%. The rules allow it, but it is thin; the edge, if any, is the rich VIX.
+- Profit target 50% of max profit (buy back near $0.48); stop loss if the loss reaches 2× the credit ($192); close or roll at 21 DTE (2026-11-09).
+```
+        96                       *****************************
+           ---------------------*-----------------------------
+                                         |                    
+                                         |                    
+                                         |                    
+                               *         |                    
+                                         |                    
+                                         |                    
+                                         |                    
+                              *          |                    
+      -804 *******************           |                    
+           642.60                                       832.82
+```
+**Greeks in dollars (whole position):** delta +3.89 share-equivalents (if SPY rises $1, gain about $4); theta +$1.56/day (if nothing else changes, about $1.60 a day from time decay in our favor); vega −$7.81 per IV point (if implied volatility rises one point, the position loses about $8); gamma −0.12.
+**Concept spotlight:**
+- *Strike distance vs. credit:* The farther the short strike is from the price, the safer the trade and the smaller the credit. Last time we sold 748 when SPY was $770 (2.8% away) and took $1.10 on an $8-wide spread. Now we sell 723 at $757 (4.5% away) and take $0.96 on a $9-wide spread. Higher IV pays us for the extra cushion, but cushion is never free.
+**What would prove this wrong:** SPY closing below 722.04 on Nov-30, or a further sell-off that lifts the spread's mark to about 2.88 (a $1.92 loss per share, the 2× stop). A volatility spike hurts through vega even if SPY holds.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-30 regime
+python3 scripts/options_data.py --asof 2026-10-30 scan
+python3 scripts/options_data.py --asof 2026-10-30 price-spread --symbol SPY --legs "SELL 1 P 723 2026-11-30;BUY 1 P 714 2026-11-30" --qty 1
+```
+
+### 2026-10-30 — CLOSE SPY bull put credit spread (Cycle #22)
+**Decision:** Close 2026-10-19-SPY-BPCS-1 (SPY Nov-20 748/740 put spread, 2 lots) at 21 DTE; not rolled into the same strikes.
+**Market context in plain words:** We sold this spread when SPY was $769.89, collecting $1.1025 per share. SPY has since fallen to $757.11, closer to our short strike of 748, so the spread is worth more to buy back than we sold it for. At mid it is worth $1.86 (`mark`), a paper loss of $151.50 (-68.7% of the credit). The stop (2× credit, -$441) was not reached.
+**Why close (not hold or roll):** Rejected: (1) hold to expiry: the 21-DTE rule exists because the position's sensitivity to price swings (gamma) grows near expiration, and SPY is only $9 above the short strike; (2) roll to the same strikes later: that would keep a position whose cushion has shrunk. We instead evaluated a fresh trade on its own merits (see the OPEN entry).
+**The trade (closing, from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| BUY (to close) | 2 | Put | 748 | 2026-11-20 | 8.3875 |
+| SELL (to close) | 2 | Put | 740 | 2026-11-20 | 6.50 |
+
+Net debit $1.8875/share = $377.50. Opened at a $1.1025 credit. Fees: entry $2.60 + exit $2.60 = $5.20.
+**Outcome:** Realized P&L = -(1.8875 − 1.1025) × 100 × 2 − 5.20 = **-$162.20**.
+**What drove the P&L (estimated from entry Greeks):** Mostly price. Entry delta was about +9.9 share-equivalents and SPY fell about $12.8, which costs roughly $125. Time decay (theta about +$2.3/day over 11 days) gave back roughly $25, and the rise in implied volatility (VIX 17.55 to 20.17, vega about −$17/point) cost the rest.
+**Lesson:** Selling premium wins small and loses big when the market drops; closing at 21 DTE at -$162 was far better than the -$441 stop or a full loss of $1,380. The loss on the old spread is gone; it should not push us to "win it back".
+**Concept spotlight:**
+- *Sunk cost:* Money already lost is not a reason to take, or avoid, the next trade. The only question today is: at today's prices, does a new trade meet the rules? We judged the new trade alone.
+**What would prove this wrong:** SPY rebounding above $770 before Nov-20; the spread would have expired worthless and we would have kept $220. The 21-DTE rule accepts that miss.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-10-30 mark
+python3 scripts/options_data.py --asof 2026-10-30 price-spread --symbol SPY --legs "BUY 1 P 748 2026-11-20;SELL 1 P 740 2026-11-20" --qty 2
+```
+**Your reflection:**
 
 ### 2026-10-29 — PASS (Cycle #21)
 **Decision:** Hold the SPY Nov-20 748/740 put spread and open nothing new today.

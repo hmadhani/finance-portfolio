@@ -14,24 +14,24 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 21 |
-| NAV | $49,234.79 |
-| Cash | $49,426.79 |
-| Collateral / max loss reserved | $1,379.50 |
-| Capital at risk (sum of max losses) | $1,379.50 (2.8% NAV) |
-| Net delta (share-equivalents) | +10.56 |
-| Net theta ($/day) | +4.20 |
-| Net vega ($/IV point) | -17.54 |
-| Return since inception | -1.53% |
-| BXM since inception | +0.48% |
-| PUT since inception | +1.19% |
-| Regime | VIX 16.37 / VIX3M 18.91, contango, no stress; VIX 1y percentile 36.5 (in between, leaning low) |
+| Cycle # | 22 |
+| NAV | $49,049.31 |
+| Cash | $49,147.31 |
+| Collateral / max loss reserved | $804.00 |
+| Capital at risk (sum of max losses) | $804.00 (1.6% NAV) |
+| Net delta (share-equivalents) | +3.89 |
+| Net theta ($/day) | +1.56 |
+| Net vega ($/IV point) | -7.81 |
+| Return since inception | -1.90% |
+| BXM since inception | -0.60% |
+| PUT since inception | +0.12% |
+| Regime | VIX 20.17 / VIX3M 21.06, contango, no stress; VIX 1y percentile 82.9 (rich, favors selling premium) |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-19-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-19 | 2026-11-20 | 2 | -1.1025 | -0.96 | +28.50 | +12.9% | 1,379.50 | 22 | none |
+| 2026-10-30-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-30 | 2026-11-30 | 1 | -0.96 | -0.98 | -2.00 | -2.1% | 804.00 | 31 | none |
 
 ## Closed Positions
 
@@ -39,6 +39,7 @@ Machine state: `options/data/positions.json`
 |---|---|---|---|---|---|---|---|
 | 2026-10-05-QQQ-BCDS-1 | QQQ | bull_call_debit_spread | 2026-10-05 | 2026-10-14 | -731.35 | stop_loss (-67.1%) | [2026-10-14 CLOSE](learning-ledger.md#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10) |
 | 2026-10-02-SPY-BCDS-1 | SPY | bull_call_debit_spread | 2026-10-02 | 2026-10-16 | -226.60 | 21_dte (-23.4% of debit) | [2026-10-16 CLOSE](learning-ledger.md#2026-10-16--close-spy-bull-call-debit-spread-cycle-12) |
+| 2026-10-19-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-19 | 2026-10-30 | -162.20 | 21_dte (-71% of credit) | [2026-10-30 CLOSE](learning-ledger.md#2026-10-30--close-spy-bull-put-credit-spread-cycle-22) |
 
 ## NAV History
 
@@ -67,10 +68,18 @@ Append-only. One row per cycle.
 | 2026-10-27 | 19 | $49,206.95 | 2574.27 | 3720.74 | 17.54 |
 | 2026-10-28 | 20 | $49,229.87 | 2576.85 | 3724.35 | 17.30 |
 | 2026-10-29 | 21 | $49,234.79 | 2577.04 | 3724.99 | 16.37 |
+| 2026-10-30 | 22 | $49,049.31 | 2549.24 | 3685.55 | 20.17 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-10-30 — Cycle #22: SPY put spread closed at 21 DTE (-$162.20); opened new SPY Nov-30 put spread
+
+- Regime: VIX 20.17, VIX3M 21.06 (contango, no stress), VIX 1y percentile 82.9 (rich). `regime` errors: none. BXM 2549.24, PUT 3685.55. SPY fell to 757.11 (from 769.89), iv30 15.251%, expected 30-day move ±$33.10. IV history 20 days; SPY IV rank 100 (n=20, thin), so the VIX percentile is the cross-check.
+- CLOSE 2026-10-19-SPY-BPCS-1: `21_dte` fired (mark -1.86 vs -1.1025 entry, -$151.50 at mid). Closed via `price-spread` at fills 8.3875 / 6.50 (debit 1.8875/sh). Realized -$162.20 after $5.20 fees. Stop (-$441) not hit. See ledger CLOSE.
+- NEW 2026-10-30-SPY-BPCS-1: SPY Nov-30 723/714 put credit spread, 1 lot, credit $0.96/sh ($96), max loss $804 (+$2.60 fees) = 1.6% NAV ≤ 3% cap; short delta 0.199, 31 DTE, all legs liquid, POP 78.5%. Capital at risk 1.6% NAV. 1 new position this week. SPY is an ETF, no earnings check. Only one trade: the rest of the universe is equity-correlated.
+- Interest accrued $5.92 (1 day at 4.5% on $48,047.29). Close cash -$380.10; open cash +$94.70. NAV $49,049.31 (cash $49,147.31 - spread $98.00 at mid). Net Greeks from `price-spread`. IV recorded (30 symbols).
 
 ### 2026-10-29 — Cycle #21: SPY put spread held (+12.9%, 22 DTE, no trigger yet); PASS
 
