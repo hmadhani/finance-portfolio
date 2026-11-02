@@ -21,6 +21,28 @@
           "option": "SPY261130P00714000"
         }
       ]
+    },
+    {
+      "id": "2026-11-02-QQQ-BPCS-1",
+      "symbol": "QQQ",
+      "strategy": "bull_put_credit_spread",
+      "opened": "2026-11-02",
+      "qty": 1,
+      "entry_cost": -1.3925,
+      "max_loss": -860.75,
+      "profit_target_pct": 50,
+      "legs": [
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "QQQ261204P00650000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "QQQ261204P00640000"
+        }
+      ]
     }
   ]
 }

@@ -67,8 +67,48 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Time-decay curve (why selling premium gains slowly at first) | [2026-10-29 PASS](#2026-10-29--pass-cycle-21) |
 | Sunk cost (past losses don't change the next decision) | [2026-10-30 CLOSE SPY](#2026-10-30--close-spy-bull-put-credit-spread-cycle-22) |
 | Strike distance vs. credit (cushion costs premium) | [2026-10-30 OPEN SPY](#2026-10-30--open-spy-bull-put-credit-spread-cycle-22) |
+| Sizing by max loss (why qty is 1) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
+| Relative IV rank (shopping for the richest premium) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
 
 ## Entries
+
+### 2026-11-02 — OPEN QQQ bull put credit spread (Cycle #23)
+**Decision:** Sell 1 QQQ Dec-04 650/640 put credit spread (id 2026-11-02-QQQ-BPCS-1), collecting $1.3925 per share ($139.25) with a worst case of $860.75.
+**Market context in plain words:** The market calmed a little from Friday: VIX is 18.91 (VIX3M 20.38, contango, no stress), still higher than on 74.6% of days in the past year, so options remain pricey, which favors sellers. QQQ is $693.83 and the options market says a typical 30-day move is about ±$47.86 (iv30 24.061%). QQQ's IV rank is 98.8 (SPY 80, IWM 57.9, DIA 66.9), so QQQ pays the most for the same risk. Caveat: IV rank rests on only about 21 days of history.
+**Why this strategy:** A bull put credit spread gets paid if QQQ stays above 650, about 6.3% below today's price, and we already hold a SPY spread of the same type, so we spread the bet across a different index. Rejected: (1) a bull call debit spread: buying options when they are expensive is the wrong side of the volatility risk premium; (2) an IWM 268/262 put spread: it failed the liquidity gate (`all_legs_liquid: false`, long leg open interest 414 < 500), so we skip it rather than accept a bad exit.
+**The trade (from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 1 | Put | 650 | 2026-12-04 | 7.185 |
+| BUY | 1 | Put | 640 | 2026-12-04 | 5.7925 |
+
+- Net credit: $1.3925/share = $139.25. Max profit $139.25, max loss $860.75 (width $10 × 100 − credit), breakeven 648.61, probability of profit 77.4%, fees round trip $2.60 (entry $1.30 recorded now). Max loss + fees = $863.35, under the 3% NAV cap (about $1,472); total capital at risk is 3.4% of NAV (limit 25%). Honest note: this risks about $6.20 to make $1, so it needs a win rate near 86%; the model says 77.4%. The rules allow it, but the edge is thin, and QQQ and SPY tend to fall together, so the two spreads are really one correlated bet.
+- Profit target 50% of max profit (buy back near $0.70); stop loss if the loss reaches 2× the credit ($278.50); close or roll at 21 DTE (2026-11-13).
+```
+       139                     *******************************
+           ---------------------------------------------------
+                                          |                   
+                              *           |                   
+                                          |                   
+                                          |                   
+                                          |                   
+                             *            |                   
+                                          |                   
+                                          |                   
+      -861 ******************             |                   
+           576.00                                       763.21
+```
+**Greeks in dollars (whole position):** delta +3.78 share-equivalents (if QQQ rises $1, gain about $3.80); theta +$2.30/day (if nothing else changes, about $2.30 a day from time decay in our favor); vega −$6.98 per IV point (if implied volatility rises one point, the position loses about $7); gamma −0.07.
+**Concept spotlight:**
+- *Sizing by max loss:* We do not decide "how many contracts do I want"; we decide how much we can lose and divide. The cap is 3% of NAV (about $1,472). One spread costs $860.75 + $2.60 fees = $863.35 of worst case, so 1.7 fits, rounded down to 1 contract. Two would risk $1,727, above the cap. Rounding down always keeps us inside the limit.
+- *Relative IV rank:* IV rank says how expensive an underlying's options are compared with its own past year. Comparing it across the universe (QQQ 98.8 vs SPY 80 vs IWM 57.9) shows where selling premium pays best. The same $10-wide spread brings in more cash where implied volatility is high, because buyers are paying extra for protection.
+**What would prove this wrong:** QQQ closing below 648.61 on Dec-04, or a sell-off that lifts the spread's mark to about 4.18 (a $2.785 loss per share, the 2× stop). A volatility spike hurts through vega even if QQQ holds.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-02 regime
+python3 scripts/options_data.py --asof 2026-11-02 scan
+python3 scripts/options_data.py --asof 2026-11-02 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+```
 
 ### 2026-10-30 — OPEN SPY bull put credit spread (Cycle #22)
 **Decision:** Sell 1 SPY Nov-30 723/714 put credit spread (id 2026-10-30-SPY-BPCS-1), collecting $0.96 per share ($96) with a worst case of $804.
