@@ -69,8 +69,26 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Strike distance vs. credit (cushion costs premium) | [2026-10-30 OPEN SPY](#2026-10-30--open-spy-bull-put-credit-spread-cycle-22) |
 | Sizing by max loss (why qty is 1) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
 | Relative IV rank (shopping for the richest premium) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
+| Missing data means wait (rate limits) | [2026-11-03 PASS](#2026-11-03--pass-cycle-24) |
 
 ## Entries
+
+### 2026-11-03 — PASS (Cycle #24)
+**Decision:** Hold both put spreads and open nothing new today.
+**Market context in plain words:** Stocks slipped again: SPY is 755.93 and QQQ 687.75. VIX rose to 20.34 (VIX3M 21.08, contango, no stress) and is higher than on 83.3% of days in the past year, so options are pricey, which normally favors selling premium. Our two bull put spreads are about flat (SPY -$2.50) and slightly red (QQQ -$32.25), with no trigger near.
+**Why pass:** Both open trades profit if US stocks stay up. A third bullish put spread would be the same bet again (see Correlation & concentration), and the data feed was shaky today: the first regime and mark calls came back "429 Too Many Requests" and 14 of 30 symbols, including SPY, DIA and AAPL, could not be scanned. Rejected: (1) another QQQ/IWM put spread: same direction, more risk on one view; (2) a bear call spread as a hedge: it needs a bearish view we do not have, and picking from a partial scan is guessing. Capital at risk is 3.4% of NAV, far under the 25% cap, so the limit is judgment, not rules.
+**Numbers (all from the commands below):** QQQ iv30 26.04%, expected 30-day move ±$51.35; SPY spread mark -0.985 (27 DTE); QQQ spread mark -1.715 (31 DTE). Net Greeks of the book: delta +8.36 share-equivalents, theta +$4.25/day, vega -$14.42 per IV point.
+**Concept spotlight:**
+- *Missing data means wait:* Our data comes from free, delayed public quotes, and the server sometimes says "429, slow down". A number we could not fetch is not zero and not "same as yesterday"; it is unknown. Example: with SPY unscanned we cannot compare it to QQQ, so we do not pretend to. We retried, got what we could, and skipped the new trade rather than guessing.
+**What would prove this wrong:** A strong rebound in stocks while we sat out would mean we missed premium; that is an acceptable cost since cash earns about 4.5% a year meanwhile.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-03 regime
+python3 scripts/options_data.py --asof 2026-11-03 mark
+python3 scripts/options_data.py --asof 2026-11-03 scan
+python3 scripts/options_data.py --asof 2026-11-03 price-spread --symbol SPY --legs "SELL 1 P 723 2026-11-30;BUY 1 P 714 2026-11-30" --qty 1
+python3 scripts/options_data.py --asof 2026-11-03 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+```
 
 ### 2026-11-02 — OPEN QQQ bull put credit spread (Cycle #23)
 **Decision:** Sell 1 QQQ Dec-04 650/640 put credit spread (id 2026-11-02-QQQ-BPCS-1), collecting $1.3925 per share ($139.25) with a worst case of $860.75.
