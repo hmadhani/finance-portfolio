@@ -70,8 +70,26 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Sizing by max loss (why qty is 1) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
 | Relative IV rank (shopping for the richest premium) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
 | Missing data means wait (rate limits) | [2026-11-03 PASS](#2026-11-03--pass-cycle-24) |
+| Volatility drop helps sellers (short vega pays when IV falls) | [2026-11-04 PASS](#2026-11-04--pass-cycle-25) |
 
 ## Entries
+
+### 2026-11-04 — PASS (Cycle #25)
+**Decision:** Hold both put spreads and open nothing new today.
+**Market context in plain words:** Stocks bounced and the fear gauge cooled: VIX fell from 20.34 to 17.50 (VIX3M 19.35, contango, no stress), now higher than on 56.7% of days in the past year, which is middle of the road. SPY is 765.89 and QQQ 693.11. Both our bull put spreads gained: SPY +$43.50 (+45.3% of its credit) and QQQ +$12.25 (+8.8%). No trigger fired.
+**Why pass:** In-between volatility gives no clear edge to sell or buy, and both open trades already profit if US stocks stay up (see Correlation & concentration). Rejected: (1) a new SPY or QQQ put spread: same view, more risk on it, and SPY's IV rank is only 42.6; (2) a debit spread to chase the bounce: after a rally and a VIX drop, options are cheaper but we have no reason to think the move continues. Capital at risk is 3.4% of NAV, so the limit is judgment, not rules.
+**Numbers (all from the commands below):** SPY spread mark -0.525 (26 DTE, 50% target is a mark near -0.48); QQQ spread mark -1.27 (30 DTE). QQQ IV rank 81.6, IWM 25.8, DIA 28.0. Book Greeks: delta +6.51 share-equivalents, theta +$4.15/day, vega -$14.19 per IV point.
+**Concept spotlight:**
+- *Volatility drop helps sellers:* We are short options, so our vega is negative (-$14.19 per IV point). If IV falls one point and nothing else changes, we gain about $14. Today VIX fell about 2.8 points while SPY rose about 1.3%, so both forces (price up, IV down) pushed the spreads in our favor, which is why the SPY spread jumped from -$2.50 to +$43.50. The flip side: when VIX spikes, we lose even if prices barely move. Buying back at a profit when IV is low is often smart because the cheap part of the gain has already arrived.
+**What would prove this wrong:** A fast sell-off with VIX back above 20 would turn today's gains red again; sitting out costs little because cash earns about 4.5% a year.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-04 regime
+python3 scripts/options_data.py --asof 2026-11-04 mark
+python3 scripts/options_data.py --asof 2026-11-04 scan
+python3 scripts/options_data.py --asof 2026-11-04 price-spread --symbol SPY --legs "SELL 1 P 723 2026-11-30;BUY 1 P 714 2026-11-30" --qty 1
+python3 scripts/options_data.py --asof 2026-11-04 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+```
 
 ### 2026-11-03 — PASS (Cycle #24)
 **Decision:** Hold both put spreads and open nothing new today.
