@@ -71,8 +71,26 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Relative IV rank (shopping for the richest premium) | [2026-11-02 OPEN QQQ](#2026-11-02--open-qqq-bull-put-credit-spread-cycle-23) |
 | Missing data means wait (rate limits) | [2026-11-03 PASS](#2026-11-03--pass-cycle-24) |
 | Volatility drop helps sellers (short vega pays when IV falls) | [2026-11-04 PASS](#2026-11-04--pass-cycle-25) |
+| Stress regime (smaller size when VIX > VIX3M) | [2026-11-06 PASS](#2026-11-06--pass-cycle-26) |
 
 ## Entries
+
+### 2026-11-06 — PASS (Cycle #26)
+**Decision:** Hold both put spreads and open nothing new today.
+**Market context in plain words:** A sharp sell-off. SPY fell to 740.24 (from 765.89 on Nov 4) and QQQ to 659.78 (from 693.11). The fear gauge jumped: VIX is 24.22 and VIX3M 23.55, so near-term fear is higher than three-month fear (backwardation), which our rules call stress. VIX is higher than on 92.1% of days in the past year. Both bull put spreads are now red: SPY -$73.50 (-76.6% of its credit) and QQQ -$161.25 (-115.8%). No trigger fired: the stop is a loss of 2x the credit (SPY -$192, QQQ -$278.50).
+**Why pass:** Stress rules say no new single-stock short premium and half-size risk (1.5% NAV per position). More importantly, both open trades already lose if US stocks keep falling, so a third bullish put spread would double down on a losing view (see Correlation & concentration). Rejected: (1) a new SPY/QQQ put spread at the higher IV: the premium is fat but it adds risk to the same bet while the market is falling; (2) a bear call spread to hedge: it would turn the book into a guess about direction right after a big move, with no edge shown. Capital at risk stays 3.4% of NAV.
+**Numbers (all from the commands below):** SPY spread mark -1.695 (24 DTE, short strike 723 vs spot 740.24, short delta now 0.3114); QQQ spread mark -3.005 (28 DTE, short strike 650 vs spot 659.78). SPY expected 30-day move ±$38.93, QQQ ±$53.69. SPY probability of profit has dropped to 68.5% (from 78.5% at entry), QQQ to 58.6% (from 77.4%). Book Greeks: delta +12.56 share-equivalents, theta +$1.90/day, vega -$10.53 per IV point.
+**Concept spotlight:**
+- *Stress regime (why we shrink when fear spikes):* Normally long-dated fear (VIX3M) is higher than short-term fear (contango). When VIX rises above VIX3M the market is paying up for protection right now, which tends to come with big, fast moves. Our rule halves the allowed loss per trade (3% to 1.5% of NAV) and blocks new single-stock short premium. Example: today a new SPY spread would need a worst case under about $733, not $1,466. The idea is to survive the storm, not to predict it.
+**What would prove this wrong:** If stocks rebound fast, we held through a dip and recover value as fear fades; if SPY closes below 723 or QQQ below 650, the short strikes go in the money and the 2x-credit stops get close. We will act on triggers, not hope.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-06 regime
+python3 scripts/options_data.py --asof 2026-11-06 mark
+python3 scripts/options_data.py --asof 2026-11-06 scan
+python3 scripts/options_data.py --asof 2026-11-06 price-spread --symbol SPY --legs "SELL 1 P 723 2026-11-30;BUY 1 P 714 2026-11-30" --qty 1
+python3 scripts/options_data.py --asof 2026-11-06 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+```
 
 ### 2026-11-04 — PASS (Cycle #25)
 **Decision:** Hold both put spreads and open nothing new today.
