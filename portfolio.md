@@ -19,19 +19,19 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-11-05)
+## Header (as of 2026-11-06)
 
 | Metric | Value |
 |---|---|
-| NAV | $98,852.57 |
+| NAV | $98,853.96 |
 | Total return | -1.15% (since inception) |
 | Blended Benchmark (ref) | not yet tracked — see note below |
 | SPY (ref) | $777.96 (+1.55% since inception) |
-| Cash balance | $11,285.61 (11.42% of NAV) |
-| Stock sleeve | $64,157.94 (64.91% of NAV) |
+| Cash balance | $11,287.00 (11.42% of NAV) |
+| Stock sleeve | $64,157.94 (64.90% of NAV) |
 | Sector ETF sleeve | $15,516.52 (15.70% of NAV) |
 | Bond sleeve | $7,892.50 (7.98% of NAV) |
-| Cycle # | 43 |
+| Cycle # | 44 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
@@ -43,7 +43,9 @@ internally contradictory ($393.41 vs. a $380-383 session range), so neither
 is reliable enough to start the column; NAV History carries "—". SPY
 ($765.63, session range $763.72-769.54) is the secondary reference.
 
-This is Cycle #43 (HEAVY). No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-11-05):** SPY and GOOGL searches returned only stale/foreign/prior-year data (no corroborated Nov-2026 quote), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. GOOGL (4.87% NAV) still flagged for re-evaluation once a corroborated print exists. Blended benchmark still untracked. No quarterly/annual report due.
+This is Cycle #44 (HEAVY). No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-11-06):** SPY and S&P 500 searches returned only stale/prior-year data (no corroborated Nov-2026 quote), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. Blended benchmark still untracked. No quarterly/annual report due.
+
+Prior cycle (#43, HEAVY) detail: No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-11-05):** SPY and GOOGL searches returned only stale/foreign/prior-year data (no corroborated Nov-2026 quote), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. GOOGL (4.87% NAV) still flagged for re-evaluation once a corroborated print exists. Blended benchmark still untracked. No quarterly/annual report due.
 
 Prior cycle (#42, HEAVY) detail: No trades executed. Cash accrued 1 day of SGOV-equivalent interest (~4.5%/yr, +$1.39). **Price-data note (2026-11-04):** SPY searches returned only stale/undated prints; GOOGL post-Q3 reads remain mutually contradictory (+7% to ~$400 vs -11% to ~$290), so all holdings and SPY ($777.96) are carried forward; only cash interest moved NAV. Blended benchmark still untracked.
 
@@ -159,6 +161,7 @@ cycles before that benchmark was tracked.
 | 2026-11-03 | 41 | $98,849.79 | — | $777.96 |
 | 2026-11-04 | 42 | $98,851.18 | — | $777.96 |
 | 2026-11-05 | 43 | $98,852.57 | — | $777.96 |
+| 2026-11-06 | 44 | $98,853.96 | — | $777.96 |
 
 ---
 
@@ -169,7 +172,7 @@ cycles before that benchmark was tracked.
 | AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $355.14 | $4,971.96 | 5.03% | -$33.88 (-0.68%) |
 | ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $434.00 | $5,208.00 | 5.27% | +$252.36 (+5.09%) |
 | COF | Stock | Financials | 35 | $217.40 | $7,609.00 | $207.55 | $7,264.25 | 7.35% | -$344.75 (-4.53%) |
-| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.54 | $1,152.44 | $6,914.64 | 7.00% | -$177.90 (-2.51%) |
+| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.54 | $1,152.44 | $6,914.64 | 6.99% | -$177.90 (-2.51%) |
 | TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $130.19 | $4,556.65 | 4.61% | -$325.15 (-6.66%) |
 | GOOGL | Stock | AI-Capex | 14 | $341.95 | $4,787.30 | $344.10 | $4,817.40 | 4.87% | +$30.10 (+0.63%) |
 | BALL | Stock | Materials | 106 | $60.97 | $6,462.82 | $58.82 | $6,234.92 | 6.31% | -$227.90 (-3.53%) |
@@ -177,13 +180,13 @@ cycles before that benchmark was tracked.
 | NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $76.09 | $4,489.31 | 4.54% | -$483.80 (-9.73%) |
 | MU | Stock | AI-Capex | 4 | $930.25 | $3,721.00 | $1,068.89 | $4,275.56 | 4.33% | +$554.56 (+14.90%) |
 | BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $73.80 | $5,092.20 | 5.15% | +$218.73 (+4.49%) |
-| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $52.77 | $4,907.61 | 4.97% | +$25.11 (+0.51%) |
+| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $52.77 | $4,907.61 | 4.96% | +$25.11 (+0.51%) |
 | VRTX | Stock | Healthcare-GLP1 | 6 | $512.00 | $3,072.00 | $527.41 | $3,164.46 | 3.20% | +$92.46 (+3.01%) |
 | XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $199.81 | $5,195.06 | 5.26% | +$359.06 (+7.42%) |
 | XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $174.94 | $10,321.46 | 10.44% | -$650.18 (-5.93%) |
-| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.25 | $7,892.50 | 7.99% | -$135.30 (-1.69%) |
-| Cash | — | — | — | — | $11,274.50 | — | $11,285.61 | 11.42% | — |
-| **TOTAL** | — | — | — | — | **$99,972.54** | — | **$98,852.57** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
+| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.25 | $7,892.50 | 7.98% | -$135.30 (-1.69%) |
+| Cash | — | — | — | — | $11,274.50 | — | $11,287.00 | 11.42% | — |
+| **TOTAL** | — | — | — | — | **$99,972.54** | — | **$98,853.96** | **100.00%** | **-$1,143.58 (-1.14% on positions)** |
 
 ---
 
@@ -191,20 +194,24 @@ cycles before that benchmark was tracked.
 
 | Theme | Positions | Mkt Value | % NAV |
 |---|---|---|---|
-| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $23,749.29 | 24.03% |
+| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $23,749.29 | 24.02% |
 | Energy-Transition | ETN, XLI | $15,529.46 | 15.71% |
 | Financials | COF, BHRB | $12,356.45 | 12.50% |
 | Healthcare-GLP1 | LLY, VRTX | $10,079.10 | 10.20% |
 | Consumer-Defensive | TJX, PEP | $6,817.63 | 6.90% |
 | Materials | BALL | $6,234.92 | 6.31% |
-| Communication-Services | IMAX | $4,907.61 | 4.97% |
-| Diversified-Core | AGG | $7,892.50 | 7.99% |
+| Communication-Services | IMAX | $4,907.61 | 4.96% |
+| Diversified-Core | AGG | $7,892.50 | 7.98% |
 
 (Cash is intentionally excluded from theme exposure — it carries no thematic risk.)
 
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-11-06 — Cycle #44 (HEAVY): full research pass, no trades
+
+All 16 positions reviewed; no Exit Criteria triggered and no corroborated new information (rule 5) — every holding "reaffirmed — no action". Searches for SPY/S&P 500 returned no Nov-2026 quote; prices carried forward. GOOGL (AI-Capex) post-earnings print still unverified; re-check next cycle. No new-candidate screen: cash 11.42% vs ~10% floor and no reliable price data. NAV $98,853.96 (-1.15% since inception; SPY $777.96 carried). AI-Capex within trim band, hot-theme screened. Slippage paid: $0.00 (no trades).
 
 ### 2026-11-05 — Cycle #43 (HEAVY): full research pass, no trades
 
