@@ -72,8 +72,50 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Missing data means wait (rate limits) | [2026-11-03 PASS](#2026-11-03--pass-cycle-24) |
 | Volatility drop helps sellers (short vega pays when IV falls) | [2026-11-04 PASS](#2026-11-04--pass-cycle-25) |
 | Stress regime (smaller size when VIX > VIX3M) | [2026-11-06 PASS](#2026-11-06--pass-cycle-26) |
+| Round-trip fees (small costs add up) | [2026-11-09 CLOSE SPY](#2026-11-09--close-spy-bull-put-credit-spread-cycle-27) |
+| Rule-based exits survive reversals | [2026-11-09 PASS](#2026-11-09--pass-cycle-27) |
 
 ## Entries
+
+### 2026-11-09 — PASS (Cycle #27)
+**Decision:** Hold the QQQ put spread and open nothing new.
+**Market context in plain words:** Stocks bounced. SPY is 751.46 (from 740.24 on Nov 6), QQQ 678.07, and VIX fell from 24.22 to 20.52 with VIX3M above it again (contango), so the stress label is off. Fear is still higher than on 82% of days in the past year, so premium is rich.
+**Why pass:** The only open trade (QQQ 650/640 put spread) is a bullish US-index bet still 31% of its credit under water. A new SPY put spread would stack the same view (see Correlation & concentration). Rejected: (1) a new SPY put spread at today's rich premium: attractive price but doubles one bet; (2) a bear call spread: no directional edge after a two-day bounce.
+**Numbers:** QQQ spread mark -1.83 (25 DTE, short strike 650 vs spot 678.07), probability of profit 71.2%, position delta +5.13 share-equivalents, theta +$2.22/day (if nothing else changes, about $2 a day from time decay), vega -$6.23 per IV point. Capital at risk 1.8% of NAV.
+**Concept spotlight:**
+- *Rule-based exits survive reversals:* On Nov 6 this SPY spread looked bad (-76% of credit). Our rules did not force a sale, and the market bounced back. Because we wait for a defined trigger (21 DTE, 50% profit, 2x-credit stop) instead of reacting to fear, the panic dip did not cost us.
+**What would prove this wrong:** A fresh fall in QQQ below 650 would put the short strike in the money; we would then rely on the stop.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-09 regime
+python3 scripts/options_data.py --asof 2026-11-09 mark
+python3 scripts/options_data.py --asof 2026-11-09 scan
+python3 scripts/options_data.py --asof 2026-11-09 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+```
+
+### 2026-11-09 — CLOSE SPY bull put credit spread (Cycle #27)
+**Decision:** Close 2026-10-30-SPY-BPCS-1 (SPY Nov-30 723/714 put spread, 1 lot) at 21 DTE.
+**Market context in plain words:** We sold this for a $0.96 credit with SPY at 757.11. SPY dipped to 740 on Nov 6 (spread worth far more to buy back) then bounced to 751.63, so it is now worth $0.985 at mid, roughly what we collected.
+**Why close (not hold or roll):** Rejected: (1) hold to expiry: gamma (sensitivity to price swings) rises near expiration, and the 21-DTE rule exists for that; with only about $29 between spot and the short strike a late drop would hurt fast; (2) roll to Dec: the roll would add a third stacked bullish bet while the QQQ spread is still open.
+**The trade (closing, from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| BUY (to close) | 1 | Put | 723 | 2026-11-30 | 4.00 |
+| SELL (to close) | 1 | Put | 714 | 2026-11-30 | 2.9975 |
+
+Net debit $1.0025/share = $100.25 against a $0.96 credit. Fees: entry $1.30 + exit $1.30 = $2.60.
+**Outcome:** Realized P&L = -(1.0025 − 0.96) × 100 − 2.60 = **-$6.85**.
+**What drove the P&L (estimated):** Nearly flat. Price recovered almost all of the dip, 12 days of time decay (about +$2/day) were offset by implied volatility being slightly higher than at entry (VIX 20.17 to 20.52).
+**Lesson:** Fees alone were $2.60 of the $6.85 loss. On a small credit trade, round-trip fees are a real cost: they are why tiny edges need to be big enough to beat them.
+**Concept spotlight:**
+- *Round-trip fees:* Every option trade pays a fee to open and again to close. Here $1.30 each way; on a $96 credit that is 2.7% of the best-case profit gone before price even moves.
+**What would prove this wrong:** SPY continuing up past 760 by Nov 30 means we would have kept the full $96 by holding; the 21-DTE rule accepts that miss.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-09 mark
+python3 scripts/options_data.py --asof 2026-11-09 price-spread --symbol SPY --legs "BUY 1 P 723 2026-11-30;SELL 1 P 714 2026-11-30" --qty 1
+```
+**Your reflection:**
 
 ### 2026-11-06 — PASS (Cycle #26)
 **Decision:** Hold both put spreads and open nothing new today.
