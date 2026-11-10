@@ -21,6 +21,38 @@
           "option": "QQQ261204P00640000"
         }
       ]
+    },
+    {
+      "id": "2026-11-10-GLD-IC-1",
+      "symbol": "GLD",
+      "strategy": "iron_condor",
+      "opened": "2026-11-10",
+      "qty": 1,
+      "entry_cost": -2.87,
+      "max_loss": -1213.0,
+      "profit_target_pct": 50,
+      "legs": [
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "GLD261218P00345000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "GLD261218P00335000"
+        },
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "GLD261218C00395000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "GLD261218C00410000"
+        }
+      ]
     }
   ]
 }

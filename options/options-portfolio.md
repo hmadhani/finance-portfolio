@@ -14,24 +14,25 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 27 |
-| NAV | $49,059.71 |
-| Cash | $49,242.71 |
-| Collateral / max loss reserved | $860.75 |
-| Capital at risk (sum of max losses) | $860.75 (1.8% NAV) |
-| Net delta (share-equivalents) | +5.13 |
-| Net theta ($/day) | +2.22 |
-| Net vega ($/IV point) | -6.23 |
-| Return since inception | -1.88% |
-| BXM since inception | -0.83% |
-| PUT since inception | -0.14% |
-| Regime | VIX 20.52 / VIX3M 21.45, contango, no stress; VIX 1y percentile 82.1 (rich) |
+| Cycle # | 28 |
+| NAV | $49,032.58 |
+| Cash | $49,533.08 |
+| Collateral / max loss reserved | $2,073.75 |
+| Capital at risk (sum of max losses) | $2,073.75 (4.2% NAV) |
+| Net delta (share-equivalents) | +1.08 |
+| Net theta ($/day) | +8.43 |
+| Net vega ($/IV point) | -27.68 |
+| Return since inception | -1.93% |
+| BXM since inception | -1.34% |
+| PUT since inception | -0.65% |
+| Regime | VIX 20.95 / VIX3M 21.6, contango, no stress; VIX 1y percentile 84.5 (rich) |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-02-QQQ-BPCS-1 | QQQ | bull_put_credit_spread | 2026-11-02 | 2026-12-04 | 1 | -1.3925 | -1.83 | -43.75 | -31.4% | 860.75 | 25 | none |
+| 2026-11-02-QQQ-BPCS-1 | QQQ | bull_put_credit_spread | 2026-11-02 | 2026-12-04 | 1 | -1.3925 | -2.01 | -61.75 | -44.3% | 860.75 | 24 | none |
+| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -2.995 | -12.50 | -4.4% | 1213.00 | 38 | none |
 
 ## Closed Positions
 
@@ -75,10 +76,19 @@ Append-only. One row per cycle.
 | 2026-11-04 | 25 | $49,135.38 | 2574.36 | 3720.84 | 17.50 |
 | 2026-11-06 | 26 | $48,856.63 | 2506.22 | 3623.43 | 24.22 |
 | 2026-11-09 | 27 | $49,059.71 | 2543.41 | 3675.92 | 20.52 |
+| 2026-11-10 | 28 | $49,032.58 | 2530.32 | 3657.25 | 20.95 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-10 — Cycle #28: QQQ spread held; opened GLD iron condor
+
+- Regime: VIX 20.95, VIX3M 21.6 (contango, no stress), VIX 1y percentile 84.5 (rich). `regime` errors: none. BXM 2530.32, PUT 3657.25. `scan`: SPY 746.9 (iv30 16.306%, rank 68.0), QQQ 672.31 (25.125%, rank 69.3), GLD 370.46 (22.483%, ±23.88, rank 83.9); IV history is thin (26 days).
+- HOLD 2026-11-02-QQQ-BPCS-1: mark -2.01 vs -1.3925 entry, P&L -$61.75 (-44.3% of credit), 24 DTE, no triggers (2x-credit stop = -$278.50).
+- OPEN 2026-11-10-GLD-IC-1: GLD 345/335 put spread + 395/410 call spread, 2026-12-18, credit $2.87/sh, max loss $1,213 (+$5.20 fees, under the 3% cap of ~$1,471), POP 66.9%. See ledger OPEN. GLD is an ETF, so no earnings check applies.
+- Interest accrued $5.97 (1 day at 4.5% on $48,381.96 unreserved cash). Open cash +$284.40 (credit $287 less $2.60 entry fees). NAV $49,032.58 = cash $49,533.08 + QQQ spread at mid -$201.00 + GLD condor at mid -$299.50. Net Greeks: QQQ spread (delta +5.68, theta +2.34, vega -6.25) + GLD condor (delta -4.6, theta +6.09, vega -21.43), from `price-spread`. IV recorded (30 symbols).
+- Note: the HEAD commit "Cycle #46 (HEAVY)" edits a different file (`portfolio.md`) and is unrelated to this options portfolio.
 
 ### 2026-11-09 — Cycle #27: SPY put spread closed at 21 DTE (-$6.85); QQQ spread held; PASS
 

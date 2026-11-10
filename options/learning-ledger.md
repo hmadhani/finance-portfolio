@@ -74,8 +74,50 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Stress regime (smaller size when VIX > VIX3M) | [2026-11-06 PASS](#2026-11-06--pass-cycle-26) |
 | Round-trip fees (small costs add up) | [2026-11-09 CLOSE SPY](#2026-11-09--close-spy-bull-put-credit-spread-cycle-27) |
 | Rule-based exits survive reversals | [2026-11-09 PASS](#2026-11-09--pass-cycle-27) |
+| Iron condor (selling both sides of a range) | [2026-11-10 OPEN GLD](#2026-11-10--open-gld-iron-condor-cycle-28) |
+| Diversifying across asset classes (gold vs stocks) | [2026-11-10 OPEN GLD](#2026-11-10--open-gld-iron-condor-cycle-28) |
 
 ## Entries
+
+### 2026-11-10 — OPEN GLD iron condor (Cycle #28)
+**Decision:** Open one GLD (gold ETF) iron condor, 1 contract, expiring 2026-12-18.
+**Market context in plain words:** Stocks are calm-ish: VIX 20.95 with VIX3M 21.6 (contango, so no stress), and fear is higher than on 84.5% of days in the past year, so option premium is rich. Our only open trade, the QQQ put spread, is a bet that US tech stays up. Gold's IV rank is 83.9 (its options are expensive versus its own recent history) and gold does not move in lockstep with stocks, so selling premium there adds a different bet instead of doubling the QQQ one (see [Correlation & concentration](#2026-10-20--pass-cycle-14)). GLD is 370.41; its 30-day expected move is ±23.88 (iv30 22.483%).
+**Why this strategy:** An iron condor sells a put spread below the price and a call spread above it, and keeps the credit if GLD stays between the two short strikes. Rejected: (1) another bull put spread on SPY/QQQ: stacks the same bullish-US-equity view we already hold; (2) a plain GLD bull put spread: collects only half the premium and still needs a directional view when we have none.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 1 | Put | 345 | 2026-12-18 | 2.5825 |
+| BUY | 1 | Put | 335 | 2026-12-18 | 1.5075 |
+| SELL | 1 | Call | 395 | 2026-12-18 | 3.175 |
+| BUY | 1 | Call | 410 | 2026-12-18 | 1.38 |
+
+Net credit $2.87/share = $287. Max profit $287. Max loss $1,213 (the wider 15-point call wing, $1,500, minus the credit). Breakevens 342.13 and 397.87. Probability of profit 66.9%. `fees_round_trip` $5.20. Short-leg deltas -0.164 (put) and +0.217 (call): roughly a 16% and 22% chance of finishing in the money. 38 DTE. Sizing: the 3% NAV cap is about $1,471; $1,213 + $5.20 fits, so qty is 1. Total capital at risk with the QQQ spread is $2,073.75 (4.2% NAV, under the 25% cap). 1 of 5 new positions this week.
+```
+       287                *****************                   
+                         *        |        *                  
+           ---------------------------------------------------
+                        *         |         *                 
+                                  |                           
+                       *          |          *                
+                                  |                           
+           ************           |           *               
+                                  |                           
+                                  |            *              
+     -1213                        |             **************
+           301.50                                       451.00
+           P&L ($) at expiry vs. underlying price.  | = today's price  - = $0 line
+```
+**Greeks for this position:** delta -4.6 share-equivalents (a $1 rise in GLD loses about $4.60); theta +$6.09/day (if nothing else changes, the position gains about $6 a day from time decay); vega -$21.43 per IV point (if GLD's implied volatility drops 1 point, we gain about $21). Honest note: $287 of reward against $1,213 of risk is lopsided (about 24 cents per dollar risked). It only pays because the win chance is about two in three; a single big gold move erases about four winners.
+**Concept spotlight:**
+- *Iron condor:* two credit spreads at once, a bull put spread below the price and a bear call spread above it. Example here: we sell the 345 put and 395 call and buy the 335 put and 410 call as protection. GLD can only be on one side at expiry, so at most one spread can lose; the other expires worthless. The credit from both sides is ours to keep if GLD finishes between 345 and 395.
+- *Diversifying across asset classes:* instead of a second trade on US stocks, we sell premium on gold. If stocks fall and hurt the QQQ spread, gold may not fall with them, so one bad week is less likely to hit both trades.
+**What would prove this wrong:** GLD breaking below 342 or above 398 before December 18 (a move beyond roughly one expected move). We would close at the 2x-credit stop (-$574) or at 21 DTE (2026-11-27), whichever comes first. Take profit at 50% ($143.50).
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-10 regime
+python3 scripts/options_data.py --asof 2026-11-10 scan
+python3 scripts/options_data.py --asof 2026-11-10 price-spread --symbol GLD --legs "SELL 1 P 345 2026-12-18;BUY 1 P 335 2026-12-18;SELL 1 C 395 2026-12-18;BUY 1 C 410 2026-12-18" --qty 1
+```
 
 ### 2026-11-09 — PASS (Cycle #27)
 **Decision:** Hold the QQQ put spread and open nothing new.
