@@ -76,8 +76,50 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Rule-based exits survive reversals | [2026-11-09 PASS](#2026-11-09--pass-cycle-27) |
 | Iron condor (selling both sides of a range) | [2026-11-10 OPEN GLD](#2026-11-10--open-gld-iron-condor-cycle-28) |
 | Diversifying across asset classes (gold vs stocks) | [2026-11-10 OPEN GLD](#2026-11-10--open-gld-iron-condor-cycle-28) |
+| Calendar spread (time spread) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
+| Portfolio net delta (hedging one trade with another) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
 
 ## Entries
+
+### 2026-11-11 — OPEN IWM put calendar (Cycle #29)
+**Decision:** Open an IWM (small-cap stock ETF) 270 put calendar, 5 contracts: sell the 2026-12-18 put, buy the 2027-01-15 put at the same strike.
+**Market context in plain words:** Stocks rallied hard and fear dropped: VIX fell to 17.66 (from 20.95 yesterday), VIX3M is 19.62 (contango, no stress), and the VIX is now only at its 58.7th percentile for the year. Options got cheaper overnight, and small caps are the cheapest corner of our universe: IWM's IV rank is 21.8 (iv30 18.135%), which is in the "buy premium" zone of our profile (≤ 25). IWM is 282.60 with a 30-day expected move of ±14.69. Our two open trades are both green (QQQ +$32.25, GLD +$23.50), and the QQQ spread is a bullish bet on US stocks.
+**Why this strategy:** A calendar *buys* a longer-dated option and *sells* a shorter-dated one at the same strike, so it profits from time decay of the short leg while staying long volatility overall — a good fit when options are cheap. We put it slightly below the price (270, short-leg delta -0.24) so it leans mildly bearish and offsets some of the QQQ spread's bullish delta. Rejected: (1) another credit spread or iron condor: selling premium when it is cheap (IV rank 21.8) pays you little for the risk, the opposite of what the [volatility risk premium](#2026-10-09--pass-cycle-7) rewards; (2) a bear put debit spread on IWM: needs a real drop to pay off, and we have no strong bearish view — the calendar wins if IWM simply drifts toward 270 or if IV rises.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 5 | Put | 270 | 2026-12-18 | 2.7575 |
+| BUY | 5 | Put | 270 | 2027-01-15 | 4.43 |
+
+Net debit $1.6725/share = $836.25 for 5 contracts. Max profit (model estimate at the front expiry, if IWM sits at 270) $2,087.10. Max loss per `price-spread`: $1,249.86 — more than the $836.25 debit, because the tool models the back-month put's value at the front expiry rather than assuming it; treat $1,249.86 as the planning worst case. Breakevens at the 2026-12-18 expiry: 259.61 and 283.30. Probability of profit 40.4%. `fees_round_trip` $13.00. Both legs liquid (open interest 100,738 and 48,410; bid-ask 3-4 cents). Sizing: 3% NAV cap is $1,474.60; one contract costs $250.47 max loss + $2.60 fees = $253.07, so qty = floor(1,474.60 / 253.07) = 5, and at qty 5 the total $1,262.86 fits. Total capital at risk $3,323.61 (6.8% NAV, under 25%). 2 of 5 new positions this week.
+```
+      2039                     *        |                     
+                              * *       |                     
+                             *   *      |                     
+                            *     **    |                     
+                           *        *   |                     
+                         **          ** |                     
+           -------------*--------------**---------------------
+                      **                |***                  
+                   ***                  |   ******            
+               ****                     |         ************
+     -1132 ****                         |                     
+           243.00                                       311.01
+           P&L ($) at expiry vs. underlying price.  | = today's price  - = $0 line
+```
+**Greeks for this position:** delta -19.15 share-equivalents (a $1 rise in IWM loses about $19; a $1 fall gains about $19); theta +$7.30/day (if nothing else changes, the position gains about $7 a day because the December put we sold decays faster than the January put we own); vega +$58.85 per IV point (if IWM's implied volatility rises 1 point, we gain about $59 — the first long-vega trade in this portfolio, so it partly offsets the short vega of the QQQ and GLD trades: portfolio vega is now +$31.06).
+**Concept spotlight:**
+- *Calendar spread (time spread):* same strike, two expiries. Near-dated options lose value faster than far-dated ones (see [the time-decay curve](#2026-10-29--pass-cycle-21)), so the December 270 put we sold (2.7575) should shrink faster than the January 270 put we bought (4.43). The best case is IWM sitting right at 270 on December 18: the December put expires worthless and the January put still has a month of time value. The danger is a big move either way — far from 270, both puts converge in value and the spread collapses toward zero. That is why the payoff diagram is a tent. Unlike a credit spread, a calendar is long vega: a rise in IV mostly helps the longer-dated leg we own.
+- *Portfolio net delta (hedging one trade with another):* every position's delta adds up. Before this trade the portfolio's net delta was about +2 shares (QQQ +3.84, GLD -1.8); this calendar adds -19.15, so the book is now -17.11 — it gains a little if stocks dip. That is deliberate: our biggest single risk was "US stocks fall", and this trade pays modestly if IWM drifts lower. (Caveat: IWM and QQQ are correlated but not identical — small caps can fall while tech rises.)
+**What would prove this wrong:** IWM rallying above ~283 or falling below ~260 by mid-December, or IV falling further (we are long vega). Exits: profit target 100% of the debit (+$836.25), stop at 50% loss of the debit (-$418.13), and the 21-DTE rule on the front leg (2026-11-27) — whichever comes first.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-11 regime
+python3 scripts/options_data.py --asof 2026-11-11 scan
+python3 scripts/options_data.py --asof 2026-11-11 scan --symbols IWM,DIA --dte 28-90
+python3 scripts/options_data.py --asof 2026-11-11 price-spread --symbol IWM --legs "SELL 1 P 270 2026-12-18; BUY 1 P 270 2027-01-15" --qty 1
+python3 scripts/options_data.py --asof 2026-11-11 price-spread --symbol IWM --legs "SELL 1 P 270 2026-12-18; BUY 1 P 270 2027-01-15" --qty 5
+```
 
 ### 2026-11-10 — OPEN GLD iron condor (Cycle #28)
 **Decision:** Open one GLD (gold ETF) iron condor, 1 contract, expiring 2026-12-18.

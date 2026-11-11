@@ -53,6 +53,28 @@
           "option": "GLD261218C00410000"
         }
       ]
+    },
+    {
+      "id": "2026-11-11-IWM-PCAL-1",
+      "symbol": "IWM",
+      "strategy": "put_calendar",
+      "opened": "2026-11-11",
+      "qty": 5,
+      "entry_cost": 1.6725,
+      "max_loss": -1249.86,
+      "profit_target_pct": 100,
+      "legs": [
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "IWM261218P00270000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "IWM270115P00270000"
+        }
+      ]
     }
   ]
 }

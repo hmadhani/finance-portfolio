@@ -14,25 +14,26 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 28 |
-| NAV | $49,032.58 |
-| Cash | $49,533.08 |
-| Collateral / max loss reserved | $2,073.75 |
-| Capital at risk (sum of max losses) | $2,073.75 (4.2% NAV) |
-| Net delta (share-equivalents) | +1.08 |
-| Net theta ($/day) | +8.43 |
-| Net vega ($/IV point) | -27.68 |
-| Return since inception | -1.93% |
-| BXM since inception | -1.34% |
-| PUT since inception | -0.65% |
-| Regime | VIX 20.95 / VIX3M 21.6, contango, no stress; VIX 1y percentile 84.5 (rich) |
+| Cycle # | 29 |
+| NAV | $49,153.18 |
+| Cash | $48,696.18 |
+| Collateral / max loss reserved | $3,323.61 |
+| Capital at risk (sum of max losses) | $3,323.61 (6.8% NAV) |
+| Net delta (share-equivalents) | -17.11 |
+| Net theta ($/day) | +16.42 |
+| Net vega ($/IV point) | +31.06 |
+| Return since inception | -1.69% |
+| BXM since inception | +0.08% |
+| PUT since inception | +0.74% |
+| Regime | VIX 17.66 / VIX3M 19.62, contango, no stress; VIX 1y percentile 58.7 |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-02-QQQ-BPCS-1 | QQQ | bull_put_credit_spread | 2026-11-02 | 2026-12-04 | 1 | -1.3925 | -2.01 | -61.75 | -44.3% | 860.75 | 24 | none |
-| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -2.995 | -12.50 | -4.4% | 1213.00 | 38 | none |
+| 2026-11-02-QQQ-BPCS-1 | QQQ | bull_put_credit_spread | 2026-11-02 | 2026-12-04 | 1 | -1.3925 | -1.07 | +32.25 | +23.2% | 860.75 | 23 | none |
+| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -2.635 | +23.50 | +8.2% | 1213.00 | 37 | none |
+| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.655 | -8.75 | -1.0% | 1249.86 | 37 (front) | none |
 
 ## Closed Positions
 
@@ -77,10 +78,20 @@ Append-only. One row per cycle.
 | 2026-11-06 | 26 | $48,856.63 | 2506.22 | 3623.43 | 24.22 |
 | 2026-11-09 | 27 | $49,059.71 | 2543.41 | 3675.92 | 20.52 |
 | 2026-11-10 | 28 | $49,032.58 | 2530.32 | 3657.25 | 20.95 |
+| 2026-11-11 | 29 | $49,153.18 | 2566.80 | 3708.38 | 17.66 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-11 — Cycle #29: QQQ and GLD held (both green); opened IWM put calendar
+
+- Regime: VIX 17.66, VIX3M 19.62 (contango, no stress), VIX 1y percentile 58.7 (fear fell sharply on a broad rally). `regime` errors: none. BXM 2566.80, PUT 3708.38. `scan`: SPY 758.59 (iv30 13.842%, ±30.1, IV rank 29.4), QQQ 691.96 (22.628%, ±44.89, rank 45.9), IWM 282.60 (18.135%, ±14.69, rank 21.8), DIA 521.12 (13.489%, rank 19.0), GLD 367.09 (22.162%, ±23.32, rank 75.3), TLT 80.55 (rank 6.3); IV history 27 days.
+- HOLD 2026-11-02-QQQ-BPCS-1: mark -1.07 vs -1.3925 entry, P&L +$32.25 (+23.2% of credit), 23 DTE, no triggers (50% target = +$69.63; 21 DTE on 2026-11-13).
+- HOLD 2026-11-10-GLD-IC-1: mark -2.635 vs -2.87 entry, P&L +$23.50 (+8.2%), 37 DTE, no triggers.
+- OPEN 2026-11-11-IWM-PCAL-1: IWM 270 put calendar, 5 contracts — SELL 2026-12-18 270P @2.7575, BUY 2027-01-15 270P @4.43, debit $1.6725/sh ($836.25). `price-spread` max loss $1,249.86 + $13.00 fees = $1,262.86, under the 3% cap ($1,474.60); qty 5 = floor($1,474.60 / $253.07), where $253.07 = $250.47 max loss + $2.60 fees per contract from the qty-1 run. POP 40.4%, breakevens 259.61 / 283.30 at front expiry. IWM IV rank 21.8 (cheap) → buy premium. ETF, no earnings check. Capital at risk now $3,323.61 (6.8% NAV, cap 25%). New positions this week: 2 of 5. See ledger OPEN.
+- Interest accrued $5.85 (1 day at 4.5% on $47,459.33 unreserved cash). Open cash -$842.75 (debit $836.25 + $6.50 entry fees). NAV $49,153.18 = cash $48,696.18 + QQQ -$107.00 + GLD -$263.50 + IWM calendar +$827.50 (all at mid). Net Greeks from `price-spread` at today's quotes: QQQ (delta +3.84, theta +3.09, vega -6.68), GLD (delta -1.8, theta +6.03, vega -21.11), IWM (delta -19.15, theta +7.30, vega +58.85). IV recorded (30 symbols).
+- Note: a second `mark` run after adding IWM showed QQQ -1.075 / GLD -2.62 (quotes ticked); NAV uses the first `mark` run of the cycle for QQQ/GLD. The HEAD commit "Cycle #47 (HEAVY)" edits a different portfolio file and is unrelated.
 
 ### 2026-11-10 — Cycle #28: QQQ spread held; opened GLD iron condor
 
