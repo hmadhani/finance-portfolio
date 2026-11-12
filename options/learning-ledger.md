@@ -81,6 +81,23 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 ## Entries
 
+### 2026-11-12 — PASS (Cycle #30)
+**Decision:** Hold all three positions and open nothing new.
+**Market context in plain words:** A calm day. VIX is 17.59 with VIX3M at 19.33 (contango, no stress), higher than on 57.9% of days in the past year: neither cheap nor rich. Gold (GLD) dropped to 354.43 and is the only index-like market with rich option prices (IV rank 100, thin 28-day history).
+**Why pass:** We already own a bullish QQQ spread, a GLD iron condor (which already sells that rich gold premium) and an IWM calendar. Rejected: (1) a second GLD trade: it would be a third bet on the same market, and the condor is already -$33.50; (2) a NVDA/AVGO premium sale (IV rank 100): single stocks need an earnings-date check and the rules bar short premium through earnings; the payoff does not justify forcing it. QQQ's 21-DTE close is due next cycle; that exit rule will free capacity.
+**Numbers (from the commands below):** QQQ spread mark -1.115 (22 DTE, +$27.75), probability of profit 81.1%; GLD condor mark -3.205 (36 DTE, -$33.50), probability of profit 60.5%; IWM calendar mark 1.705 (+$16.25), probability of profit 40.8%. Book: delta -7.57 share-equivalents, theta +$15.99/day (if nothing else changes, about $16 a day from time decay), vega +$37.34 per IV point. Capital at risk 6.8% of NAV.
+**Concept spotlight:** none new today (see the Concept Index); this is the "prefer to skip a day over forcing a trade" rule in action.
+**What would prove this wrong:** A sharp, quick drop in VIX or a clean setup we skipped would show a missed opportunity, but a skipped trade costs only the opportunity.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-12 regime
+python3 scripts/options_data.py --asof 2026-11-12 mark
+python3 scripts/options_data.py --asof 2026-11-12 scan
+python3 scripts/options_data.py --asof 2026-11-12 price-spread --symbol QQQ --legs "SELL 1 P 650 2026-12-04;BUY 1 P 640 2026-12-04" --qty 1
+python3 scripts/options_data.py --asof 2026-11-12 price-spread --symbol GLD --legs "SELL 1 P 345 2026-12-18;BUY 1 P 335 2026-12-18;SELL 1 C 395 2026-12-18;BUY 1 C 410 2026-12-18" --qty 1
+python3 scripts/options_data.py --asof 2026-11-12 price-spread --symbol IWM --legs "SELL 1 P 270 2026-12-18;BUY 1 P 270 2027-01-15" --qty 5
+```
+
 ### 2026-11-11 — OPEN IWM put calendar (Cycle #29)
 **Decision:** Open an IWM (small-cap stock ETF) 270 put calendar, 5 contracts: sell the 2026-12-18 put, buy the 2027-01-15 put at the same strike.
 **Market context in plain words:** Stocks rallied hard and fear dropped: VIX fell to 17.66 (from 20.95 yesterday), VIX3M is 19.62 (contango, no stress), and the VIX is now only at its 58.7th percentile for the year. Options got cheaper overnight, and small caps are the cheapest corner of our universe: IWM's IV rank is 21.8 (iv30 18.135%), which is in the "buy premium" zone of our profile (≤ 25). IWM is 282.60 with a 30-day expected move of ±14.69. Our two open trades are both green (QQQ +$32.25, GLD +$23.50), and the QQQ spread is a bullish bet on US stocks.
