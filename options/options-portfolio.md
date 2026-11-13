@@ -43,6 +43,7 @@ Machine state: `options/data/positions.json`
 | 2026-10-02-SPY-BCDS-1 | SPY | bull_call_debit_spread | 2026-10-02 | 2026-10-16 | -226.60 | 21_dte (-23.4% of debit) | [2026-10-16 CLOSE](learning-ledger.md#2026-10-16--close-spy-bull-call-debit-spread-cycle-12) |
 | 2026-10-19-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-19 | 2026-10-30 | -162.20 | 21_dte (-71% of credit) | [2026-10-30 CLOSE](learning-ledger.md#2026-10-30--close-spy-bull-put-credit-spread-cycle-22) |
 | 2026-10-30-SPY-BPCS-1 | SPY | bull_put_credit_spread | 2026-10-30 | 2026-11-09 | -6.85 | 21_dte (-4.4% of credit) | [2026-11-09 CLOSE](learning-ledger.md#2026-11-09--close-spy-bull-put-credit-spread-cycle-27) |
+| 2026-11-02-QQQ-BPCS-1 | QQQ | bull_put_credit_spread | 2026-11-02 | 2026-11-13 | -71.10 | 21_dte (-51% of credit) | [2026-11-13 CLOSE](learning-ledger.md#2026-11-13--close-qqq-bull-put-credit-spread-cycle-31) |
 
 ## NAV History
 
