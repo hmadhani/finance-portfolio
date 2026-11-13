@@ -81,6 +81,67 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 ## Entries
 
+### 2026-11-13 — CLOSE QQQ bull put credit spread (Cycle #31)
+**Decision:** Close 2026-11-02-QQQ-BPCS-1 (QQQ Dec-04 650/640 put spread, 1 lot) at 21 DTE rather than roll it.
+**Market context in plain words:** Tech sold off: QQQ is 673.385 (it was 691.71 yesterday), and QQQ's implied volatility jumped (IV rank 78.4, iv30 26.087%). The spread we sold for a $1.3925 credit is now worth about $2.0775 to buy back, so it is under water, but the 650 short strike is still about 23 points (3.5%) below the price.
+**Why close (not hold or roll):** The 21-DTE rule fired today. Rejected: (1) hold to expiry: gamma (sensitivity to price swings) rises near expiration, and a further 3-4% drop would put the short put in the money with little time to recover; (2) roll to January: it would re-sell a bullish bet right after the market turned down, and the new SPY condor already covers our US-index premium selling.
+**The trade (closing, from `price-spread`):**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| BUY (to close) | 1 | Put | 650 | 2026-12-04 | 9.2875 |
+| SELL (to close) | 1 | Put | 640 | 2026-12-04 | 7.21 |
+
+Net debit $2.0775/share = $207.75 against a $1.3925 credit. Fees: entry $1.30 + exit $1.30 = $2.60.
+**Outcome:** Realized P&L = -(2.0775 - 1.3925) x 100 - 2.60 = **-$71.10** (about 51% of the credit; the 2x-credit stop at -$278.50 was not hit).
+**What drove the P&L (estimated):** Mostly price: QQQ fell, which raised the value of the puts we sold (negative delta effect of roughly -$60), plus a rise in implied volatility hurt a short-vega position; 11 days of time decay (about +$3/day) recovered part of it.
+**Lesson:** A rule-based exit at 21 DTE limited a losing trade to a small loss. We do not need to be right about direction to keep losses small, only to follow the exit rule.
+**Concept spotlight:** none new (see [gamma & why 21 DTE](#2026-10-12--pass-cycle-8) and [rolling](#2026-10-14--close-qqq-bull-call-debit-spread-cycle-10)).
+**What would prove this wrong:** QQQ rebounding above 690 by Dec 4 means holding would have kept the full $139 credit; the 21-DTE rule accepts that miss.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-13 mark
+python3 scripts/options_data.py --asof 2026-11-13 price-spread --symbol QQQ --legs "BUY 1 P 650 2026-12-04;SELL 1 P 640 2026-12-04" --qty 1
+```
+**Your reflection:**
+
+### 2026-11-13 — OPEN SPY iron condor (Cycle #31)
+**Decision:** Open one SPY iron condor, 1 contract, expiring 2026-12-18: sell 711 put / 778 call, buy 701 put / 790 call.
+**Market context in plain words:** VIX is 20.12 with VIX3M at 21.09 (contango, so no stress), higher than on 82.9% of days in the past year: option premium is rich. SPY is 750.19 with a 30-day expected move of about +/-33.35 and an IV rank of 55.5 (iv30 15.505%). Our book after closing QQQ is a GLD condor and an IWM calendar, so we hold no US large-cap trade; a market that is jumpy but not in backwardation suits selling a range.
+**Why this strategy:** An iron condor sells a put spread below and a call spread above the price and keeps the credit if SPY stays between the short strikes. Rejected: (1) a bull put spread alone: after QQQ's drop that is a directional bet on a bounce, and pays half the premium; (2) a debit spread: buying premium when VIX is at the 83rd percentile means paying up for expensive options.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 1 | Put | 711 | 2026-12-18 | 5.5425 |
+| BUY | 1 | Put | 701 | 2026-12-18 | 4.47 |
+| SELL | 1 | Call | 778 | 2026-12-18 | 3.295 |
+| BUY | 1 | Call | 790 | 2026-12-18 | 1.305 |
+
+Net credit $3.0625/share = $306.25. Max profit $306.25. Max loss $893.75 (the wider 12-point call wing, $1,200, minus the credit). Breakevens 707.94 and 781.06. Probability of profit 63.6%. `fees_round_trip` $5.20. Short-leg deltas -0.198 (put) and +0.205 (call). 35 DTE. All legs liquid (open interest 1,178 to 32,788). Sizing: 3% NAV cap is about $1,473; $893.75 + $5.20 fits once, so qty is 1. Capital at risk with the other two trades is $3,356.61 (6.8% NAV, under 25%). 3 of 5 new positions this week.
+```
+       304                  ***************                   
+                                    |                         
+                                    |                         
+           ----------------*----------------------------------
+                                    |      *                  
+                                    |                         
+                                    |                         
+                          *         |                         
+           ***************          |       *                 
+                                    |                         
+      -896                          |        *****************
+           630.90                                       869.00
+           P&L ($) at expiry vs. underlying price.  | = today's price  - = $0 line
+```
+**Greeks for this position:** delta -6.46 share-equivalents (a $1 rise in SPY loses about $6.50); theta +$6.51/day (if nothing else changes, about $6.50 a day from time decay); vega -$34.01 per IV point (if implied volatility rises 1 point, the position loses about $34). Portfolio after today: delta -7.93, theta +$22.84/day, vega +$6.68 per IV point (the IWM calendar's long vega offsets the condors).
+**Concept spotlight:** none new (see [iron condors](#2026-11-10--open-gld-iron-condor-cycle-28) and [the volatility risk premium](#2026-10-09--pass-cycle-7)).
+**What would prove this wrong:** SPY breaking below ~708 or above ~781 by mid-December, or a spike in VIX. Exits: 50% of max profit (+$153), stop at 2x credit (-$612.50), and 21 DTE (2026-11-27).
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-13 regime
+python3 scripts/options_data.py --asof 2026-11-13 scan
+python3 scripts/options_data.py --asof 2026-11-13 price-spread --symbol SPY --legs "SELL 1 P 711 2026-12-18;BUY 1 P 701 2026-12-18;SELL 1 C 778 2026-12-18;BUY 1 C 790 2026-12-18" --qty 1
+```
+
 ### 2026-11-12 — PASS (Cycle #30)
 **Decision:** Hold all three positions and open nothing new.
 **Market context in plain words:** A calm day. VIX is 17.59 with VIX3M at 19.33 (contango, no stress), higher than on 57.9% of days in the past year: neither cheap nor rich. Gold (GLD) dropped to 354.43 and is the only index-like market with rich option prices (IV rank 100, thin 28-day history).

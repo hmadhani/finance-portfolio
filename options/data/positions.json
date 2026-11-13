@@ -1,28 +1,6 @@
 {
   "positions": [
     {
-      "id": "2026-11-02-QQQ-BPCS-1",
-      "symbol": "QQQ",
-      "strategy": "bull_put_credit_spread",
-      "opened": "2026-11-02",
-      "qty": 1,
-      "entry_cost": -1.3925,
-      "max_loss": -860.75,
-      "profit_target_pct": 50,
-      "legs": [
-        {
-          "action": "SELL",
-          "ratio": 1,
-          "option": "QQQ261204P00650000"
-        },
-        {
-          "action": "BUY",
-          "ratio": 1,
-          "option": "QQQ261204P00640000"
-        }
-      ]
-    },
-    {
       "id": "2026-11-10-GLD-IC-1",
       "symbol": "GLD",
       "strategy": "iron_condor",
@@ -73,6 +51,38 @@
           "action": "BUY",
           "ratio": 1,
           "option": "IWM270115P00270000"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-SPY-IC-1",
+      "symbol": "SPY",
+      "strategy": "iron_condor",
+      "opened": "2026-11-13",
+      "qty": 1,
+      "entry_cost": -3.0625,
+      "max_loss": -893.75,
+      "profit_target_pct": 50,
+      "legs": [
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "SPY261218P00711000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "SPY261218P00701000"
+        },
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "SPY261218C00778000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "SPY261218C00790000"
         }
       ]
     }
