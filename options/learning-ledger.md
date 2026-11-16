@@ -78,8 +78,48 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Diversifying across asset classes (gold vs stocks) | [2026-11-10 OPEN GLD](#2026-11-10--open-gld-iron-condor-cycle-28) |
 | Calendar spread (time spread) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
 | Portfolio net delta (hedging one trade with another) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
+| Correlation (two trades, one bet) | [2026-11-16 OPEN QQQ](#2026-11-16--open-qqq-iron-condor-cycle-32) |
 
 ## Entries
+
+### 2026-11-16 — OPEN QQQ iron condor (Cycle #32)
+**Decision:** Open one QQQ iron condor, 1 contract, expiring 2026-12-18: sell 620 put / 719 call, buy 609.78 put / 731 call.
+**Market context in plain words:** VIX is 20.9 with VIX3M at 21.67 (contango, no stress), higher than on 86.1% of days in the past year. QQQ is 667.78 with a 30-day expected move of about +/-51.94 and an IV rank of 88.2 (iv30 27.131%): QQQ options are the richest large-index premium on the board today.
+**Why this strategy:** An iron condor sells a put spread below and a call spread above the price and keeps the credit if QQQ stays between the short strikes. Rejected: (1) bull put spread alone: bets on a bounce after QQQ's recent drop and collects only half the premium; (2) a debit spread: buying options when IV rank is 88 means paying a high price.
+**The trade:**
+| Action | Contracts | Type | Strike | Expiry | Fill |
+|---|---|---|---|---|---|
+| SELL | 1 | Put | 620 | 2026-12-18 | 7.645 |
+| BUY | 1 | Put | 609.78 | 2026-12-18 | 6.2275 |
+| SELL | 1 | Call | 719 | 2026-12-18 | 3.6525 |
+| BUY | 1 | Call | 731 | 2026-12-18 | 2.05 |
+
+Net credit $3.02/share = $302. Max profit $302. Max loss $898. Breakevens 616.98 and 722.02. Probability of profit 65.6%. `fees_round_trip` $5.20. Short-leg deltas -0.2013 (put) and +0.1608 (call). 32 DTE. All legs liquid (open interest 1,605 to 48,439). Sizing: 3% NAV cap is about $1,475; $898 + $5.20 fits once, so qty is 1. Capital at risk with the other three trades is $4,254.61 (8.7% NAV, under 25%). 1 of 5 new positions this week.
+```
+       302               ********************                 
+                                  |                           
+                                  |                           
+           ----------------------------------*----------------
+                        *         |                           
+                                  |                           
+                                  |                           
+                                  |           *               
+                       *          |                           
+           ************           |                           
+      -898                        |            ***************
+           548.80                                       804.10
+           P&L ($) at expiry vs. underlying price.  | = today's price  - = $0 line
+```
+**Greeks for this position:** delta -2.35 share-equivalents (a $1 rise in QQQ loses about $2); theta +$7.40/day (if nothing else changes, about $7 a day from time decay); vega -$19.42 per IV point (if implied volatility rises 1 point, the position loses about $19). Portfolio after today: delta -4.94, theta +$32.68/day, vega -$6.99 per IV point.
+**Concept spotlight:** *Correlation (two trades, one bet).* QQQ and SPY usually move together, so our SPY condor and this QQQ condor are close to the same wager: that the US market stays calm. If both indexes fell 6% together, both condors would lose at the same time, so the two max losses ($893.75 + $898) are effectively one bigger risk. We accept it because the combined max loss is $1,792 (3.6% of NAV) and the 25% total cap still holds, but a beginner should count correlated trades as one position when judging risk.
+**What would prove this wrong:** QQQ breaking below ~617 or above ~722 by mid-December, or a VIX spike. Exits: 50% of max profit (+$151), stop at 2x credit (-$604), and 21 DTE (2026-11-27).
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-16 regime
+python3 scripts/options_data.py --asof 2026-11-16 scan
+python3 scripts/options_data.py --asof 2026-11-16 mark
+python3 scripts/options_data.py --asof 2026-11-16 price-spread --symbol QQQ --legs "SELL 1 P 620 2026-12-18;BUY 1 P 609.78 2026-12-18;SELL 1 C 719 2026-12-18;BUY 1 C 731 2026-12-18" --qty 1
+```
 
 ### 2026-11-13 — CLOSE QQQ bull put credit spread (Cycle #31)
 **Decision:** Close 2026-11-02-QQQ-BPCS-1 (QQQ Dec-04 650/640 put spread, 1 lot) at 21 DTE rather than roll it.

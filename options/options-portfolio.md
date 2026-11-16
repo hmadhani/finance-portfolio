@@ -14,26 +14,27 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 31 |
-| NAV | $49,103.46 |
-| Cash | $48,801.96 |
-| Collateral / max loss reserved | $3,356.61 |
-| Capital at risk (sum of max losses) | $3,356.61 (6.8% NAV) |
-| Net delta (share-equivalents) | -7.93 |
-| Net theta ($/day) | +22.84 |
-| Net vega ($/IV point) | +6.68 |
-| Return since inception | -1.79% |
-| BXM since inception | -0.89% |
-| PUT since inception | -0.22% |
-| Regime | VIX 20.12 / VIX3M 21.09, contango, no stress; VIX 1y percentile 82.9 |
+| Cycle # | 32 |
+| NAV | $49,163.17 |
+| Cash | $49,118.17 |
+| Collateral / max loss reserved | $4,254.61 |
+| Capital at risk (sum of max losses) | $4,254.61 (8.7% NAV) |
+| Net delta (share-equivalents) | -4.94 |
+| Net theta ($/day) | +32.68 |
+| Net vega ($/IV point) | -6.99 |
+| Return since inception | -1.67% |
+| BXM since inception | -1.39% |
+| PUT since inception | -0.68% |
+| Regime | VIX 20.9 / VIX3M 21.67, contango, no stress; VIX 1y percentile 86.1 |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -3.03 | -16.00 | -5.6% | 1213.00 | 35 | none |
-| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.83 | +78.75 | +9.4% | 1249.86 | 35 (front) | none |
-| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -3.105 | -4.25 | -1.4% | 893.75 | 35 | none |
+| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -3.13 | -26.00 | -9.1% | 1213.00 | 32 | none |
+| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.90 | +113.75 | +13.6% | 1249.86 | 32 (front) | none |
+| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -2.85 | +21.25 | +6.9% | 893.75 | 32 |
+| 2026-11-16-QQQ-IC-1 | QQQ | iron_condor | 2026-11-16 | 2026-12-18 | 1 | -3.02 | -3.07 | -5.00 | -1.7% | 898.00 | 32 | none | none |
 
 ## Closed Positions
 
@@ -82,10 +83,20 @@ Append-only. One row per cycle.
 | 2026-11-11 | 29 | $49,153.18 | 2566.80 | 3708.38 | 17.66 |
 | 2026-11-12 | 30 | $49,122.27 | 2572.34 | 3717.23 | 17.59 |
 | 2026-11-13 | 31 | $49,103.46 | 2541.88 | 3673.26 | 20.12 |
+| 2026-11-16 | 32 | $49,163.17 | 2529.02 | 3656.35 | 20.9 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-16 — Cycle #32: all three positions held (no triggers); opened QQQ iron condor
+
+- Regime: VIX 20.9, VIX3M 21.67 (contango, no stress), VIX 1y percentile 86.1 (rich). `regime` errors: none. BXM 2529.02, PUT 3656.35. `scan` (30 symbols, no errors): SPY 746.28 (IV rank 69.0), QQQ 667.78 (iv30 27.131%, expected move +/-51.94, IV rank 88.2), IWM 274.83 (65.6), GLD 353.48 (95.9), XLK 84.6.
+- HOLD 2026-11-10-GLD-IC-1: mark -3.13 vs -2.87, P&L -$26.00, 32 DTE, no triggers.
+- HOLD 2026-11-11-IWM-PCAL-1: mark 1.90 vs 1.6725, P&L +$113.75 (+13.6%), 32 DTE, no triggers.
+- HOLD 2026-11-13-SPY-IC-1: mark -2.85 vs -3.0625, P&L +$21.25 (+6.9%), 32 DTE, no triggers.
+- OPEN 2026-11-16-QQQ-IC-1: QQQ 620/609.78 put + 719/731 call iron condor, Dec-18, credit $3.02/sh ($302), max loss $898 + $5.20 fees (under 3% cap ~$1,475), POP 65.6%. 1 of 5 new positions this week. Capital at risk $4,254.61 (8.7% NAV). Note: QQQ and SPY condors are highly correlated (one bet on a calm US market). See ledger OPEN.
+- Interest accrued $16.81 (3 days at 4.5% on $45,445.35 unreserved cash). Open cash +$299.40 (credit $302 less $2.60 entry fees). NAV $49,163.17 = cash $49,118.17 + GLD -$313 + IWM +$950 + SPY -$285 + QQQ -$307 (all at mid). Net Greeks from `price-spread` (GLD +8.34/+5.07/-14.6; IWM -6.1/+13.3/+57.95; SPY -4.83/+6.91/-30.92; QQQ -2.35/+7.4/-19.42). IV recorded (30 symbols).
 
 ### 2026-11-13 — Cycle #31: closed QQQ spread at 21 DTE; opened SPY iron condor
 

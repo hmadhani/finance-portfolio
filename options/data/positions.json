@@ -85,6 +85,38 @@
           "option": "SPY261218C00790000"
         }
       ]
+    },
+    {
+      "id": "2026-11-16-QQQ-IC-1",
+      "symbol": "QQQ",
+      "strategy": "iron_condor",
+      "opened": "2026-11-16",
+      "qty": 1,
+      "entry_cost": -3.02,
+      "max_loss": -898.0,
+      "profit_target_pct": 50,
+      "legs": [
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "QQQ261218P00620000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "QQQ261218P00609780"
+        },
+        {
+          "action": "SELL",
+          "ratio": 1,
+          "option": "QQQ261218C00719000"
+        },
+        {
+          "action": "BUY",
+          "ratio": 1,
+          "option": "QQQ261218C00731000"
+        }
+      ]
     }
   ]
 }
