@@ -79,8 +79,26 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Calendar spread (time spread) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
 | Portfolio net delta (hedging one trade with another) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
 | Correlation (two trades, one bet) | [2026-11-16 OPEN QQQ](#2026-11-16--open-qqq-iron-condor-cycle-32) |
+| Net portfolio vega (a book that is not all short vega) | [2026-11-17 PASS](#2026-11-17--pass-cycle-33) |
 
 ## Entries
+
+### 2026-11-17 — PASS (Cycle #33)
+**Decision:** Open nothing today; hold all four positions.
+**Market context in plain words:** Fear jumped. VIX is 25.74 with VIX3M at 24.8, so near-term fear exceeds longer-term fear (backwardation) and VIX is higher than on 95.6% of days this past year. The market is in the stress regime from the profile. SPY is 730.9 (expected 30-day move about +/-42.12, IV rank 100) and QQQ is 651.7047 (+/-57.45). Our three condors and the IWM calendar all show small P&L (GLD -$22.00, IWM +$121.25, SPY +$13.25, QQQ -$7.50) and no exit rule has fired.
+**Why this strategy (doing nothing):** Rejected: (1) another condor on a different ETF (e.g. DIA or XLK): in stress we may only risk 1.5% of NAV per new trade and the index moves together, so it would stack the same bet on a calm market; (2) a single-stock premium sale such as NVDA or AMD, whose IV looks rich: barred outright in stress. A held position that follows its exit rules is a decision too.
+**The trade:** None. Capital at risk stays $4,254.61 (8.7% NAV, cap 25%); new positions this week: 1 of 5.
+**Greeks for the whole book:** delta +17.17 share-equivalents (a $1 rise across our underlyings gains about $17); theta +$33.62/day (if nothing else changes, about $34 a day from time decay); vega +$2.11 per IV point (if implied volatility rose 1 point everywhere, the book would gain about $2).
+**Concept spotlight:** *Net portfolio vega.* Each condor is short vega (GLD -15.52, SPY -24.06, QQQ -16.36 per IV point): they lose when fear rises. The IWM calendar is long vega (+58.05) because we own the far-dated put. Added up, the book is about flat (+2.11), which is why VIX jumping from 20.9 to 25.74 barely moved NAV ($49,163.17 to $49,169.70). Lesson: mixing short-vega and long-vega trades can cushion a volatility spike, though it did not remove price risk (QQQ's short put is still 32 points below the market).
+**What would prove this wrong:** A fast rebound and VIX falling back below VIX3M would reopen selling opportunities at rich IV that we skipped; a further selloff through the condors' short strikes (SPY 711, QQQ 620, GLD 345) would show the book was more exposed than flat vega suggests. Exits stay: 50% of max profit, 2x-credit stop, 21 DTE.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-17 regime
+python3 scripts/options_data.py --asof 2026-11-17 scan
+python3 scripts/options_data.py --asof 2026-11-17 mark
+python3 scripts/options_data.py --asof 2026-11-17 price-spread --symbol IWM --legs "SELL 1 P 270 2026-12-18;BUY 1 P 270 2027-01-15" --qty 5
+python3 scripts/options_data.py --asof 2026-11-17 price-spread --symbol SPY --legs "SELL 1 P 711 2026-12-18;BUY 1 P 701 2026-12-18;SELL 1 C 778 2026-12-18;BUY 1 C 790 2026-12-18" --qty 1
+```
 
 ### 2026-11-16 — OPEN QQQ iron condor (Cycle #32)
 **Decision:** Open one QQQ iron condor, 1 contract, expiring 2026-12-18: sell 620 put / 719 call, buy 609.78 put / 731 call.
