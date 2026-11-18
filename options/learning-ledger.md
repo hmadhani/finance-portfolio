@@ -80,8 +80,28 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 | Portfolio net delta (hedging one trade with another) | [2026-11-11 OPEN IWM](#2026-11-11--open-iwm-put-calendar-cycle-29) |
 | Correlation (two trades, one bet) | [2026-11-16 OPEN QQQ](#2026-11-16--open-qqq-iron-condor-cycle-32) |
 | Net portfolio vega (a book that is not all short vega) | [2026-11-17 PASS](#2026-11-17--pass-cycle-33) |
+| Breached short strike (defined risk caps the damage) | [2026-11-18 PASS](#2026-11-18--pass-cycle-34) |
 
 ## Entries
+
+### 2026-11-18 — PASS (Cycle #34)
+**Decision:** Open nothing today; hold all four positions.
+**Market context in plain words:** Fear is still high. VIX is 24.63 with VIX3M at 24.59, so near-term fear still edges out longer-term fear (backwardation = stress), and VIX is higher than on 92.9% of days this past year. SPY is 730.605 (expected 30-day move about +/-41.49, IV rank 97.5, but only 32 days of history). Gold fell: GLD is 343.89, below our condor's short 345 put. Today's P&L: GLD -$156.00, IWM +$181.25, SPY +$23.75, QQQ +$12.00.
+**Why this strategy (doing nothing):** Rejected: (1) a new ETF condor to collect today's rich premium: in stress the cap is 1.5% NAV per trade and the index trades would just repeat the SPY/QQQ bet; (2) a single-stock premium sale: barred outright in stress. Closing the GLD condor early was also rejected: its stop (2x credit = -$574) and 21-DTE rule have not fired, and rules made in calm conditions beat panic decisions.
+**The trade:** None. Capital at risk stays $4,254.61 (8.7% NAV, cap 25%); new positions this week: 1 of 5.
+**Greeks for the whole book:** delta +21.48 share-equivalents (a $1 rise across our underlyings gains about $21); theta +$31.48/day (if nothing else changes, about $31 a day from time decay); vega +$11.67 per IV point (if implied volatility rose 1 point everywhere, the book would gain about $12).
+**Concept spotlight:** *A breached short strike (and why defined risk matters).* GLD's short 345 put is now in the money (GLD 343.89), which sounds alarming. But the condor also owns the 335 put, so the put side can lose at most the $10 gap between strikes ($1,000 per contract) minus the credit we took, and the whole trade's max loss is capped at $1,213. Today it shows -$156, about 13% of that cap. A breached strike raises the odds of a loss; the long wing is what keeps it from becoming a disaster.
+**What would prove this wrong:** GLD continuing down toward 335 would push the loss toward the -$574 stop, proving we should have exited sooner. A rebound with VIX below VIX3M would show we skipped good selling conditions.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-18 regime
+python3 scripts/options_data.py --asof 2026-11-18 scan
+python3 scripts/options_data.py --asof 2026-11-18 mark
+python3 scripts/options_data.py --asof 2026-11-18 price-spread --symbol GLD --legs "SELL 1 P 345 2026-12-18;BUY 1 P 335 2026-12-18;SELL 1 C 395 2026-12-18;BUY 1 C 410 2026-12-18" --qty 1
+python3 scripts/options_data.py --asof 2026-11-18 price-spread --symbol IWM --legs "SELL 1 P 270 2026-12-18;BUY 1 P 270 2027-01-15" --qty 5
+python3 scripts/options_data.py --asof 2026-11-18 price-spread --symbol SPY --legs "SELL 1 P 711 2026-12-18;BUY 1 P 701 2026-12-18;SELL 1 C 778 2026-12-18;BUY 1 C 790 2026-12-18" --qty 1
+python3 scripts/options_data.py --asof 2026-11-18 price-spread --symbol QQQ --legs "SELL 1 P 620 2026-12-18;BUY 1 P 609.78 2026-12-18;SELL 1 C 719 2026-12-18;BUY 1 C 731 2026-12-18" --qty 1
+```
 
 ### 2026-11-17 — PASS (Cycle #33)
 **Decision:** Open nothing today; hold all four positions.
