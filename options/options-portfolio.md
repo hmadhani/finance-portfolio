@@ -14,27 +14,27 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 34 |
-| NAV | $49,131.23 |
-| Cash | $49,129.23 |
+| Cycle # | 35 |
+| NAV | $48,987.76 |
+| Cash | $49,134.76 |
 | Collateral / max loss reserved | $4,254.61 |
 | Capital at risk (sum of max losses) | $4,254.61 (8.7% NAV) |
 | Net delta (share-equivalents) | +21.48 |
 | Net theta ($/day) | +31.48 |
 | Net vega ($/IV point) | +11.67 |
-| Return since inception | -1.74% |
-| BXM since inception | -3.42% |
-| PUT since inception | -2.72% |
-| Regime | VIX 24.63 / VIX3M 24.59, BACKWARDATION = STRESS; VIX 1y percentile 92.9 |
+| Return since inception | -2.02% |
+| BXM since inception | -3.77% |
+| PUT since inception | -3.10% |
+| Regime | VIX 25.59 / VIX3M 24.87, BACKWARDATION = STRESS; VIX 1y percentile 95.2 |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -4.43 | -156.00 | -54.4% | 1213.00 | 30 | none |
-| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 2.035 | +181.25 | +21.7% | 1249.86 | 30 (front) | none |
-| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -2.825 | +23.75 | +7.8% | 893.75 | 30 | none |
-| 2026-11-16-QQQ-IC-1 | QQQ | iron_condor | 2026-11-16 | 2026-12-18 | 1 | -3.02 | -2.90 | +12.00 | +4.0% | 898.00 | 30 | none |
+| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -5.375 | -250.50 | -87.3% | 1213.00 | 29 | none |
+| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.995 | +161.25 | +19.3% | 1249.86 | 29 (front) | none |
+| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -2.985 | +7.75 | +2.5% | 893.75 | 29 | none |
+| 2026-11-16-QQQ-IC-1 | QQQ | iron_condor | 2026-11-16 | 2026-12-18 | 1 | -3.02 | -3.085 | -6.50 | -2.2% | 898.00 | 29 | none |
 
 ## Closed Positions
 
@@ -86,10 +86,21 @@ Append-only. One row per cycle.
 | 2026-11-16 | 32 | $49,163.17 | 2529.02 | 3656.35 | 20.9 |
 | 2026-11-17 | 33 | $49,169.70 | 2477.8 | 3581.33 | 25.74 |
 | 2026-11-18 | 34 | $49,131.23 | 2476.95 | 3581.23 | 24.63 |
+| 2026-11-19 | 35 | $48,987.76 | 2467.9 | 3567.2 | 25.59 |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-19 — Cycle #35: stress persists (VIX 25.59, backwardation); GLD condor deeper red (-$250.50) but no trigger; all four held; PASS
+
+- Regime: VIX 25.59, VIX3M 24.87 (backwardation = stress), VIX 1y percentile 95.2. `regime` errors: none. BXM 2467.90, PUT 3567.20. `scan` (30 symbols): SPY 727.96 (iv30 20.456%, +/-42.69, IV rank 100, n=33 thin). Stress: per-position cap 1.5% NAV, no new single-stock short premium.
+- HOLD 2026-11-10-GLD-IC-1: GLD 336.77, short 345 put ITM; mark -5.375 vs -2.87, P&L -$250.50 (-87.3% of credit), 29 DTE. No trigger (2x-credit stop = -$574 not reached; max loss $1,213). Watch closely.
+- HOLD 2026-11-11-IWM-PCAL-1: mark 1.995 vs 1.6725, P&L +$161.25 (+19.3%), 29 DTE (front), no triggers.
+- HOLD 2026-11-13-SPY-IC-1: mark -2.985 vs -3.0625, P&L +$7.75 (+2.5%), 29 DTE, no triggers.
+- HOLD 2026-11-16-QQQ-IC-1: mark -3.085 vs -3.02, P&L -$6.50 (-2.2%), 29 DTE, no triggers.
+- PASS on new trades: stress regime with four positions open, three of them index/ETF condors/calendars already stacked on the same Dec-18 expiry; a fifth would add correlated risk. See ledger PASS entry. New positions this week: 1 of 5.
+- Interest accrued $5.53 (1 day at 4.5% on $44,869.09 unreserved cash). NAV $48,987.76 = cash $49,134.76 + GLD -$537.50 + IWM +$997.50 + SPY -$298.50 + QQQ -$308.50 (at mid). Net Greeks NOT recomputed this cycle (carried from Cycle #34: delta +21.48, theta +$31.48/day, vega +$11.67/IV pt) — gap noted, no `price-spread` re-run. IV recorded (30 symbols).
 
 ### 2026-11-18 — Cycle #34: stress regime persists (VIX 24.63, backwardation); GLD condor's short put now in the money but no trigger; all four held; PASS
 

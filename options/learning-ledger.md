@@ -84,6 +84,21 @@ Standardized Options* (theocc.com) — see RESOURCES.md.
 
 ## Entries
 
+### 2026-11-19 — PASS (Cycle #35)
+**Decision:** Open nothing today; hold all four positions.
+**Market context in plain words:** Fear rose again. VIX is 25.59 with VIX3M at 24.87 (backwardation = stress), higher than on 95.2% of days this past year. SPY is 727.96 (expected 30-day move about +/-42.69, IV rank 100 but only 33 days of history). Gold slid further: GLD is 336.77, so the condor's short 345 put is deeper in the money. Marks: GLD -$250.50, IWM calendar +$161.25, SPY condor +$7.75, QQQ condor -$6.50. NAV $48,987.76.
+**Why this strategy (doing nothing):** Rejected: (1) another ETF condor to harvest rich premium: in stress the per-trade cap is 1.5% NAV and it would stack on the same Dec-18 index bet; (2) single-stock premium: barred in stress. Closing the GLD condor early was also rejected: its stop (2x credit = -$574) has not fired (loss -$250.50, max loss capped at $1,213) and 29 DTE leaves it above the 21-DTE rule.
+**The trade:** None. Capital at risk stays $4,254.61 (about 8.7% NAV, cap 25%); new positions this week: 1 of 5.
+**Greeks for the whole book:** not recomputed today (carried from Cycle #34: delta +21.48, theta +$31.48/day, vega +$11.67 per IV point); a data gap, noted in the Daily Decision Log.
+**Concept spotlight:** none new today; see [defined risk and a breached short strike](#2026-11-18--pass-cycle-34).
+**What would prove this wrong:** GLD falling toward 335 would push the loss to the -$574 stop, showing we should have exited earlier; a VIX drop below VIX3M would show we skipped good selling conditions.
+**Reproduce:**
+```
+python3 scripts/options_data.py --asof 2026-11-19 regime
+python3 scripts/options_data.py --asof 2026-11-19 scan
+python3 scripts/options_data.py --asof 2026-11-19 mark
+```
+
 ### 2026-11-18 — PASS (Cycle #34)
 **Decision:** Open nothing today; hold all four positions.
 **Market context in plain words:** Fear is still high. VIX is 24.63 with VIX3M at 24.59, so near-term fear still edges out longer-term fear (backwardation = stress), and VIX is higher than on 92.9% of days this past year. SPY is 730.605 (expected 30-day move about +/-41.49, IV rank 97.5, but only 32 days of history). Gold fell: GLD is 343.89, below our condor's short 345 put. Today's P&L: GLD -$156.00, IWM +$181.25, SPY +$23.75, QQQ +$12.00.
