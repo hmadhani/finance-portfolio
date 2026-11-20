@@ -14,15 +14,15 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 35 |
-| NAV | $48,987.76 |
-| Cash | $49,134.76 |
+| Cycle # | 36 |
+| NAV | $48,993.29 (degraded — marks carried from 2026-11-19) |
+| Cash | $49,140.29 |
 | Collateral / max loss reserved | $4,254.61 |
 | Capital at risk (sum of max losses) | $4,254.61 (8.7% NAV) |
 | Net delta (share-equivalents) | +21.48 |
 | Net theta ($/day) | +31.48 |
 | Net vega ($/IV point) | +11.67 |
-| Return since inception | -2.02% |
+| Return since inception | -2.01% |
 | BXM since inception | -3.77% |
 | PUT since inception | -3.10% |
 | Regime | VIX 25.59 / VIX3M 24.87, BACKWARDATION = STRESS; VIX 1y percentile 95.2 |
@@ -87,10 +87,18 @@ Append-only. One row per cycle.
 | 2026-11-17 | 33 | $49,169.70 | 2477.8 | 3581.33 | 25.74 |
 | 2026-11-18 | 34 | $49,131.23 | 2476.95 | 3581.23 | 24.63 |
 | 2026-11-19 | 35 | $48,987.76 | 2467.9 | 3567.2 | 25.59 |
+| 2026-11-20 | 36 (degraded — Cboe 403, marks carried) | $48,993.29 | — | — | — |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-20 — Cycle #36: DEGRADED — Cboe returned HTTP 403 on every call; all four positions held with carried marks; no new trades
+
+- `regime` exited 1 (vix, vix3m, bxm, put all HTTP 403 Forbidden), so degraded mode: `mark` ran but every position returned `error` (HTTP 403 on each chain). No quotes, no `scan`, no `record-iv`, nothing opened. BXM/PUT/VIX not available for the NAV row (left as —); stress status unknown (last known: VIX 25.59 backwardation = stress).
+- Date-based triggers checked from the calendar: all four positions expire 2026-12-18 (28 DTE; IWM front leg 28 DTE) so 21 DTE fires 2026-11-27 — no `21_dte`/`expiration`/`assignment` today. `stop_loss` could not be evaluated: GLD was -$250.50 on 11-19 (2x-credit stop = -$574), a real gap to retry next cycle.
+- HOLD all four with carried marks from 2026-11-19: GLD -5.375, IWM 1.995, SPY -2.985, QQQ -3.085 (P&L carried). No news-based close (WebSearch not used; no hard risk event known).
+- Interest accrued $5.53 (1 day at 4.5% on $44,869.09 unreserved cash). NAV $48,993.29 = cash $49,140.29 + carried position values -$147.00 (GLD -$537.50 + IWM +$997.50 + SPY -$298.50 + QQQ -$308.50). Net Greeks carried from Cycle #34.
 
 ### 2026-11-19 — Cycle #35: stress persists (VIX 25.59, backwardation); GLD condor deeper red (-$250.50) but no trigger; all four held; PASS
 
