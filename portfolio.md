@@ -19,19 +19,19 @@ risk, including potential loss of principal. Always consult with qualified finan
 professionals before making investment decisions.
 ```
 
-## Header (as of 2026-11-20)
+## Header (as of 2026-11-23)
 
 | Metric | Value |
 |---|---|
-| NAV | $94,055.14 |
-| Total return | -5.94% (since inception) |
-| Blended Benchmark (ref) | $93,029.00 (-6.97% since inception; tracking started 2026-11-11 — see note) |
-| SPY (ref) | $716.35 (-6.49% since inception) |
-| Cash balance | $10,433.02 (11.09% of NAV) |
-| Stock sleeve | $62,097.51 (66.02% of NAV) |
-| Sector ETF sleeve | $13,659.99 (14.52% of NAV) |
-| Bond sleeve | $7,864.62 (8.36% of NAV) |
-| Cycle # | 54 |
+| NAV | $93,849.50 |
+| Total return | -6.15% (since inception) |
+| Blended Benchmark (ref) | $93,999.65 (-6.00% since inception; tracking started 2026-11-11 — see note) |
+| SPY (ref) | $722.14 (-5.74% since inception) |
+| Cash balance | $10,436.88 (11.12% of NAV) |
+| Stock sleeve | $61,765.64 (65.81% of NAV) |
+| Sector ETF sleeve | $13,764.32 (14.67% of NAV) |
+| Bond sleeve | $7,882.66 (8.40% of NAV) |
+| Cycle # | 55 |
 | Glide-Path Phase | Accumulation |
 
 `Cycle #` counts routine cycles that have written this file (one entry per
@@ -46,7 +46,9 @@ at inception, so the anchor is a close proxy but not exact. Price-only (no
 AGG/ACWI distributions). Today (11-12) components: ACWI $156.41, AGG $95.45, GLD
 $353.95. Earlier NAV History rows stay "—" (append-only).
 
-This is Cycle #54 (HEAVY): corroborated prices (stockanalysis.com, Nov 20 ~9:52-10:08 ET), no trades, cash +$1.29 (1 day), all 16 holdings reaffirmed. Sharp risk-off: SPY fell to $716.35 (prior close ~$715.87 vs the $736.17 morning print on 11-19, i.e. a late-day selloff), MU -13.5% and AVGO -9.6% vs the 11-19 verdicts, XLK -6.2%, GLD -3.6%. Today (11-20) benchmark components: ACWI $147.25, AGG $95.91, GLD $327.42.
+This is Cycle #55 (HEAVY): corroborated prices (stockanalysis.com, Nov 23 ~10:04-10:08 ET; BHRB 9:47 ET), no trades, cash +$3.86 (Fri-Mon, 3 days), all 16 holdings reaffirmed. Sharp risk-on rebound after a heavy Friday selloff (SPY closed 11-20 at $689.81, today $722.14, +4.7%; XLK +9.2%, MU +17.9%, ETN +8.1%, GOOGL +6.0% vs Friday closes). Versus the 11-20 morning verdict prices no holding moved ±10% (largest: MU +7.1%, AVGO -6.3%), and no company-specific catalyst news was found, so rule 5 blocks any ADD/TRIM. Today (11-23) benchmark components: ACWI $149.06, AGG $96.13, GLD $335.84.
+
+Prior cycle (#54, HEAVY): corroborated prices (stockanalysis.com, Nov 20 ~9:52-10:08 ET), no trades, cash +$1.29 (1 day), all 16 holdings reaffirmed. Sharp risk-off: SPY fell to $716.35 (prior close ~$715.87 vs the $736.17 morning print on 11-19, i.e. a late-day selloff), MU -13.5% and AVGO -9.6% vs the 11-19 verdicts, XLK -6.2%, GLD -3.6%. Today (11-20) benchmark components: ACWI $147.25, AGG $95.91, GLD $327.42.
 
 Prior cycle (#53, HEAVY): corroborated prices (stockanalysis.com, Nov 19 ~10:02-10:07 ET), no trades, cash +$1.29 (1 day), all 16 holdings reaffirmed. Risk-on bounce (SPY +0.82%, XLK +2.95%, MU +7.2%, GOOGL +3.7%, AVGO +3.3%). Today (11-19) benchmark components: ACWI $151.55, AGG $95.38, GLD $339.69.
 
@@ -195,6 +197,7 @@ cycles before that benchmark was tracked.
 | 2026-11-18 | 52 | $95,608.73 | $94,888.56 | $732.19 |
 | 2026-11-19 | 53 | $95,666.52 | $95,049.23 | $736.17 |
 | 2026-11-20 | 54 | $94,055.14 | $93,029.00 | $716.35 |
+| 2026-11-23 | 55 | $93,849.50 | $93,999.65 | $722.14 |
 
 ---
 
@@ -202,44 +205,67 @@ cycles before that benchmark was tracked.
 
 | Ticker | Type | Theme | Shares | Entry Price | Cost Basis | Current Price | Mkt Value | % NAV | Unrealized G/L |
 |---|---|---|---|---|---|---|---|---|---|
-| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $330.65 | $4,629.10 | 4.92% | -$376.74 (-7.53%) |
-| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $324.32 | $3,891.84 | 4.14% | -$1,063.80 (-21.47%) |
-| COF | Stock | Financials | 35 | $217.40 | $7,609.00 | $183.62 | $6,426.70 | 6.83% | -$1,182.30 (-15.54%) |
-| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.54 | $1,368.71 | $8,212.26 | 8.73% | +$1,119.72 (+15.79%) |
-| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $140.98 | $4,934.30 | 5.25% | +$52.50 (+1.08%) |
-| GOOGL | Stock | AI-Capex | 17 | $332.93 | $5,659.79 | $280.46 | $4,767.82 | 5.07% | -$891.97 (-15.76%) |
-| BALL | Stock | Materials | 106 | $60.97 | $6,462.82 | $64.53 | $6,840.18 | 7.27% | +$377.36 (+5.84%) |
-| PEP | Stock | Consumer-Defensive | 18 | $142.27 | $2,560.86 | $142.29 | $2,561.22 | 2.72% | +$0.36 (+0.01%) |
-| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $84.65 | $4,994.35 | 5.31% | +$21.24 (+0.43%) |
-| MU | Stock | AI-Capex | 4 | $930.25 | $3,721.00 | $654.15 | $2,616.60 | 2.78% | -$1,104.40 (-29.68%) |
-| BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $69.00 | $4,761.00 | 5.06% | -$112.47 (-2.31%) |
-| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $46.10 | $4,287.30 | 4.56% | -$595.20 (-12.19%) |
-| VRTX | Stock | Healthcare-GLP1 | 6 | $512.00 | $3,072.00 | $529.14 | $3,174.84 | 3.38% | +$102.84 (+3.35%) |
-| XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $158.20 | $4,113.20 | 4.37% | -$722.80 (-14.95%) |
-| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $161.81 | $9,546.79 | 10.15% | -$1,424.85 (-12.99%) |
-| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $95.91 | $7,864.62 | 8.36% | -$163.18 (-2.03%) |
-| Cash | — | — | — | — | $10,433.02 | — | $10,433.02 | 11.09% | — |
-| **TOTAL** | — | — | — | — | **$100,017.54** | — | **$94,055.14** | **100.00%** | **-$5,962.40 (-5.96% vs cost)** |
+| AVGO | Stock | AI-Capex | 14 | $357.56 | $5,005.84 | $309.84 | $4,337.76 | 4.62% | -$668.08 (-13.35%) |
+| ETN | Stock | Energy-Transition | 12 | $412.97 | $4,955.64 | $336.41 | $4,036.92 | 4.30% | -$918.72 (-18.54%) |
+| COF | Stock | Financials | 35 | $217.40 | $7,609.00 | $181.13 | $6,339.55 | 6.76% | -$1,269.45 (-16.68%) |
+| LLY | Stock | Healthcare-GLP1 | 6 | $1,182.09 | $7,092.54 | $1,366.83 | $8,200.98 | 8.74% | +$1,108.44 (+15.63%) |
+| TJX | Stock | Consumer-Defensive | 35 | $139.48 | $4,881.80 | $139.04 | $4,866.40 | 5.19% | -$15.40 (-0.32%) |
+| GOOGL | Stock | AI-Capex | 17 | $332.93 | $5,659.79 | $281.32 | $4,782.44 | 5.10% | -$877.35 (-15.50%) |
+| BALL | Stock | Materials | 106 | $60.97 | $6,462.82 | $63.79 | $6,761.74 | 7.20% | +$298.92 (+4.63%) |
+| PEP | Stock | Consumer-Defensive | 18 | $142.27 | $2,560.86 | $139.13 | $2,504.34 | 2.67% | -$56.52 (-2.21%) |
+| NEE | Stock | AI-Capex | 59 | $84.29 | $4,973.11 | $83.01 | $4,897.59 | 5.22% | -$75.52 (-1.52%) |
+| MU | Stock | AI-Capex | 4 | $930.25 | $3,721.00 | $700.89 | $2,803.56 | 2.99% | -$917.44 (-24.66%) |
+| BHRB | Stock | Financials | 69 | $70.63 | $4,873.47 | $69.00 | $4,761.00 | 5.07% | -$112.47 (-2.31%) |
+| IMAX | Stock | Communication-Services | 93 | $52.50 | $4,882.50 | $46.40 | $4,315.20 | 4.60% | -$567.30 (-11.62%) |
+| VRTX | Stock | Healthcare-GLP1 | 6 | $512.00 | $3,072.00 | $526.36 | $3,158.16 | 3.37% | +$86.16 (+2.80%) |
+| XLK | Sector ETF | AI-Capex | 26 | $186.00 | $4,836.00 | $162.78 | $4,232.28 | 4.51% | -$603.72 (-12.48%) |
+| XLI | Sector ETF | Energy-Transition | 59 | $185.96 | $10,971.64 | $161.56 | $9,532.04 | 10.16% | -$1,439.60 (-13.12%) |
+| AGG | Bond | Diversified-Core | 82 | $97.90 | $8,027.80 | $96.13 | $7,882.66 | 8.40% | -$145.14 (-1.81%) |
+| Cash | — | — | — | — | $10,436.88 | — | $10,436.88 | 11.12% | — |
+| **TOTAL** | — | — | — | — | **$100,017.54** | — | **$93,849.50** | **100.00%** | **-$6,168.04 (-6.17% vs cost)** |
 ---
 
 ## Theme Exposure
 
 | Theme | Positions | Mkt Value | % NAV |
 |---|---|---|---|
-| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $21,121.07 | 22.46% |
-| Energy-Transition | ETN, XLI | $13,438.63 | 14.29% |
-| Financials | COF, BHRB | $11,187.70 | 11.89% |
-| Healthcare-GLP1 | LLY, VRTX | $11,387.10 | 12.11% |
-| Consumer-Defensive | TJX, PEP | $7,495.52 | 7.97% |
-| Materials | BALL | $6,840.18 | 7.27% |
-| Communication-Services | IMAX | $4,287.30 | 4.56% |
-| Diversified-Core | AGG | $7,864.62 | 8.36% |
+| AI-Capex | AVGO, GOOGL, NEE, MU, XLK | $21,053.63 | 22.43% |
+| Energy-Transition | ETN, XLI | $13,568.96 | 14.46% |
+| Financials | COF, BHRB | $11,100.55 | 11.83% |
+| Healthcare-GLP1 | LLY, VRTX | $11,359.14 | 12.10% |
+| Consumer-Defensive | TJX, PEP | $7,370.74 | 7.85% |
+| Materials | BALL | $6,761.74 | 7.20% |
+| Communication-Services | IMAX | $4,315.20 | 4.60% |
+| Diversified-Core | AGG | $7,882.66 | 8.40% |
 
 (Cash is intentionally excluded from theme exposure — it carries no thematic risk.)
 
 ---
 
 ## Trade Log (reverse-chronological)
+
+### 2026-11-23 — Cycle #55 (HEAVY): full research pass, no trades
+
+Corroborated same-day quotes for all 16 holdings, SPY, ACWI, AGG, GLD (stockanalysis.com, ~10:04-10:08 ET; BHRB 9:47 ET; each page also showed the 11-20 close). NAV $93,849.50 (-6.15% since inception) vs blended benchmark $93,999.65 (-6.00%) and SPY $722.14 (-5.74% vs 766.08). Cash accrued 3 days SGOV-equivalent (Fri-Mon, +$3.86). Friday 11-20 closed in a deep selloff (SPY $689.81, AVGO $304.41 -12.2%, MU $594.51, XLK $149.01); today opened in a sharp risk-on rebound (SPY +4.7%, XLK +9.2%, MU +17.9%, ETN +8.1%, GOOGL +6.0%, GLD +4.0% vs Friday closes). Catalyst news searches (market wrap, MU/semis, ETN) returned nothing dated after 11-19, so no new company-specific information was found; the rebound reads as macro/sentiment, not thesis news. No Exit Criteria triggered (thesis intact, no insider-selling flag). Rule 5: measured against the 11-20 verdict prices no holding moved ±10% (largest: MU +7.1%, AVGO -6.3%, ETN +3.7%), and there was no earnings/rating/corporate event, so no ADD/TRIM is permitted. Rule 1 additionally locks GOOGL (ADD 11-11, 8 trading days ago). No tickers sold in 30 days (rule 2); 0 new positions this week (rule 7). Slippage paid: $0.00.
+
+- **AVGO** (AI-Capex) — reaffirmed — no action (rule 5). $330.65 → $309.84 (-6.3% vs verdict; Friday close $304.41). Valuation compressed in the AI-capex drawdown with no thesis change found. Hot-theme screened. Earnings 12-09 is the next real test.
+- **GOOGL** (AI-Capex) — reaffirmed — no action (rules 1, 5). $280.46 → $281.32.
+- **MU** (AI-Capex) — reaffirmed — no action (rule 5). $654.15 → $700.89 (+7.1% vs verdict; +17.9% off Friday's $594.51 close). Memory-cycle sentiment whipsaw; below trigger and no news. Earnings 12-16. Hot-theme screened.
+- **NEE** (AI-Capex) — reaffirmed — no action. $84.65 → $83.01.
+- **XLK** (AI-Capex) — reaffirmed — no action. $158.20 → $162.78.
+- **ETN** (Energy-Transition) — reaffirmed — no action. $324.32 → $336.41 (+3.7%); no news found for today's +8% intraday rebound.
+- **XLI** (Energy-Transition) — reaffirmed — no action. $161.81 → $161.56; 10.16% NAV (<15% cap).
+- **COF** (Financials) — reaffirmed — no action. $183.62 → $181.13; Berkshire stake cut remains a watch item.
+- **BHRB** (Financials) — reaffirmed — no action. $69.00 → $69.00.
+- **LLY** (Healthcare-GLP1) — reaffirmed — no action. $1,368.71 → $1,366.83; 8.74% NAV.
+- **VRTX** (Healthcare-GLP1) — reaffirmed — no action. $529.14 → $526.36; povetacicept IgAN decision due 11-30 (a rule-5 event when it lands).
+- **TJX** (Consumer-Defensive) — reaffirmed — no action. $140.98 → $139.04.
+- **PEP** (Consumer-Defensive) — reaffirmed — no action. $142.29 → $139.13 (-2.2%).
+- **BALL** (Materials) — reaffirmed — no action. $64.53 → $63.79.
+- **IMAX** (Communication-Services) — reaffirmed — no action. $46.10 → $46.40.
+- **AGG** (Diversified-Core) — reaffirmed — no action. $95.91 → $96.13.
+
+New-candidate screen (Step 4) skipped: cash $10,436.88 (11.12%) is only ~$1,050 above the 10% floor. 16 positions. Caps: largest stock LLY 8.74%, XLI 10.16% (<15%), AI-Capex 22.43% (<25%, band 27%). No trim bands triggered. Glide-Path Phase: Accumulation (day 89 of 7-year accumulation window). No quarterly/annual report due (2026-Q3 already generated; 2026-Q4 and 2026-annual not yet ended).
 
 ### 2026-11-20 — Cycle #54 (HEAVY): full research pass, no trades
 
