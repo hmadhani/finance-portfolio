@@ -14,27 +14,27 @@ Machine state: `options/data/positions.json`
 | Field | Value |
 |---|---|
 | Inception | 2026-10-01 (BXM/PUT/VIX base levels set 2026-10-02: BXM 2564.68, PUT 3681.24, VIX 15.65) |
-| Cycle # | 38 |
-| NAV | $49,015.43 (degraded — marks carried from 2026-11-19) |
-| Cash | $49,162.43 |
+| Cycle # | 39 |
+| NAV | $49,020.97 (degraded — marks carried from 2026-11-19) |
+| Cash | $49,167.97 |
 | Collateral / max loss reserved | $4,254.61 |
 | Capital at risk (sum of max losses) | $4,254.61 (8.7% NAV) |
 | Net delta (share-equivalents) | +21.48 |
 | Net theta ($/day) | +31.48 |
 | Net vega ($/IV point) | +11.67 |
-| Return since inception | -1.97% |
-| BXM since inception | -3.77% (as of 2026-11-19; BXM unavailable 11-20, 11-23, 11-24) |
-| PUT since inception | -3.10% (as of 2026-11-19; PUT unavailable 11-20, 11-23, 11-24) |
+| Return since inception | -1.96% |
+| BXM since inception | -3.77% (as of 2026-11-19; BXM unavailable 11-20, 11-23, 11-24, 11-25) |
+| PUT since inception | -3.10% (as of 2026-11-19; PUT unavailable 11-20, 11-23, 11-24, 11-25) |
 | Regime | UNKNOWN since 2026-11-20 (Cboe 403) — treated as stress; last known 11-19: VIX 25.59 / VIX3M 24.87, backwardation, VIX 1y pct 95.2 |
 
 ## Open Positions
 
 | ID | Symbol | Strategy | Opened | Expiry | Qty | Entry $/sh | Mark $/sh | P&L $ | % of basis | Max loss $ | DTE | Triggers |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -5.375 | -250.50 | -87.3% | 1213.00 | 24 | none (mark carried) |
-| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.995 | +161.25 | +19.3% | 1249.86 | 24 (front) | none (mark carried) |
-| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -2.985 | +7.75 | +2.5% | 893.75 | 24 | none (mark carried) |
-| 2026-11-16-QQQ-IC-1 | QQQ | iron_condor | 2026-11-16 | 2026-12-18 | 1 | -3.02 | -3.085 | -6.50 | -2.2% | 898.00 | 24 | none (mark carried) |
+| 2026-11-10-GLD-IC-1 | GLD | iron_condor | 2026-11-10 | 2026-12-18 | 1 | -2.87 | -5.375 | -250.50 | -87.3% | 1213.00 | 23 | none (mark carried) |
+| 2026-11-11-IWM-PCAL-1 | IWM | put_calendar | 2026-11-11 | 2026-12-18 / 2027-01-15 | 5 | 1.6725 | 1.995 | +161.25 | +19.3% | 1249.86 | 23 (front) | none (mark carried) |
+| 2026-11-13-SPY-IC-1 | SPY | iron_condor | 2026-11-13 | 2026-12-18 | 1 | -3.0625 | -2.985 | +7.75 | +2.5% | 893.75 | 23 | none (mark carried) |
+| 2026-11-16-QQQ-IC-1 | QQQ | iron_condor | 2026-11-16 | 2026-12-18 | 1 | -3.02 | -3.085 | -6.50 | -2.2% | 898.00 | 23 | none (mark carried) |
 
 ## Closed Positions
 
@@ -90,10 +90,19 @@ Append-only. One row per cycle.
 | 2026-11-20 | 36 (degraded — Cboe 403, marks carried) | $48,993.29 | — | — | — |
 | 2026-11-23 | 37 (degraded — Cboe 403, marks carried) | $49,009.89 | — | — | — |
 | 2026-11-24 | 38 (degraded — Cboe 403, marks carried) | $49,015.43 | — | — | — |
+| 2026-11-25 | 39 (degraded — Cboe 403, marks carried) | $49,020.97 | — | — | — |
 
 ## Daily Decision Log
 
 Reverse-chronological. One heading per cycle: `### YYYY-MM-DD — Cycle #N: <summary>`.
+
+### 2026-11-25 — Cycle #39: DEGRADED (4th straight cycle) — Cboe HTTP 403 on every call; all four positions held with carried marks; no new trades
+
+- `regime` exited 1 (vix, vix3m, bxm, put all HTTP 403 Forbidden) → degraded mode. `mark` exited 0 but every position returned `error: HTTPError: HTTP Error 403: Forbidden` (GLD, IWM, SPY, QQQ). No `scan`, no `record-iv`, nothing opened. BXM/PUT/VIX unavailable for the NAV row (—); stress unknown → treated as stress.
+- Date-based triggers checked from the calendar: all four positions expire 2026-12-18 (23 DTE; IWM front leg 23 DTE). No `21_dte`/`expiration`/`assignment` today. 11-26 is a market holiday (Thanksgiving), so the next cycle is 2026-11-27, when `21_dte` fires on ALL FOUR positions (21 DTE). If Cboe is still 403 then, the closes cannot be priced with `price-spread` (exit 2 rule) → held and retried — gap. The 403 is now 4 trading days old; the data path likely needs attention before 11-27.
+- GAP: `stop_loss` / `profit_target` could not be evaluated for the 4th cycle in a row. Highest risk remains GLD (-$250.50 on 11-19 vs 2x-credit stop at -$574; short 345 put was ITM). News check (WebSearch): no 11-25 gold or US index quote found; latest 2026 reports (11-12 to 11-17) had gold near one-year lows on a strong dollar / Fed-hike bets. No clear hard risk event → no news-based close (and a close could not be priced anyway).
+- HOLD all four with carried marks from 2026-11-19: GLD -5.375, IWM 1.995, SPY -2.985, QQQ -3.085 (P&L carried, NOT live).
+- Interest accrued $5.54 (1 day at 4.5% on $44,907.82 unreserved cash). NAV $49,020.97 = cash $49,167.97 + carried position values -$147.00 (GLD -$537.50 + IWM +$997.50 + SPY -$298.50 + QQQ -$308.50). Net Greeks carried from Cycle #34. No ledger entry (nothing closed, assigned, or opened).
 
 ### 2026-11-24 — Cycle #38: DEGRADED (3rd straight cycle) — Cboe HTTP 403 on every call; all four positions held with carried marks; no new trades
 
